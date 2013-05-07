@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="5dp" android:paddingBottom="5dp">
+
+    <ImageView
+        android:id="@+id/matchRightImage"
+        android:layout_width="40dip"
+        android:layout_height="40dip"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp" />
+
+    <TextView
+        android:id="@+id/matchName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:paddingLeft="15dp"
+        android:text="Nome Partita"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/matchOwner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/matchName"
+        android:paddingBottom="5dp"
+        android:paddingLeft="15dp"
+        android:text="Creatore"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#6b71f1" />
+
+    <TextView
+        android:id="@+id/matchDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/matchOwner"
+        android:paddingBottom="5dp"
+        android:paddingLeft="15dp"
+        android:text="Data"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/matchPlayers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/matchDate"
+        android:paddingLeft="15dp"
+        android:text="Partecipanti"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</RelativeLayout>

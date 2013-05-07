@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="90dp"
+       android:orientation="vertical" android:layout_marginLeft="5dp" android:layout_marginRight="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="88dp"
+            android:background="@drawable/layout_border" >
+
+            <TextView
+                android:id="@+id/numberElement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:layout_marginRight="5dp"
+                android:text="1)"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.91"
+                android:orientation="vertical" android:gravity="center_vertical|center_horizontal">
+
+                <Button
+                    android:id="@+id/buttonSetData"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="168dp"
+                    android:layout_height="35dp"
+                    android:text="Imposta Data" android:textSize="15dp"/>
+
+                <Button
+                    android:id="@+id/buttonSetTime"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="168dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Imposta ora d'inizio" android:textSize="15dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="49dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|center_horizontal"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/buttonRemove"
+                    android:layout_width="45dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/remove2" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+    
+   </LinearLayout>
