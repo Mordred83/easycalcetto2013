@@ -18,6 +18,7 @@ import android.util.Log;
 import android.widget.Toast;
 import edu.easycalcetto.data.ECRegistrationData;
 import edu.easycalcetto.data.ECUser;
+import static edu.easycalcetto.ApplicationStatus.UNREGISTERED;
 import static edu.easycalcetto.CommonUtilities.PREFNAME_IMAGEDIR;
 import static edu.easycalcetto.Constants.IMAGES_DIRECTORY_NAME;
 import static edu.easycalcetto.Constants.PREFKEY_OWNER_ID;
@@ -30,8 +31,6 @@ import static edu.easycalcetto.Constants.PREFKEY_REGSTATUS;
 import static edu.easycalcetto.Constants.PREFS_NAME;
 
 public class ECApplication extends Application {
-
-
 
 	private File imagesDir;
 	private ECUser owner = null;
@@ -76,8 +75,8 @@ public class ECApplication extends Application {
 		String num_tel = pref.getString(PREFKEY_OWNER_NUMBER, null);
 		String yob = pref.getString(PREFKEY_OWNER_YOB, null);
 		String photo_path = pref.getString(PREFKEY_OWNER_PHOTO_FILE_NAME, null);
-		if (id != -1 && name != null && surname != null && num_tel != null
-				&& yob != null && photo_path != null) {
+		if (name != null && surname != null && num_tel != null && yob != null
+				&& photo_path != null) {
 			owner = new ECUser(id, num_tel, name, surname, yob);
 			owner.setPhotoName(photo_path);
 		}
@@ -90,8 +89,7 @@ public class ECApplication extends Application {
 	}
 
 	private void initImagesDir() throws IOException {
-		File externalRootDir = getExternalFilesDir(null);
-		File imagesDir = new File(externalRootDir, IMAGES_DIRECTORY_NAME);
+		File imagesDir = new File(getFilesDir(), IMAGES_DIRECTORY_NAME);
 		if (!imagesDir.exists()) {
 			imagesDir.mkdir();
 			new File(imagesDir, ".nomedia").createNewFile();
@@ -129,6 +127,11 @@ public class ECApplication extends Application {
 		Editor e = pref.edit();
 		e.putString(PREFKEY_REGSTATUS, appStatus.toString());
 		e.commit();
+	}
+	
+	public ApplicationStatus getApplicationStatus(){
+		SharedPreferences pref = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+		return ApplicationStatus.getByString(pref.getString(PREFKEY_REGSTATUS, UNREGISTERED.toString()));
 	}
 
 	public boolean setOwner(long id, ECRegistrationData registration) {

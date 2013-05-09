@@ -1,20 +1,16 @@
 package edu.easycalcetto.activities;
 
-import static android.content.Context.MODE_PRIVATE;
-import static edu.easycalcetto.Constants.PREFS_NAME;
+import static edu.easycalcetto.ApplicationStatus.REGISTRATION_PENDING;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.BNDKEY_RESULT;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
-import android.preference.Preference;
 import android.telephony.SmsManager;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,7 +19,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ShareActionProvider;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -31,7 +26,6 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 import edu.easycalcetto.ApplicationStatus;
-import edu.easycalcetto.Constants;
 import edu.easycalcetto.EasyCalcettoActivity;
 import edu.easycalcetto.R;
 import edu.easycalcetto.connection.ECConnectionMessageConstants;
@@ -293,11 +287,10 @@ public class RegistrazioneActivity extends EasyCalcettoActivity {
 					long l = msg.getData().getLong(BNDKEY_RESULT);
 					String smsmsg = getResources().getString(R.string.smsfmsg, String.valueOf(l));
 					prepareAndSendSMS(number, smsmsg);
-					saveRegistrationLocally(registration);
 					Intent intent = new Intent(RegistrazioneActivity.this, Registrazione2Activity.class);
 					//intent.putExtra("new.account", registration);
 					getMyApplication().setOwner(-1, registration);
-					getMyApplication().setApplicationStatus(ApplicationStatus.REGISTRATION_PENDING);
+					getMyApplication().setApplicationStatus(REGISTRATION_PENDING);
 					startActivityForResult(intent, STARTFLAG_MENU);
 					break;
 				case ECConnectionMessageConstants.RES_KIND_FAILURE:
@@ -311,13 +304,6 @@ public class RegistrazioneActivity extends EasyCalcettoActivity {
 			
 			
 		};
-	}
-	
-	private void saveRegistrationLocally(ECRegistrationData registration) {
-		SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-		SharedPreferences.Editor editor = prefs.edit();
-		
-		
 	}
 
 	@Override

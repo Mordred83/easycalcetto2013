@@ -1,5 +1,6 @@
 package edu.easycalcetto.activities;
 
+import static edu.easycalcetto.ApplicationStatus.REGISTRATION_PENDING;
 import static edu.easycalcetto.ApplicationStatus.UNREGISTERED;
 import static edu.easycalcetto.Constants.PREFS_NAME;
 import static edu.easycalcetto.Constants.PREF_REGISTERED;
@@ -18,9 +19,10 @@ import com.google.android.gcm.GCMRegistrar;
 import edu.easycalcetto.ApplicationStatus;
 import edu.easycalcetto.Constants;
 import edu.easycalcetto.ECApplication;
+import edu.easycalcetto.EasyCalcettoActivity;
 import edu.easycalcetto.R;
 
-public class SplashActivity extends Activity {
+public class SplashActivity extends EasyCalcettoActivity {
 	
 	//public static final String PREFS_NAME = ECApplication.PREFS_NAME;
     //public static final String PREF_REGISTERED = ECApplication.PREFKEY_REGSTATUS;
@@ -38,15 +40,13 @@ public class SplashActivity extends Activity {
         ImageView splashImage=(ImageView)findViewById(R.id.splashImage);
         splashImage.setImageResource(R.drawable.splash_image);
         splashImage.setScaleType(ScaleType.FIT_XY);
-        final SharedPreferences pref = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        
         // Create a Message object
         Message msg = new Message();
-        String appStatus = pref.getString(PREF_REGISTERED, UNREGISTERED.toString());
         
-        if(appStatus.equals(UNREGISTERED.toString()))  
+        
+        if(getMyApplication().getApplicationStatus().equals(UNREGISTERED))  
         	msg.what=0;
-        else if(appStatus.equals(ApplicationStatus.REGISTRATION_PENDING.toString()))
+        else if(getMyApplication().getApplicationStatus().equals(REGISTRATION_PENDING))
         	msg.what=1;
         else
         	msg.what=2;
@@ -82,5 +82,26 @@ public class SplashActivity extends Activity {
             //Toast.makeText(getApplicationContext(), "Valore "+msg.what, Toast.LENGTH_SHORT).show();
           }
     }
+
+
+	@Override
+	protected Handler getConnectionServiceHandler() {
+		// TODO Auto-generated method stub
+		return new Handler();
+	}
+
+
+	@Override
+	protected void onServiceConnected() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	protected void onServiceDisconnected() {
+		// TODO Auto-generated method stub
+		
+	}
  
 }

@@ -5,9 +5,14 @@ import static edu.easycalcetto.ApplicationStatus.UNREGISTERED;
 import static edu.easycalcetto.Constants.PREFKEY_OWNER_NAME;
 import static edu.easycalcetto.Constants.PREFKEY_OWNER_NUMBER;
 import static edu.easycalcetto.Constants.PREFKEY_OWNER_SURNAME;
+import static edu.easycalcetto.Constants.PREFKEY_OWNER_YOB;
 import static edu.easycalcetto.Constants.PREFS_NAME;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.BNDKEY_RESULT;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.MSGTASKDESCRIPTOR_CONFIRM_REGISTRATION;
+import static java.util.Calendar.YEAR;
+
+import java.util.Calendar;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -56,9 +61,6 @@ public class Registrazione2Activity extends EasyCalcettoActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.reg2);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-		
-		
 		registration = getTempOwnerData();
 		if(registration == null){
 			Toast.makeText(getApplicationContext(), "registration malformed", Toast.LENGTH_SHORT).show();
@@ -102,12 +104,18 @@ public class Registrazione2Activity extends EasyCalcettoActivity {
 	private ECRegistrationData getTempOwnerData() {
 		SharedPreferences pref = getSharedPreferences(PREFS_NAME,
 				MODE_PRIVATE);
+		
 		String name = pref.getString(PREFKEY_OWNER_NAME, null);
 		String surname = pref.getString(PREFKEY_OWNER_SURNAME, null); 
-		String age = pref.getString(PREFKEY_OWNER_SURNAME, null);
+		String age = pref.getString(PREFKEY_OWNER_YOB, null);
 		String mobileNumber = pref.getString(PREFKEY_OWNER_NUMBER, null);
+		
 		if(name != null && surname != null && age != null && mobileNumber != null){
-			return new ECRegistrationData(name, surname, age, mobileNumber);
+			Calendar c = Calendar.getInstance();
+			Calendar c1 = Calendar.getInstance();
+			c1.setTimeInMillis(Long.parseLong(age));
+			age = String.valueOf(c.get(YEAR) - c1.get(YEAR));
+			return new ECRegistrationData(name, surname, age, mobileNumber); 
 		}else
 			return null;
 	}
