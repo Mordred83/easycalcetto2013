@@ -10,7 +10,5 @@ public enum ApplicationStatus {
 		return null;
 	}
 	
-	public static String anghingo(){
-		return "anghingo";
-	}
+//ammazzata
 }
