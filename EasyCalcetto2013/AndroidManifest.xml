@@ -79,7 +79,7 @@
             android:screenOrientation="portrait" >
         </activity>
 
-        <service android:name=".connection.ECConnectionService" >
+        <service android:name=".connection.ECConnectionService" android:process=":EC_ConnServ">
         </service>
 
         <activity
