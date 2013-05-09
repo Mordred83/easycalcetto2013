@@ -76,7 +76,7 @@ public class MenuActivity extends EasyCalcettoActivity {
 				
 				@Override
 				public void run() {
-					Toast.makeText(getApplicationContext(), getIntent().getStringExtra(EXTRA_MESSAGE), Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), getIntent().getStringExtra(EXTRA_MESSAGE), Toast.LENGTH_LONG).show();
 				}
 			}, 1000);
 		// unregistrationToGCM();
@@ -330,7 +330,7 @@ public class MenuActivity extends EasyCalcettoActivity {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(R.string.infoDialogTitle);
 		builder.setIcon(R.drawable.info_button_white);
-		builder.setMessage(R.string.infoDialogMSG);
+		builder.setMessage(R.string.infoDialogMSGMenu);
 		builder.setPositiveButton(R.string.close_labelDialog,
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {

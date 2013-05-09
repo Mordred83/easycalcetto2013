@@ -119,6 +119,12 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name=".activities.SchedaPartitaGiocata"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name=".activities.PreferencePartita"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"

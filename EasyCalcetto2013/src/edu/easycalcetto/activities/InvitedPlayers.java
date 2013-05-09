@@ -319,7 +319,7 @@ public class InvitedPlayers extends EasyCalcettoActivity implements
 		mList.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				mSelectedRow = position;-1 // set the selected row
+				mSelectedRow = position-1; // set the selected row
 				mQuickAction.show(view);
 			}
 		});
@@ -329,7 +329,7 @@ public class InvitedPlayers extends EasyCalcettoActivity implements
 	public void aggiungiQuickActionConfermati() {
 
 		ActionItem profileItem = new ActionItem(ID_PROFILE, "Profilo",
-				getResources().getDrawable(R.drawable.fprofilo_utente);
+				getResources().getDrawable(R.drawable.profilo_utente));
 		// ActionItem sendItem = new ActionItem(ID_SEND, "Messaggio",
 		// getResources().getDrawable(R.drawable.ic_menu_send));
 		ActionItem addFriendItem = new ActionItem(ID_AGGIUNGI,
@@ -349,7 +349,7 @@ public class InvitedPlayers extends EasyCalcettoActivity implements
 							int actionId) {
 						ActionItem actionItem = quickAction.getActionItem(pos);
 
-							switch (actionId) {		
+						switch (actionId) {		
 						
 						case ID_PROFILE:
 							Intent intentProfilo = new Intent(InvitedPlayers.this,
@@ -383,7 +383,7 @@ public class InvitedPlayers extends EasyCalcettoActivity implements
 							break;
 						default:
 							Toast.makeText(getApplicationContext(),
-									"Funzionalità  in fase di sviluppo",
+									"Funzionalit� in fase di sviluppo",
 									Toast.LENGTH_SHORT).show();
 							break;
 						}
@@ -401,7 +401,7 @@ public class InvitedPlayers extends EasyCalcettoActivity implements
 		mList.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				mSelectedRow = position;-1 // set the selected row
+				mSelectedRow = position-1; // set the selected row
 				mQuickAction.show(view);
 			}
 		});

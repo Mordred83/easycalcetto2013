@@ -1,5 +1,7 @@
 package edu.easycalcetto.data;
 
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_REGISTRATION;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,7 +14,7 @@ public class MessagesCreator {
 	
 	public static Message getRegistrationMessage(Messenger msnger, ECRegistrationData registration){
 		Message m = Message.obtain();
-		Bundle b = createBundle(ECConnectionMessageConstants.FUNCDESCRIPTOR_REGISTRATION, "OK_BUDDY", "SORRY_MY_FRIEND");
+		Bundle b = createBundle(FUNCDESCRIPTOR_REGISTRATION, "OK_BUDDY", "SORRY_MY_FRIEND");
 		b.putParcelable(ECConnectionMessageConstants.BNDKEY_POST_PARCELABLE, registration);
 		m.what = ECConnectionMessageConstants.MSGWHAT_POST;
 		m.arg1 = ECConnectionMessageConstants.MSGTASKDESCRIPTOR_REGISTRATON;

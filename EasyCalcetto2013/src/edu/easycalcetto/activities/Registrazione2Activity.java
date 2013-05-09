@@ -57,15 +57,7 @@ public class Registrazione2Activity extends EasyCalcettoActivity {
 				&& getIntent().getExtras().containsKey("new.account"))
 			registration = (ECRegistrationData) getIntent().getExtras()
 					.getParcelable("new.account");
-		/*
-		 * Toast.makeText(this,"Nome: " + player.getName(),
-		 * Toast.LENGTH_SHORT).show(); Toast.makeText(this,"Cognome: " +
-		 * player.getSurname(), Toast.LENGTH_SHORT).show();
-		 * Toast.makeText(this,"Eta': " + player.getAge(),
-		 * Toast.LENGTH_SHORT).show(); Toast.makeText(this,
-		 * "Numero di Telefono: "+ player.getNumber(),
-		 * Toast.LENGTH_SHORT).show();
-		 */
+		
 		SMSfield = (EditText) findViewById(R.id.fieldSMS);
 		SMSfield.addTextChangedListener(new TextWatcher() {
 

@@ -1,5 +1,34 @@
 package edu.easycalcetto.connection;
 
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.BNDKEY_ID;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.BNDKEY_MESSAGE;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.BNDKEY_PARAM_KEYS;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.BNDKEY_POST_IMAGE_PHOTOPATH;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.BNDKEY_POST_PARCELABLE;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.BNDKEY_RESULT;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.BNDKEY_RESULT_ARRAY;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNC;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_UPLOAD_PHOTO;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.MSGTASKDESCRIPTOR_ADD_FRIEND;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.MSGTASKDESCRIPTOR_CONFIRM_GAME;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.MSGTASKDESCRIPTOR_CONFIRM_REGISTRATION;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.MSGTASKDESCRIPTOR_CREATEMATCH;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.MSGTASKDESCRIPTOR_DECLINE_GAME;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETACQUAINTANCES;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETFRIENDS;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETMATCHES_CLOSED;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETMATCHES_OPEN;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETMATCH_PARTECIPANTS;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.MSGTASKDESCRIPTOR_REGISTRATON;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.MSGTASKDESCRIPTOR_UPDATEMATCH;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.MSGTASKDESCRIPTOR_UPDATEUSER;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.RESIND_DATA;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.RESIND_OPRESULT;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.RES_KIND_FAILURE;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.RES_KIND_SUCCESS;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.RES_KIND_UNKNOWN_ERROR;
+import static edu.easycalcetto.data.ECMatch.PARTECIPANT_STATUSES;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -42,9 +71,10 @@ import edu.easycalcetto.data.JSONParser;
 
 public class ECConnectionService extends Service {
 	public final String LOGTAG = this.getClass().getSimpleName();
-	public static final String SERVER_HR_ADDRESS = "http://www.easycalcetto.altervista.org";// "http://192.168.1.80";//
-																								// "https://www.google.com";
-	private Thread worker ;
+	public static final String SERVER_HR_ADDRESS = "http://www.sapienzaapps.it/easycalcetto/index.php";
+	// "http://www.easycalcetto.altervista.org";//
+	// "http://192.168.1.80";//"https://www.google.com";
+	private Thread worker;
 
 	final Messenger inMessenger = new Messenger(new IncomingHandler()); // Used
 																		// to
@@ -54,7 +84,7 @@ public class ECConnectionService extends Service {
 																		// the
 																		// Activity
 
-	private DefaultHttpClient client;// ECHttpClient client; // Client for
+	private DefaultHttpClient client;	// ECHttpClient client; // Client for
 										// http/https connections
 
 	@Override
@@ -142,37 +172,38 @@ public class ECConnectionService extends Service {
 			switch (msg.what) {
 			case ECConnectionMessageConstants.MSGWHAT_POST:
 				switch (msg.arg1) {
-				case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETFRIENDS:
-				case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETACQUAINTANCES:
-				case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETMATCHES_OPEN:
-				case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETMATCH_PARTECIPANTS:
-				case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETMATCHES_CLOSED:
-				case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_CONFIRM_GAME:
-				case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_DECLINE_GAME:
-				case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_ADD_FRIEND:
-				case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_UPDATEUSER:
+				case MSGTASKDESCRIPTOR_GETFRIENDS:
+				case MSGTASKDESCRIPTOR_GETACQUAINTANCES:
+				case MSGTASKDESCRIPTOR_GETMATCHES_OPEN:
+				case MSGTASKDESCRIPTOR_GETMATCH_PARTECIPANTS:
+				case MSGTASKDESCRIPTOR_GETMATCHES_CLOSED:
+				case MSGTASKDESCRIPTOR_CONFIRM_GAME:
+				case MSGTASKDESCRIPTOR_DECLINE_GAME:
+				case MSGTASKDESCRIPTOR_ADD_FRIEND:
+				case MSGTASKDESCRIPTOR_UPDATEUSER:
 					final String[] keys = data
-							.getStringArray(ECConnectionMessageConstants.BNDKEY_PARAM_KEYS);
+							.getStringArray(BNDKEY_PARAM_KEYS);
 					for (String key : keys)
 						funcdesc.add(new BasicNameValuePair(key, data
 								.getString(key)));
 					break;
-				case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_REGISTRATON:
-				case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_CREATEMATCH:
-				case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_UPDATEMATCH:
-				case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_CONFIRM_REGISTRATION:
+				case MSGTASKDESCRIPTOR_REGISTRATON:
+				case MSGTASKDESCRIPTOR_CREATEMATCH:
+				case MSGTASKDESCRIPTOR_UPDATEMATCH:
+				case MSGTASKDESCRIPTOR_CONFIRM_REGISTRATION:
 					final HTTPPostable payload = (HTTPPostable) data
-							.getParcelable(ECConnectionMessageConstants.BNDKEY_POST_PARCELABLE);
-					
-					if(payload instanceof ECMatch){
-						Log.d("DATA:", ""+((ECMatch)payload).getDates()[0].getTimeInMillis());
+							.getParcelable(BNDKEY_POST_PARCELABLE);
+
+					if (payload instanceof ECMatch) {
+						Log.d("DATA:",
+								""
+										+ ((ECMatch) payload).getDates()[0]
+												.getTimeInMillis());
 					}
-					
+
 					List<NameValuePair> argsList = payload
 							.getObjectAsNameValuePairList();
-					
-					
-					
+
 					funcdesc.addAll(argsList);
 					break;
 				}
@@ -204,10 +235,8 @@ public class ECConnectionService extends Service {
 				String opResult = null;
 				try {
 					jArr = JSONParser.getJSONArrayFromHttpResponse(response);
-					opResult = jArr
-							.getString(ECConnectionMessageConstants.RESIND_OPRESULT);
-					dataJArr = jArr
-							.optJSONArray(ECConnectionMessageConstants.RESIND_DATA);
+					opResult = jArr.getString(RESIND_OPRESULT);
+					dataJArr = jArr.optJSONArray(RESIND_DATA);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 					Log.e(LOGTAG + " - DEBUG", response.toString());
@@ -223,30 +252,26 @@ public class ECConnectionService extends Service {
 					if (dataJArr != null)
 						try {
 							switch (msg.arg1) {
-							case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_CONFIRM_REGISTRATION:
-								long l= Long.valueOf(dataJArr.getString(0));
-								resultBundle.putLong(ECConnectionMessageConstants.BNDKEY_RESULT, l);
-								break;	
-							case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETFRIENDS:
-							case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETACQUAINTANCES:
+							case MSGTASKDESCRIPTOR_CONFIRM_REGISTRATION:
+								long l = Long.valueOf(dataJArr.getString(0));
+								resultBundle.putLong(BNDKEY_RESULT, l);
+								break;
+							case MSGTASKDESCRIPTOR_GETFRIENDS:
+							case MSGTASKDESCRIPTOR_GETACQUAINTANCES:
 								ECUser[] uArr = ECUser
 										.createFromJSONArray(dataJArr);
-								resultBundle
-										.putParcelableArray(
-												ECConnectionMessageConstants.BNDKEY_RESULT_ARRAY,
-												uArr);
+								resultBundle.putParcelableArray(
+										BNDKEY_RESULT_ARRAY, uArr);
 								break;
-							case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETMATCHES_OPEN:
-							case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETMATCHES_CLOSED:
+							case MSGTASKDESCRIPTOR_GETMATCHES_OPEN:
+							case MSGTASKDESCRIPTOR_GETMATCHES_CLOSED:
 								ECMatch[] mArr = ECMatch
 										.createFromJSONArray(dataJArr);
-								resultBundle
-										.putParcelableArray(
-												ECConnectionMessageConstants.BNDKEY_RESULT_ARRAY,
-												mArr);
+								resultBundle.putParcelableArray(
+										BNDKEY_RESULT_ARRAY, mArr);
 								break;
-							case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETMATCH_PARTECIPANTS:
-								final String[] statuses = ECMatch.PARTECIPANT_STATUSES;
+							case MSGTASKDESCRIPTOR_GETMATCH_PARTECIPANTS:
+								final String[] statuses = PARTECIPANT_STATUSES;
 								ECUser[][] pMatr = new ECUser[statuses.length][];
 								for (int i = 0; i < statuses.length; i++) {
 									pMatr[i] = ECUser
@@ -255,10 +280,8 @@ public class ECConnectionService extends Service {
 									resultBundle.putParcelableArray(
 											statuses[i], pMatr[i]);
 								}
-								resultBundle
-										.putStringArray(
-												ECConnectionMessageConstants.BNDKEY_RESULT_ARRAY,
-												statuses);
+								resultBundle.putStringArray(
+										BNDKEY_RESULT_ARRAY, statuses);
 								break;
 							}
 						} catch (JSONException e) {
@@ -268,28 +291,25 @@ public class ECConnectionService extends Service {
 
 				} else if (opResult.toString().toLowerCase()
 						.contains(FAILURE_RESPONSE.toLowerCase())) {
-					responseMes.arg2 = ECConnectionMessageConstants.RES_KIND_FAILURE;
+					responseMes.arg2 = RES_KIND_FAILURE;
 				} else {
-					responseMes.arg2 = ECConnectionMessageConstants.RES_KIND_UNKNOWN_ERROR;
+					responseMes.arg2 = RES_KIND_UNKNOWN_ERROR;
 				}
 				break;
 			case ECConnectionMessageConstants.MSGWHAT_POST_IMAGE:
-				final String function = ECConnectionMessageConstants.FUNC;
-				final String function_value = ECConnectionMessageConstants.FUNCDESCRIPTOR_UPLOAD_PHOTO;
-				final String id = ECConnectionMessageConstants.BNDKEY_ID;
-				final String id_value = ""+data.getLong(id); 
+				final String function = FUNC;
+				final String function_value = FUNCDESCRIPTOR_UPLOAD_PHOTO;
+				final String id = BNDKEY_ID;
+				final String id_value = "" + data.getLong(id);
 				MultipartEntity mpEntity;
 				request = new HttpPost(SERVER_HR_ADDRESS);
 				File file = new File(
-						data.getString(ECConnectionMessageConstants.BNDKEY_POST_IMAGE_PHOTOPATH));
+						data.getString(BNDKEY_POST_IMAGE_PHOTOPATH));
 				if (!file.exists()) {
-					postMessage(
-							msg.replyTo,
-							ECConnectionMessageConstants.RES_KIND_UNKNOWN_ERROR,
-							"");
+					postMessage(msg.replyTo, RES_KIND_UNKNOWN_ERROR, "");
 					return;
 				}
-				
+
 				mpEntity = new MultipartEntity(
 						HttpMultipartMode.BROWSER_COMPATIBLE);
 				// use FileBody to transfer the data
@@ -314,33 +334,26 @@ public class ECConnectionService extends Service {
 				}
 				if (response == null) {
 					Log.e("WTF", "response null");
-					postMessage(
-							msg.replyTo,
-							ECConnectionMessageConstants.RES_KIND_UNKNOWN_ERROR,
-							"");
+					postMessage(msg.replyTo, RES_KIND_UNKNOWN_ERROR, "");
 					return;
 				}
 				try {
 					Log.e(LOGTAG + " - DEBUG", response.toString());
 					jArr = JSONParser.getJSONArrayFromHttpResponse(response);
-					opResult = jArr
-							.getString(ECConnectionMessageConstants.RESIND_OPRESULT);
+					opResult = jArr.getString(RESIND_OPRESULT);
 				} catch (Exception e1) {
 					e1.printStackTrace();
-					postMessage(
-							msg.replyTo,
-							ECConnectionMessageConstants.RES_KIND_UNKNOWN_ERROR,
-							"");
+					postMessage(msg.replyTo, RES_KIND_UNKNOWN_ERROR, "");
 					return;
 				}
 				if (opResult.toString().toLowerCase()
 						.contains(SUCCESS_RESPONSE.toLowerCase())) {
-					responseMes.arg2 = ECConnectionMessageConstants.RES_KIND_SUCCESS;
+					responseMes.arg2 = RES_KIND_SUCCESS;
 				} else if (opResult.toString().toLowerCase()
 						.contains(FAILURE_RESPONSE.toLowerCase())) {
-					responseMes.arg2 = ECConnectionMessageConstants.RES_KIND_FAILURE;
+					responseMes.arg2 = RES_KIND_FAILURE;
 				} else {
-					responseMes.arg2 = ECConnectionMessageConstants.RES_KIND_UNKNOWN_ERROR;
+					responseMes.arg2 = RES_KIND_UNKNOWN_ERROR;
 				}
 				break;
 			}
@@ -358,14 +371,13 @@ public class ECConnectionService extends Service {
 			Message message = Message.obtain();
 			message.what = what;
 			Bundle b = new Bundle();
-			b.putString(ECConnectionMessageConstants.BNDKEY_MESSAGE, content);
+			b.putString(BNDKEY_MESSAGE, content);
 			message.setData(b);
 			try {
 				m.send(message);
 			} catch (android.os.RemoteException e1) {
 				Log.w(getClass().getName(), "Exception sending message", e1);
 			}
-
 		}
 	}
 

@@ -296,8 +296,9 @@ public class Partite extends EasyCalcettoActivity implements
 							// "Aggiunto alla Partita",
 							// Toast.LENGTH_LONG).show();
 							// }
+							confirmGame();
 						} else if (actionId == ID_NO) {
-
+							declineGame();
 							// if (match.getRightImage() ==
 							// R.drawable.btn_check_buttonless_on) {
 							// playerMax = matchs[mSelectedRow]
@@ -602,6 +603,27 @@ public class Partite extends EasyCalcettoActivity implements
 			}
 		};
 	}
+	
+	private void confirmGame() {
+		Messenger msnger = new Messenger(getConnectionServiceHandler());
+		Message msg = MessagesCreator.getConfirmGameMessage(msnger, getMyApplication().getOwner().get_id(), matchs[mSelectedRow].getIdMatch(), 1);
+		try {
+			messenger.send(msg);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void declineGame() {
+		Messenger msnger = new Messenger(getConnectionServiceHandler());
+		Message msg = MessagesCreator.getDeclineGameMessage(msnger, getMyApplication().getOwner().get_id(), matchs[mSelectedRow].getIdMatch(), 1);
+		try {
+			messenger.send(msg);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+	
 
 	@Override
 	protected void onServiceConnected() {
@@ -630,18 +652,19 @@ public class Partite extends EasyCalcettoActivity implements
 			ECMatch[] tmpMatchs = currentTab == TabID.APERTE ? matchs
 					: matchs_played;
 
-			if (tmpMatchs[mSelectedRow].getOwner().equals(
-tMyApplication().getOwner())) {
-
-				if(currentTab==TabID.APERTE){				intentPartita = new Intent(getApplicationContext(),
-hedaPartitaOwner.class);
-
+			if (tmpMatchs[mSelectedRow].getOwner().equals(getMyApplication().getOwner())) {
+				if(currentTab==TabID.APERTE){
+				intentPartita = new Intent(getApplicationContext(),SchedaPartitaOwner.class);
 				}
 				else{
-				intentPartita = new Intent(getApplicationContext(),SchedaPartita.class);
-				}			} else {
-				intentPartita = new Intent(getApplicationContext(),
-						SchedaPartita.class);
+				intentPartita = new Intent(getApplicationContext(),SchedaPartitaGiocata.class);
+				}
+			} else {
+				if(currentTab==TabID.APERTE)
+					intentPartita = new Intent(getApplicationContext(),SchedaPartita.class);
+				else
+					intentPartita = new Intent(getApplicationContext(),SchedaPartitaGiocata.class);
+
 			}
 
 			intentPartita.putExtra(EXTRAKEY_MATCH, tmpMatchs[mSelectedRow]);

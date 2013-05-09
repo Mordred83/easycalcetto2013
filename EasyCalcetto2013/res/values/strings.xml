@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="label_button_invita">Aggiungi un amico suggerendo EasyCalcetto</string>
     <string name="hintOnClickFriend">Suggerimento: tocca un amico per usare le azioni rapide</string>
-    <string name="hintOnClickOther">Suggerimento: tocca un giocatore per usare le azioni rapide</string>
-    <string name="hintLongPressRating">Suggerimento: tieni premuto su una partita per votare i partecipanti</string>
-    <string name="hintLongPress">Suggerimento: tieni premuto su una partita per cambiare velocemente la partecipazione</string>
+	<string name="hintOnClickOther">Suggerimento: tocca un giocatore per usare le azioni rapide</string> 
+	<string name="hintLongPressRating">Suggerimento: tieni premuto su una partita per votare i partecipanti</string>
+	<string name="hintLongPress">Suggerimento: tieni premuto su una partita per cambiare velocemente la partecipazione</string>
     <string name="answerInvited">Risposta</string>
     <string name="app_name">EasyCalcetto</string>
     <string name="optionSendItemDialog">Scegli come contattare i tuoi amici</string>
@@ -16,23 +15,24 @@
     <string name="exitDialogMSG">Sei sicuro di voler uscire da EasyCalcetto?</string>
     <string name="yes_labelDialog">Sì,esci</string>
     <string name="no_labelDialog">No</string>
-
-    <!-- Dialog Info Menu Iniziale -->
+    
+	<!-- Dialog Info Menu Iniziale -->
     <string name="infoDialogTitle">INFO</string>
-    <string name="infoDialogMSG">Questo è il tuo menù.\n Tocca:\n
+    <string name="infoDialogMSGMenu">Questo è il tuo menù.\n Tocca:\n
         	"Crea partita: " se vuoi creare un nuova partita e invitare i tuoi amici.\n
         	"Partite: " se vuoi vedere quali sono le partite create da te e dai tuoi amici.\n
         	"Amici: "qui troverai l\'elenco di tutti i tuoi amici. Puoi vedere la loro scheda giocatore, votare le loro ultime partite e altro ancora.\n
-        	"Profilo: "questa è la tua scheda giocatore, con tutti i tuoi dati.</string>
+        	"Profilo: "questa è la tua scheda giocatore, con tutti i tuoi dati.\n
+    </string>
     <string name="close_labelDialog1">Chiudi</string>
 
-    <!-- label per le preferences Profilo -->
-    <string name="profilo_label_Nome">Nome:</string>
-    <string name="profilo_label_Cognome">Cognome:</string>
-    <string name="profilo_label_Eta">Età:</string>
-    <string name="profilo_label_Ruolo">Ruolo:</string>
-    <string name="profilo_label_Partite">Partite Giocate:</string>
-    <string name="profilo_label_Rating">Reputazione:</string>
+    <!--  label per le preferences Profilo -->
+     <string name="profilo_label_Nome">Nome:</string>
+     <string name="profilo_label_Cognome">Cognome:</string>
+     <string name="profilo_label_Eta">Età:</string>
+     <string name="profilo_label_Ruolo">Ruolo:</string>
+     <string name="profilo_label_Partite">Partite Giocate:</string>
+     <string name="profilo_label_Rating">Reputazione:</string>
     <string name="set_preferences1">Impostazioni</string>
     <string name="title_Category_Edit1">Dati personali</string>
     <string name="edit_Name">Nome</string>
@@ -44,8 +44,8 @@
     <string name="dialog_title_edit_Surname">Inserisci Cognome</string>
     <string name="summary_edit_Age">Modifica Età</string>
     <string name="dialog_title_edit_Age">Inserisci età</string>
-
-    <!-- label per le preferences Partita -->
+    
+    <!--  label per le preferences Partita -->
     <string name="set_preferences">Impostazioni</string>
     <string name="title_Category_Edit">Dati Partita</string>
     <string name="edit_Stato">Stato</string>
@@ -60,53 +60,66 @@
     <string name="dialog_title_edit_StartHour">Inserisci orario di inizio</string>
     <string name="summary_edit_EndHour">Modifica l\'ora di fine della partita</string>
     <string name="dialog_title_edit_EndHour">Inserisci orario di fine</string>
-
+    
+    
+    
     <!-- Dialog Info Profilo -->
     <string name="infoProfiloDialogTitle">INFO</string>
-    <string name="infoProfiloDialogMSG">        Questa è la tua scheda giocatore.\n
+    <string name="infoProfiloDialogMSG">
+        Questa è la tua scheda giocatore.\n
         Qui trovi tutte le tue informazioni personali e anche altre informazioni come il numero
         di partite a cui hai partecipato e la media delle tue prestazioni, votate dai tuoi amici.
         Puoi modificare quando vuoi i tuoi dati e la tua immagine profilo, che sarà visibile ai tuoi
-        amici.</string>
+        amici.   
+    </string>
     <string name="close_labelDialog">Chiudi</string>
-
-    <!-- Dialog Info Preference -->
+    
+     <!-- Dialog Info Preference -->
     <string name="infoPreferenceDialogTitle">INFO</string>
-    <string name="infoPreferenceDialogMSG">        Tocca gli elementi per modificarne il valore.\n
+    <string name="infoPreferenceDialogMSG">
+        Tocca gli elementi per modificarne il valore.\n
         Es: tocca "Modica Nome" e inserisce nella finestra che si apre il nuovo nome che
-        vuoi usare come nome utente in EasyCalcetto.</string>
+        vuoi usare come nome utente in EasyCalcetto.   
+    </string>
     <string name="close_labelDialog">Chiudi</string>
     <string name="adesionText">Partecipa</string>
-    <string name="ratingText">Vota</string>
-
+     <string name="ratingText">Vota</string>
+    
     <!-- label scheda partita -->
-    <string name="partita_label_Date">Partita del:</string>
-    <string name="partita_label_Owner">Creata da:</string>
-    <string name="partita_label_Status">Stato:</string>
-    <string name="partita_label_Confermati">Confermati:</string>
-    <string name="partita_label_Luogo">Luogo:</string>
-    <string name="partita_label_StartHour">Ora Inizio:</string>
-    <string name="partita_label_EndHour">Ora Fine:</string>
-    <string name="partita_label_Partecipa">Partecipo:</string>
+     <string name="partita_label_Date">Partita del:</string>
+     <string name="partita_label_Owner">Creata da:</string>
+     <string name="partita_label_Status">Stato:</string>
+     <string name="partita_label_Confermati">Confermati:</string>
+     <string name="partita_label_Luogo">Luogo:</string>
+     <string name="partita_label_StartHour">Ora Inizio:</string>
+     <string name="partita_label_EndHour">Ora Fine:</string>
+      <string name="partita_label_Partecipa">Partecipo:</string>
     <string name="label_button_changeImage">Modifica Foto</string>
-    <string name="label_button_changeValue">Salva Info</string>
-    <string name="changeImageMatchDialogTitle">Seleziona l\'immagine della partita</string>
-    <string name="infoDialogPartiteMSG">In questa schermata sono elencate tutte le partite create da te 
+	<string name="label_button_changeValue">Salva Info</string>
+
+	<string name="changeImageMatchDialogTitle">Seleziona l\'immagine della partita</string>
+	
+	<string name="infoDialogPartiteMSG">In questa schermata sono elencate tutte le partite create da te 
 	    o dai tuoi amici, divise per:\n
 	    - APERTE: elenco di tutte le partite non ancora disputate a cui puoi partecipare;\n
 	    - GIOCATE: elenco di tutte le partite già disputate a cui hai partecipato.
 	    \n
 	    Clicca su una partita per accedere alla sua scheda per avere maggiori informazioni, oppure tieni premuto
 	    su una partita per le azioni rapide.</string>
-    <string name="infoDialogSchedaPartitaMSG">Questa è la scheda che contiene tutte le informazioni
+
+	<string name="infoDialogSchedaPartitaMSG">Questa è la scheda che contiene tutte le informazioni
 	    sulla partita: la data di quando si giocherà (o si è giocata) la partita, l\'orario del calcio d\'inizio,
 	    chi ha creato la partita, chi parteciperà ecc...
-	    Se vuoi partecipare a questa partita assicurati di spuntare la casella "Partecipo".</string>
-    <string name="infoDialogSchedaPartitaOwnerMSG">Questa è la scheda che contiene tutte le informazioni
+	    Se vuoi partecipare a questa partita assicurati di spuntare la casella "Partecipo".
+	   </string>
+	 
+	<string name="infoDialogSchedaPartitaOwnerMSG">Questa è la scheda che contiene tutte le informazioni
 	    sulla partita che hai creato. Puoi vedere la lista dei partecipanti e di quelli che non hanno ancora risposto.
 	    Puoi modificare le informazioni sulla partita, ma ricordati di premere il pulsante "Salva Info" per rendere effettive 
-	    le modifiche.</string>
-    <string name="infoDialogAmiciMSG">In questa schermata sono elencate tutti i tuoi amici che puoi invitare
+	    le modifiche.
+	  </string>
+	
+	<string name="infoDialogAmiciMSG">In questa schermata sono elencate tutti i tuoi amici che puoi invitare
 	    ad una partita.
 	    Sono divisi in:\n
 	    - AMICI: elenco di tutti i tuoi amici che usano EasyCalcetto;\n
@@ -117,47 +130,50 @@
 	    Clicca su un giocatore per usare le azioni rapide, come:\n
 	    - Profilo giocatore;\n
 	    - Invia messaggio;
-	    - ecc...\n</string>
-
-    <!-- label crea partita -->
-    <string name="label_info">Completa i campi per creare una nuova partita</string>
-    <string name="nome_partita">Nome partita:</string>
-    <string name="label_luogo">Luogo:</string>
-    <string name="squadre">Squadre:</string>
-    <string name="label_date">Aggiungi data e ora</string>
-    <string name="data">Data</string>
-    <string name="ora">Ora</string>
-    <string name="infoDialogNuovaPartitaMSG">Completa i campi aggiungendo:\n
+	    - ecc...\n
+	    </string>
+	    
+	
+	 <!-- label crea partita -->
+	<string name="label_info">Completa i campi per creare una nuova partita</string>
+	<string name="nome_partita">Nome partita:</string>
+	<string name="label_luogo">Luogo:</string>
+	<string name="squadre">Squadre:</string>
+	<string name="label_date">Aggiungi data e ora</string>
+	<string name="data">Data</string>
+	<string name="ora">Ora</string>
+	<string name="infoDialogNuovaPartitaMSG">Completa i campi aggiungendo:\n
 	    - Il nome della partita\n
 	    - Il luogo dove si gioca\n
 	    - Quanti giocatori ha un squadra\n
 	    Aggiungi la data e l\'orario della partita
 	    premendo sul pulsante "+". 
 	    \n</string>
-    <string name="infoDialogNuovaPartitaInvitaAmiciMSG">Seleziona gli amici che vuoi
+	 <string name="infoDialogNuovaPartitaInvitaAmiciMSG">Seleziona gli amici che vuoi
 	     invitare alla partita e poi premi "Crea Partita".\n</string>
-    <string name="label_button_CreaPartita">Crea la partita</string>
-
-    <!-- STRINGHE DELLA REGISTRAZIONE -->
+	<string name="label_button_CreaPartita">Crea la partita</string>
+	
+	
+	<!-- STRINGHE DELLA REGISTRAZIONE -->
     <string name="labelTitle">Inserisci i tuoi dati per completare l\'installazione</string>
     <string name="labelName">Nome:</string>
     <string name="labelFieldName">Inserisci il tuo nome</string>
     <string name="labelSurname">Cognome:</string>
     <string name="labelFieldSurname">Inserisci il tuo cognome</string>
     <string name="labelAge">Età</string>
-    <string name="labelFieldAge" />
+    <string name="labelFieldAge"/>
     <string name="labelNumber">Numero di Telefono:</string>
     <string name="labelFieldNumber"></string>
     <string name="labelButton">Continua</string>
     <string name="labelTitle2">Per convalidare l\'installazione, inserisci il codice di verifica che hai ricevuto nel sms che ti abbiamo mandato</string>
     <string name="labelCode">Codice SMS:</string>
     <string name="labelValidate">Convalida</string>
-    <string name="actionbar">Actionbar</string>
+	<string name="actionbar">Actionbar</string>
     <string name="menu_context">Context</string>
     <string name="menu_info">Info</string>
     <string name="menu_share">Share</string>
     <string name="prefissi_DialogTitle">Scegli un Prefisso</string>
-    <string name="infoDialogMSG">Inserendo i tuoi dati verrà creata la tua scheda giocatore, che sarà visibile
+    <string name="infoDialogMSGRegistrazione">Inserendo i tuoi dati verrà creata la tua scheda giocatore, che sarà visibile
             agli amici con cui giocherai.
             \nEsempio\n
             Nome: Mario\n
@@ -168,9 +184,10 @@
             \n******  PRIVACY  ******\n
         EasyCalcetto non utilizzerà nè divulgerà i tuoi dati per scopi illeciti o per altri fini che non rientrano nell\'applicazione.\n
         \nFirmato\n
-        Il team di EasyCalcetto.</string>
+        Il team di EasyCalcetto.
+            </string>
     <string name="close_labelDialog">Chiudi</string>
-    <string name="infoNumberDialogTitle">Perchè devo inserire il mio numero?</string>
+   	<string name="infoNumberDialogTitle">Perchè devo inserire il mio numero?</string>
     <string name="infoNumberDialogMSG">Il tuo numero di telefono servirà all\'applicazione per trovare
         i tuoi amici che hanno EasyCalcetto.\n
         Cosi potrai invatarli alla tue partite e viceversa.\n
@@ -178,13 +195,15 @@
         \n******  PRIVACY  ******\n
         EasyCalcetto non utilizzerà nè divulgerà il tuo numero per scopi illeciti o per altri fini che non rientrano nell\'applicazione.\n
         \nFirmato\n
-        Il team di EasyCalcetto.</string>
-    <string name="infoSMSDialogTitle">SMS di convalida</string>
+        Il team di EasyCalcetto.
+	</string>
+    
+   	<string name="infoSMSDialogTitle">SMS di convalida</string>
     <string name="infoSMSDialogMSG"> Inserisci nel campo "Codice SMS", il codice che hai trovato nel SMS che ti abbiamo
         mandato (o ti stiamo per mandare). Controlla se lo hai già ricevuto!!</string>
-
+        
     <!-- FABRIZIO -->
     <string name="rowView_date_format">%1$02d - %2$02d - %3$4d</string>
     <string name="rowView_time_format">%1$02d : %2$02d</string>
-
+	
 </resources>

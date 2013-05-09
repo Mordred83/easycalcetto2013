@@ -282,6 +282,15 @@ public class Amici extends EasyCalcettoActivity implements
 						case ID_AGGIUNGI:
 							addFriend(acquietances[mSelectedRow]);
 						break;
+						case ID_PROFILE:
+							Intent intentProfilo = new Intent(Amici.this,
+									ProfiloAmico.class);
+							ECUser[] tmpArr = currentTab.equals(TabID.AMICI) ? friends
+									: acquietances;
+							intentProfilo.putExtra(Profilo.EXTRAKEY_ECUSER,
+									tmpArr[mSelectedRow]);
+							startActivity(intentProfilo);
+							break;
 						default:
 							Toast.makeText(getApplicationContext(), "Funzionalità in fase di sviluppo", Toast.LENGTH_SHORT).show();
 							break;

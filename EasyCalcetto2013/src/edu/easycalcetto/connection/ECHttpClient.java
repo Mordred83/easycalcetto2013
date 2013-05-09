@@ -11,8 +11,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.SingleClientConnManager;
 
 import android.content.Context;
-
-
+import edu.easycalcetto.R;
 
 public class ECHttpClient extends DefaultHttpClient {
 	final Context context ;
@@ -35,7 +34,7 @@ public class ECHttpClient extends DefaultHttpClient {
 		try {
 			KeyStore trusted = KeyStore.getInstance("BKS");
 			InputStream in =  context.getResources().openRawResource(
-					);
+					R.raw.mystore);
 			try {
 				trusted.load(in, "maledictus".toCharArray());
 			} finally {

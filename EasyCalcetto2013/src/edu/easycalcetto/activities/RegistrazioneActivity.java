@@ -193,7 +193,7 @@ public class RegistrazioneActivity extends EasyCalcettoActivity {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(R.string.infoDialogTitle);
 		builder.setIcon(R.drawable.info_button_white);
-		builder.setMessage(R.string.infoDialogMSG);
+		builder.setMessage(R.string.infoDialogMSGRegistrazione);
 		builder.setPositiveButton(R.string.close_labelDialog,
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
