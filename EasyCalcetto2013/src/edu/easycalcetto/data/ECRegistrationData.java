@@ -12,7 +12,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class ECRegistrationData implements Parcelable, HTTPPostable{
-
 	/**
 	 * 
 	 */

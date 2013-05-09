@@ -1,5 +1,8 @@
 package edu.easycalcetto.activities;
 
+import static edu.easycalcetto.ApplicationStatus.REGISTERED;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.BNDKEY_RESULT;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.MSGTASKDESCRIPTOR_CONFIRM_REGISTRATION;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -184,11 +187,11 @@ public class Registrazione2Activity extends EasyCalcettoActivity {
 				switch (msg.arg2) {
 				case ECConnectionMessageConstants.RES_KIND_SUCCESS:
 					switch (msg.arg1) {
-					case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_CONFIRM_REGISTRATION:
-						long l = msg.getData().getLong(ECConnectionMessageConstants.BNDKEY_RESULT);
+					case MSGTASKDESCRIPTOR_CONFIRM_REGISTRATION:
+						long l = msg.getData().getLong(BNDKEY_RESULT);
 						getMyApplication().setOwner(l, registration);
 						getMyApplication().setApplicationStatus(
-								ApplicationStatus.REGISTERED);
+								REGISTERED);
 						Toast.makeText(getApplicationContext(),
 								"Ti sei Registrato correttamente",
 								Toast.LENGTH_SHORT).show();

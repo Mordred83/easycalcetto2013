@@ -9,6 +9,7 @@ import static edu.easycalcetto.connection.ECConnectionMessageConstants.BNDKEY_RE
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.BNDKEY_RESULT_ARRAY;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNC;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_UPLOAD_PHOTO;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.MSGRESDESCTIPTION_SUCCESS;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.MSGTASKDESCRIPTOR_ADD_FRIEND;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.MSGTASKDESCRIPTOR_CONFIRM_GAME;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.MSGTASKDESCRIPTOR_CONFIRM_REGISTRATION;
@@ -25,6 +26,7 @@ import static edu.easycalcetto.connection.ECConnectionMessageConstants.MSGTASKDE
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.RESIND_DATA;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.RESIND_OPRESULT;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.RES_KIND_FAILURE;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.RES_KIND_NETWORK_UNAVALIABLE;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.RES_KIND_SUCCESS;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.RES_KIND_UNKNOWN_ERROR;
 import static edu.easycalcetto.data.ECMatch.PARTECIPANT_STATUSES;
@@ -75,11 +77,7 @@ public class ECConnectionService extends Service {
 	// "http://www.easycalcetto.altervista.org";//
 	// "http://192.168.1.80";//"https://www.google.com";
 	private Thread worker;
-
-	final Messenger inMessenger = new Messenger(new IncomingHandler()); // Used
-																		// to
-																		// receive
-																		// messages
+	final Messenger inMessenger = new Messenger(new IncomingHandler()); // Used to receive messages
 																		// from
 																		// the
 																		// Activity
@@ -151,7 +149,7 @@ public class ECConnectionService extends Service {
 				Log.e(LOGTAG, "Network is Unavaliable");
 				postMessage(
 						msg.replyTo,
-						ECConnectionMessageConstants.RES_KIND_NETWORK_UNAVALIABLE,
+						RES_KIND_NETWORK_UNAVALIABLE,
 						null);
 			}
 			HttpPost request = new HttpPost(SERVER_HR_ADDRESS);
@@ -159,9 +157,9 @@ public class ECConnectionService extends Service {
 			StringEntity entity = null;
 
 			final String funcDescriptor = data
-					.getString(ECConnectionMessageConstants.FUNC);
+					.getString(FUNC);
 			final String SUCCESS_RESPONSE = data
-					.getString(ECConnectionMessageConstants.MSGRESDESCTIPTION_SUCCESS);
+					.getString(MSGRESDESCTIPTION_SUCCESS);
 			final String FAILURE_RESPONSE = data
 					.getString(ECConnectionMessageConstants.MSGRESDESCTIPTION_FAILURE);
 
@@ -252,6 +250,7 @@ public class ECConnectionService extends Service {
 					if (dataJArr != null)
 						try {
 							switch (msg.arg1) {
+							case MSGTASKDESCRIPTOR_REGISTRATON:
 							case MSGTASKDESCRIPTOR_CONFIRM_REGISTRATION:
 								long l = Long.valueOf(dataJArr.getString(0));
 								resultBundle.putLong(BNDKEY_RESULT, l);

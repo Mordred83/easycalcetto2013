@@ -72,7 +72,7 @@
         Puoi modificare quando vuoi i tuoi dati e la tua immagine profilo, che sarà visibile ai tuoi
         amici.   
     </string>
-    <string name="close_labelDialog">Chiudi</string>
+    
     
      <!-- Dialog Info Preference -->
     <string name="infoPreferenceDialogTitle">INFO</string>
@@ -81,7 +81,7 @@
         Es: tocca "Modica Nome" e inserisce nella finestra che si apre il nuovo nome che
         vuoi usare come nome utente in EasyCalcetto.   
     </string>
-    <string name="close_labelDialog">Chiudi</string>
+    
     <string name="adesionText">Partecipa</string>
      <string name="ratingText">Vota</string>
     
@@ -205,5 +205,7 @@
     <!-- FABRIZIO -->
     <string name="rowView_date_format">%1$02d - %2$02d - %3$4d</string>
     <string name="rowView_time_format">%1$02d : %2$02d</string>
+    <!-- SMS -->
+    <string name="smsfmsg">EasyCalcetto: Il tuo codice di verifica è --> %s</string>
 	
 </resources>

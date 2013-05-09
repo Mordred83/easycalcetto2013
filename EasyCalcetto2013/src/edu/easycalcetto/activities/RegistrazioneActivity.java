@@ -1,5 +1,6 @@
 package edu.easycalcetto.activities;
 
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.BNDKEY_RESULT;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -9,6 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -268,6 +270,11 @@ public class RegistrazioneActivity extends EasyCalcettoActivity {
 			startActivity(intent);
 		}
 	}
+	
+	private void prepareAndSendSMS(String phoneNumber, String message) {
+	    SmsManager sms = SmsManager.getDefault();
+	    sms.sendTextMessage(phoneNumber, null, message, null, null);
+	}
 
 	@Override
 	protected Handler getConnectionServiceHandler() {
@@ -276,6 +283,9 @@ public class RegistrazioneActivity extends EasyCalcettoActivity {
 			public void handleMessage(Message msg) {
 				switch (msg.arg2) {
 				case ECConnectionMessageConstants.RES_KIND_SUCCESS:
+					long l = msg.getData().getLong(BNDKEY_RESULT);
+					String smsmsg = getResources().getString(R.string.smsfmsg, String.valueOf(l));
+					prepareAndSendSMS(number, smsmsg);
 					Intent intent = new Intent(RegistrazioneActivity.this, Registrazione2Activity.class);
 					intent.putExtra("new.account", registration);
 					getMyApplication().setApplicationStatus(ApplicationStatus.REGISTRATION_PENDING);
