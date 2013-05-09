@@ -1,6 +1,11 @@
 package edu.easycalcetto.activities;
 
 import static edu.easycalcetto.ApplicationStatus.REGISTERED;
+import static edu.easycalcetto.ApplicationStatus.UNREGISTERED;
+import static edu.easycalcetto.Constants.PREFKEY_OWNER_NAME;
+import static edu.easycalcetto.Constants.PREFKEY_OWNER_NUMBER;
+import static edu.easycalcetto.Constants.PREFKEY_OWNER_SURNAME;
+import static edu.easycalcetto.Constants.PREFS_NAME;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.BNDKEY_RESULT;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.MSGTASKDESCRIPTOR_CONFIRM_REGISTRATION;
 import android.app.AlertDialog;
@@ -12,6 +17,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
+import android.provider.SyncStateContract.Constants;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -42,10 +48,7 @@ public class Registrazione2Activity extends EasyCalcettoActivity {
 	private Button validateButton;
 	private ImageView tickImage;
 	private String status = "null";
-	public static final String PREFS_NAME = "PrefLogFile";
-	public static final String PREF_REGISTERED = "registered";
-
-	ECRegistrationData registration;
+	private ECRegistrationData registration;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -54,12 +57,14 @@ public class Registrazione2Activity extends EasyCalcettoActivity {
 		setContentView(R.layout.reg2);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-		final SharedPreferences pref = getSharedPreferences(PREFS_NAME,
-				MODE_PRIVATE);
-		if (getIntent().getExtras() != null
-				&& getIntent().getExtras().containsKey("new.account"))
-			registration = (ECRegistrationData) getIntent().getExtras()
-					.getParcelable("new.account");
+		
+		
+		registration = getTempOwnerData();
+		if(registration == null){
+			Toast.makeText(getApplicationContext(), "registration malformed", Toast.LENGTH_SHORT).show();
+			getMyApplication().setApplicationStatus(UNREGISTERED);
+			finish();
+		}
 		
 		SMSfield = (EditText) findViewById(R.id.fieldSMS);
 		SMSfield.addTextChangedListener(new TextWatcher() {
@@ -92,6 +97,19 @@ public class Registrazione2Activity extends EasyCalcettoActivity {
 				sendConfirmation();
 			}
 		});
+	}
+
+	private ECRegistrationData getTempOwnerData() {
+		SharedPreferences pref = getSharedPreferences(PREFS_NAME,
+				MODE_PRIVATE);
+		String name = pref.getString(PREFKEY_OWNER_NAME, null);
+		String surname = pref.getString(PREFKEY_OWNER_SURNAME, null); 
+		String age = pref.getString(PREFKEY_OWNER_SURNAME, null);
+		String mobileNumber = pref.getString(PREFKEY_OWNER_NUMBER, null);
+		if(name != null && surname != null && age != null && mobileNumber != null){
+			return new ECRegistrationData(name, surname, age, mobileNumber);
+		}else
+			return null;
 	}
 
 	private void sendConfirmation() {
@@ -227,7 +245,6 @@ public class Registrazione2Activity extends EasyCalcettoActivity {
 	@Override
 	protected void onServiceConnected() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override

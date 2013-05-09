@@ -1,5 +1,7 @@
 package edu.easycalcetto.activities;
 
+import static edu.easycalcetto.Constants.PREFS_NAME;
+
 import java.io.File;
 
 import android.content.Context;
@@ -13,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
 import edu.easycalcetto.CommonUtilities;
+import edu.easycalcetto.Constants;
 import edu.easycalcetto.ECApplication;
 import edu.easycalcetto.R;
 import edu.easycalcetto.activities.NewQAAdapter.ViewHolder;
@@ -77,7 +80,7 @@ public class NewQAAdapterInvitedPlayers extends BaseAdapter {
 		holder.nameText.setText(ecu.getName());
 		holder.surnameText.setText(ecu.getSurname());
 		SharedPreferences pref = context.getSharedPreferences(
-				ECApplication.PREFS_NAME, ECApplication.MODE_PRIVATE);
+				PREFS_NAME, ECApplication.MODE_PRIVATE);
 		String imageDir = pref.getString(CommonUtilities.PREFNAME_IMAGEDIR,
 				null);
 		boolean imageExists = false;

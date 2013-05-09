@@ -16,13 +16,12 @@ import android.graphics.BitmapFactory;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
-import edu.easycalcetto.ECApplication;
 
 public class ECUser implements Parcelable, HTTPPostable{
 
-	private static final long serialVersionUID = 1014215480574712987L;
+	public static final long serialVersionUID = 1014215480574712987L;
 	public static final String IMAGE_FILE_NAME_DEFAULT = "default.png";
-	private static final String IMAGES_DIRECTORY_NAME = ECApplication.IMAGES_DIRECTORY_NAME;
+	//private static final String IMAGES_DIRECTORY_NAME = ECApplication.IMAGES_DIRECTORY_NAME;
 	
 	private long _id;
 	private String num_tel;
@@ -290,7 +289,6 @@ public class ECUser implements Parcelable, HTTPPostable{
 	}
 	
 	public static String generateNewPhotoName(String oldName){
-		Calendar c = Calendar.getInstance();
 		StringBuffer newName = new StringBuffer();
 		return newName.toString();
 	}

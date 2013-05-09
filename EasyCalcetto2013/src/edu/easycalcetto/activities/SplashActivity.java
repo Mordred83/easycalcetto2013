@@ -1,5 +1,8 @@
 package edu.easycalcetto.activities;
 
+import static edu.easycalcetto.ApplicationStatus.UNREGISTERED;
+import static edu.easycalcetto.Constants.PREFS_NAME;
+import static edu.easycalcetto.Constants.PREF_REGISTERED;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,13 +16,14 @@ import android.widget.ImageView.ScaleType;
 import com.google.android.gcm.GCMRegistrar;
 
 import edu.easycalcetto.ApplicationStatus;
+import edu.easycalcetto.Constants;
 import edu.easycalcetto.ECApplication;
 import edu.easycalcetto.R;
 
 public class SplashActivity extends Activity {
 	
-	public static final String PREFS_NAME = ECApplication.PREFS_NAME;
-    public static final String PREF_REGISTERED = ECApplication.PREFKEY_REGSTATUS;
+	//public static final String PREFS_NAME = ECApplication.PREFS_NAME;
+    //public static final String PREF_REGISTERED = ECApplication.PREFKEY_REGSTATUS;
 	
     /** Called when the activity is first created. */
     @Override
@@ -38,9 +42,9 @@ public class SplashActivity extends Activity {
         
         // Create a Message object
         Message msg = new Message();
-        String appStatus = pref.getString(PREF_REGISTERED, ApplicationStatus.UNREGISTERED.toString());
+        String appStatus = pref.getString(PREF_REGISTERED, UNREGISTERED.toString());
         
-        if(appStatus.equals(ApplicationStatus.UNREGISTERED.toString()))  
+        if(appStatus.equals(UNREGISTERED.toString()))  
         	msg.what=0;
         else if(appStatus.equals(ApplicationStatus.REGISTRATION_PENDING.toString()))
         	msg.what=1;

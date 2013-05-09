@@ -19,18 +19,19 @@ import android.widget.Toast;
 import edu.easycalcetto.data.ECRegistrationData;
 import edu.easycalcetto.data.ECUser;
 import static edu.easycalcetto.CommonUtilities.PREFNAME_IMAGEDIR;
+import static edu.easycalcetto.Constants.IMAGES_DIRECTORY_NAME;
+import static edu.easycalcetto.Constants.PREFKEY_OWNER_ID;
+import static edu.easycalcetto.Constants.PREFKEY_OWNER_NAME;
+import static edu.easycalcetto.Constants.PREFKEY_OWNER_NUMBER;
+import static edu.easycalcetto.Constants.PREFKEY_OWNER_PHOTO_FILE_NAME;
+import static edu.easycalcetto.Constants.PREFKEY_OWNER_SURNAME;
+import static edu.easycalcetto.Constants.PREFKEY_OWNER_YOB;
+import static edu.easycalcetto.Constants.PREFKEY_REGSTATUS;
+import static edu.easycalcetto.Constants.PREFS_NAME;
 
 public class ECApplication extends Application {
 
-	public static final String IMAGES_DIRECTORY_NAME = "myImages";
-	public static final String PREFS_NAME = "APPLICATION_PREFERENCES";
-	public static final String PREFKEY_REGSTATUS = "REGISTRATION_STATUS";;
-	public static final String PREFKEY_OWNER_ID = "ID";
-	public static final String PREFKEY_OWNER_NAME = "NAME";
-	public static final String PREFKEY_OWNER_SURNAME = "SURNAME";
-	public static final String PREFKEY_OWNER_YOB = "AGE";
-	public static final String PREFKEY_OWNER_NUMBER = "NUMBER";
-	public static final String PREFKEY_OWNER_PHOTO_FILE_NAME = "PHOTOPATH";
+
 
 	private File imagesDir;
 	private ECUser owner = null;
