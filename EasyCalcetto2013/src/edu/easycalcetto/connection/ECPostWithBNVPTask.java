@@ -1,8 +1,8 @@
 package edu.easycalcetto.connection;
 
+import static edu.easycalcetto.connection.Constants.COM_RESULT_OK;
 import static edu.easycalcetto.connection.Constants.RESULT_ERR_CONNECTION_LOST;
 import static edu.easycalcetto.connection.Constants.RESULT_ERR_GENERIC;
-import static edu.easycalcetto.connection.Constants.RESULT_OK;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.SERVER_HR_ADDRESS;
 
 import java.io.IOException;
@@ -11,7 +11,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -30,6 +29,7 @@ public class ECPostWithBNVPTask extends AsyncTask<BasicNameValuePair, Void, Inte
 	
 	public ECPostWithBNVPTask(){
 		request = new HttpPost(SERVER_HR_ADDRESS);
+		//request.addHeader("accept", "application/json");
 		client = new ECHttpClient();
 	}
 	
@@ -45,7 +45,16 @@ public class ECPostWithBNVPTask extends AsyncTask<BasicNameValuePair, Void, Inte
 				entity = new UrlEncodedFormEntity(paramslist);
 				request.setEntity(entity);
 				response = client.execute(request);
-				result = RESULT_OK;
+				// BufferedReader reader = new BufferedReader(new
+				// InputStreamReader(
+				// response.getEntity().getContent(), "iso-8859-1"), 8);
+				// StringBuffer sb = new StringBuffer();
+				// String line = null;
+				// while ((line = reader.readLine()) != null) {
+				// sb.append(line+"\n");
+				// }
+				// Log.d(LOGTAG, "RESPONSE: " +sb.toString());
+				result = COM_RESULT_OK;
 			}else{
 				String msg = "The params passed are not valid";
 				Log.e(LOGTAG, msg);

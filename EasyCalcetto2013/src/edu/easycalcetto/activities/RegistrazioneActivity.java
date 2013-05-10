@@ -1,7 +1,7 @@
 package edu.easycalcetto.activities;
 
 import static edu.easycalcetto.ApplicationStatus.REGISTRATION_PENDING;
-import static edu.easycalcetto.connection.Constants.RESULT_OK;
+import static edu.easycalcetto.connection.Constants.COM_RESULT_OK;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.BNDKEY_RESULT;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNC;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_REGISTRATION;
@@ -365,13 +365,12 @@ public class RegistrazioneActivity extends EasyCalcettoActivity {
 			protected void onPostExecute(Integer result) {
 				pDialog.dismiss();
 				int res = result.intValue();
-				if(res == RESULT_OK){
+				if(res == COM_RESULT_OK){
 					try {
-						;
 						if((jArr = JSONParser.getJSONArrayFromHttpResponse(getResponse()))!= null){
 							if((opResult = jArr.getString(RESIND_OPRESULT))!=null){
 								if (opResult.toString().toLowerCase()
-										.contains(MSGRESDESCTIPTION_SUCCESS.toLowerCase())){
+										.contains("OK_BUDDY".toLowerCase())){
 									// RESPONSE SUCCESS
 									if ((dataJArr = jArr.optJSONArray(RESIND_DATA))!=null){
 										long l = Long.valueOf(dataJArr.getString(0));
