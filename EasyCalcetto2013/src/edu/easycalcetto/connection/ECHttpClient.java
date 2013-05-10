@@ -21,14 +21,14 @@ public class ECHttpClient extends DefaultHttpClient {
 		//this.context = context;
 	}
 
-	// @Override
-	// protected ClientConnectionManager createClientConnectionManager() {
-	// SchemeRegistry registry = new SchemeRegistry();
-	// registry.register(new Scheme("http", PlainSocketFactory
-	// .getSocketFactory(), 80));
-	// registry.register(new Scheme("https", newSslSocketFactory(), 443));
-	// return new SingleClientConnManager(getParams(), registry);
-	// }
+	@Override
+	protected ClientConnectionManager createClientConnectionManager() {
+		SchemeRegistry registry = new SchemeRegistry();
+		registry.register(new Scheme("http", PlainSocketFactory
+				.getSocketFactory(), 80));
+		//registry.register(new Scheme("https", newSslSocketFactory(), 443));
+		return new SingleClientConnManager(getParams(), registry);
+	}
 
 	// private SSLSocketFactory newSslSocketFactory() {
 	// try {

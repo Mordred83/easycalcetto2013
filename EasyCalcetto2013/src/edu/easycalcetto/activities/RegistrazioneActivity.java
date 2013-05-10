@@ -367,11 +367,10 @@ public class RegistrazioneActivity extends EasyCalcettoActivity {
 				int res = result.intValue();
 				if(res == COM_RESULT_OK){
 					try {
-						;
 						if((jArr = JSONParser.getJSONArrayFromHttpResponse(getResponse()))!= null){
 							if((opResult = jArr.getString(RESIND_OPRESULT))!=null){
 								if (opResult.toString().toLowerCase()
-										.contains(MSGRESDESCTIPTION_SUCCESS.toLowerCase())){
+										.contains("OK_BUDDY".toLowerCase())){
 									// RESPONSE SUCCESS
 									if ((dataJArr = jArr.optJSONArray(RESIND_DATA))!=null){
 										long l = Long.valueOf(dataJArr.getString(0));
