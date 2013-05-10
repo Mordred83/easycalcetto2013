@@ -93,7 +93,7 @@ public class Registrazione2Activity extends EasyCalcettoActivity {
 		});
 		validateButton = (Button) findViewById(R.id.validateButton);
 		validateButton.setEnabled(false);
-		progBar = (ProgressBar) findViewById(R.id.progressBar);
+		//progBar = (ProgressBar) findViewById(R.id.progressBar);
 		validateButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				sendConfirmation();
@@ -135,7 +135,7 @@ public class Registrazione2Activity extends EasyCalcettoActivity {
 
 	public void aggiornaStatus() {
 		// Toast.makeText(this, "CIAO-3", Toast.LENGTH_SHORT).show();
-		ImageView tickImage = (ImageView) findViewById(R.id.tick);
+		//ImageView tickImage = (ImageView) findViewById(R.id.tick);
 		tickImage.setVisibility(View.VISIBLE);
 		// progBar.refreshDrawableState();
 		tickImage.refreshDrawableState();
