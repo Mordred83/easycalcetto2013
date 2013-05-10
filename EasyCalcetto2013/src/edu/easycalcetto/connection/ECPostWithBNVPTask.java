@@ -2,6 +2,7 @@ package edu.easycalcetto.connection;
 
 import static edu.easycalcetto.connection.Constants.RESULT_ERR_CONNECTION_LOST;
 import static edu.easycalcetto.connection.Constants.RESULT_ERR_GENERIC;
+import static edu.easycalcetto.connection.Constants.RESULT_OK;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.SERVER_HR_ADDRESS;
 
 import java.io.IOException;
@@ -44,6 +45,7 @@ public class ECPostWithBNVPTask extends AsyncTask<BasicNameValuePair, Void, Inte
 				entity = new UrlEncodedFormEntity(paramslist);
 				request.setEntity(entity);
 				response = client.execute(request);
+				result = RESULT_OK;
 			}else{
 				String msg = "The params passed are not valid";
 				Log.e(LOGTAG, msg);
