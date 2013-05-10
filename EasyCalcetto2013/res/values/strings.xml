@@ -207,5 +207,7 @@
     <string name="rowView_time_format">%1$02d : %2$02d</string>
     <!-- SMS -->
     <string name="smsfmsg">EasyCalcetto: Il tuo codice di verifica è --> %s</string>
+    <string name="retrySMS">Richiedi nuovo Codice SMS</string>
+    <string name="labelRetrySMS">Se non hai ricevuto nessun SMS o la registrazione non è riuscita richiedi un nuovo codice di attivazione</string>
 	
 </resources>
