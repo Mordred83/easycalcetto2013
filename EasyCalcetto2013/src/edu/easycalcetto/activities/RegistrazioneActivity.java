@@ -354,7 +354,7 @@ public class RegistrazioneActivity extends EasyCalcettoActivity {
 			
 			@Override
 			protected void onPreExecute() {
-				pDialog = new ProgressDialog(getApplicationContext());
+				pDialog = new ProgressDialog(RegistrazioneActivity.this);
 				pDialog.setMessage("Inviando la registrazione");
 				pDialog.show();
 				super.onPreExecute();
@@ -367,24 +367,50 @@ public class RegistrazioneActivity extends EasyCalcettoActivity {
 				int res = result.intValue();
 				if(res == RESULT_OK){
 					try {
-						jArr = JSONParser.getJSONArrayFromHttpResponse(getResponse());
-						opResult = jArr.getString(RESIND_OPRESULT);
-						dataJArr = jArr.optJSONArray(RESIND_DATA);
-						if (opResult.toString().toLowerCase()
-								.contains(MSGRESDESCTIPTION_SUCCESS.toLowerCase())){
-							if (dataJArr != null){
-								long l = Long.valueOf(dataJArr.getString(0));
-								String smsmsg = getResources().getString(R.string.smsfmsg,
-										String.valueOf(l));
-								prepareAndSendSMS(number, smsmsg);
-								Intent intent = new Intent(RegistrazioneActivity.this,
-										Registrazione2Activity.class);
-								getMyApplication().setOwner(-1, registration);
-								getMyApplication().setApplicationStatus(
-										REGISTRATION_PENDING);
-								startActivityForResult(intent, STARTFLAG_MENU);
+						;
+						if((jArr = JSONParser.getJSONArrayFromHttpResponse(getResponse()))!= null){
+							if((opResult = jArr.getString(RESIND_OPRESULT))!=null){
+								if (opResult.toString().toLowerCase()
+										.contains(MSGRESDESCTIPTION_SUCCESS.toLowerCase())){
+									// RESPONSE SUCCESS
+									if ((dataJArr = jArr.optJSONArray(RESIND_DATA))!=null){
+										long l = Long.valueOf(dataJArr.getString(0));
+										String smsmsg = getResources().getString(R.string.smsfmsg,
+												String.valueOf(l));
+										prepareAndSendSMS(number, smsmsg);
+										Intent intent = new Intent(RegistrazioneActivity.this,
+												Registrazione2Activity.class);
+										getMyApplication().setOwner(-1, registration);
+										getMyApplication().setApplicationStatus(
+												REGISTRATION_PENDING);
+										startActivityForResult(intent, STARTFLAG_MENU);
+									}else{
+										Log.e(LOGTAG, "no data");
+										Toast.makeText(getApplicationContext(), "registration failed", Toast.LENGTH_LONG).show();
+										finish();
+										return;
+									}
+								}else{
+									// RESPONSE FAILURE
+									Log.e(LOGTAG, "the registration is failed");
+									Toast.makeText(getApplicationContext(), "registration failed", Toast.LENGTH_LONG).show();
+									finish();
+									return;
+								}
+								
+							}else{
+								Log.e(LOGTAG, "no opresult");
+								Toast.makeText(getApplicationContext(), "registration failed", Toast.LENGTH_LONG).show();
+								finish();
+								return;
 							}
+						}else{
+							Log.e(LOGTAG, "no JArr");
+							Toast.makeText(getApplicationContext(), "registration failed", Toast.LENGTH_LONG).show();
+							finish();
+							return;
 						}
+						
 					} catch (Exception e) {
 						Log.e(LOGTAG + " - DEBUG", getResponse().toString(), e);
 						Toast.makeText(getApplicationContext(), "registration failed", Toast.LENGTH_LONG).show();
@@ -392,6 +418,7 @@ public class RegistrazioneActivity extends EasyCalcettoActivity {
 						return;
 					}
 				}else{
+					Log.e(LOGTAG,"internal error");
 					Toast.makeText(getApplicationContext(), "registration failed", Toast.LENGTH_LONG).show();
 					finish();
 				}
