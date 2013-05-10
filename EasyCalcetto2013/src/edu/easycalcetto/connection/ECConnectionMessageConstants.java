@@ -2,6 +2,10 @@ package edu.easycalcetto.connection;
 
 
 public final class ECConnectionMessageConstants{
+	
+	
+	public static final String SERVER_HR_ADDRESS = "http://www.sapienzaapps.it/easycalcetto/index.php";
+	
 	//*********	INTENT DATA KEYS
 	public static final String INTKEY_MESSENGER = "MESSENGER";
 	

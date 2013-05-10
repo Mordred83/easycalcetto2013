@@ -303,7 +303,7 @@ public class InvitaAmiciNuovaPartita extends EasyCalcettoActivity {
 
 	private void updatePhotos(ArrayList<ECUser> al) {
 
-		DefaultHttpClient client = new ECHttpClient(getApplicationContext());
+		DefaultHttpClient client = new ECHttpClient();
 
 		new ImageDownloadTask(client, getMyApplication().getImagesDir())
 				.execute(al.toArray(new ECUser[0]));

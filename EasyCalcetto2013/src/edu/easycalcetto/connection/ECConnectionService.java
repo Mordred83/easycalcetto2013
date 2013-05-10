@@ -9,6 +9,7 @@ import static edu.easycalcetto.connection.ECConnectionMessageConstants.BNDKEY_RE
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.BNDKEY_RESULT_ARRAY;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNC;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_UPLOAD_PHOTO;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.MSGRESDESCTIPTION_FAILURE;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.MSGRESDESCTIPTION_SUCCESS;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.MSGTASKDESCRIPTOR_ADD_FRIEND;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.MSGTASKDESCRIPTOR_CONFIRM_GAME;
@@ -66,6 +67,7 @@ import android.os.Messenger;
 import android.os.Parcelable;
 import android.os.RemoteException;
 import android.util.Log;
+import edu.easycalcetto.Constants;
 import edu.easycalcetto.data.ECMatch;
 import edu.easycalcetto.data.ECUser;
 import edu.easycalcetto.data.HTTPPostable;
@@ -77,19 +79,17 @@ public class ECConnectionService extends Service {
 	// "http://www.easycalcetto.altervista.org";//
 	// "http://192.168.1.80";//"https://www.google.com";
 	private Thread worker;
-	final Messenger inMessenger = new Messenger(new IncomingHandler()); // Used to receive messages
-																		// from
-																		// the
-																		// Activity
+	final Messenger inMessenger = new Messenger(new IncomingHandler());
+	// Used to receive messages from the Activity
 
-	private DefaultHttpClient client;	// ECHttpClient client; // Client for
-										// http/https connections
+	private DefaultHttpClient client; // ECHttpClient client;
+
+	// Client for http/https connections
 
 	@Override
 	public void onCreate() {
-		// TODO Auto-generated method stub
 		super.onCreate();
-		client = new ECHttpClient(getApplication().getApplicationContext());
+		client = new ECHttpClient(/* getApplication().getApplicationContext() */);
 	}
 
 	class IncomingHandler extends Handler {
@@ -98,7 +98,6 @@ public class ECConnectionService extends Service {
 			worker = new Thread(new RequestRunnable(msg));
 			worker.run();
 		}
-
 	}
 
 	@Override
@@ -110,10 +109,6 @@ public class ECConnectionService extends Service {
 		}
 		// Return our messenger to the Activity to get commands
 		return inMessenger.getBinder();
-	}
-
-	public Parcelable[] executeGetRequest() {
-		return null;
 	}
 
 	public boolean isNetworkAvailable() {
@@ -147,21 +142,17 @@ public class ECConnectionService extends Service {
 
 			if (!isNetworkAvailable()) {
 				Log.e(LOGTAG, "Network is Unavaliable");
-				postMessage(
-						msg.replyTo,
-						RES_KIND_NETWORK_UNAVALIABLE,
-						null);
+				postMessage(msg.replyTo, RES_KIND_NETWORK_UNAVALIABLE, null);
 			}
 			HttpPost request = new HttpPost(SERVER_HR_ADDRESS);
 			data = msg.getData();
 			StringEntity entity = null;
 
-			final String funcDescriptor = data
-					.getString(FUNC);
-			final String SUCCESS_RESPONSE = data
-					.getString(MSGRESDESCTIPTION_SUCCESS);
-			final String FAILURE_RESPONSE = data
-					.getString(ECConnectionMessageConstants.MSGRESDESCTIPTION_FAILURE);
+			final String funcDescriptor = data.getString(FUNC);
+			// final String SUCCESS_RESPONSE = data
+			// .getString(MSGRESDESCTIPTION_SUCCESS);
+			// final String FAILURE_RESPONSE = data
+			// .getString(ECConnectionMessageConstants.MSGRESDESCTIPTION_FAILURE);
 
 			List<NameValuePair> funcdesc = new ArrayList<NameValuePair>();
 
@@ -192,17 +183,11 @@ public class ECConnectionService extends Service {
 					final HTTPPostable payload = (HTTPPostable) data
 							.getParcelable(BNDKEY_POST_PARCELABLE);
 
-					if (payload instanceof ECMatch) {
-						Log.d("DATA:",
-								""
-										+ ((ECMatch) payload).getDates()[0]
-												.getTimeInMillis());
-					}
-
 					List<NameValuePair> argsList = payload
 							.getObjectAsNameValuePairList();
 
 					funcdesc.addAll(argsList);
+					
 					break;
 				}
 				try {
@@ -245,7 +230,7 @@ public class ECConnectionService extends Service {
 					return;
 				}
 				if (opResult.toString().toLowerCase()
-						.contains(SUCCESS_RESPONSE.toLowerCase())) {
+						.contains(MSGRESDESCTIPTION_SUCCESS.toLowerCase())) {
 					responseMes.arg2 = ECConnectionMessageConstants.RES_KIND_SUCCESS;
 					if (dataJArr != null)
 						try {
@@ -289,7 +274,7 @@ public class ECConnectionService extends Service {
 						}
 
 				} else if (opResult.toString().toLowerCase()
-						.contains(FAILURE_RESPONSE.toLowerCase())) {
+						.contains(MSGRESDESCTIPTION_FAILURE.toLowerCase())) {
 					responseMes.arg2 = RES_KIND_FAILURE;
 				} else {
 					responseMes.arg2 = RES_KIND_UNKNOWN_ERROR;
@@ -346,10 +331,10 @@ public class ECConnectionService extends Service {
 					return;
 				}
 				if (opResult.toString().toLowerCase()
-						.contains(SUCCESS_RESPONSE.toLowerCase())) {
+						.contains(MSGRESDESCTIPTION_SUCCESS.toLowerCase())) {
 					responseMes.arg2 = RES_KIND_SUCCESS;
 				} else if (opResult.toString().toLowerCase()
-						.contains(FAILURE_RESPONSE.toLowerCase())) {
+						.contains(MSGRESDESCTIPTION_FAILURE.toLowerCase())) {
 					responseMes.arg2 = RES_KIND_FAILURE;
 				} else {
 					responseMes.arg2 = RES_KIND_UNKNOWN_ERROR;
