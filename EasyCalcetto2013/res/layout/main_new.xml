@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center_vertical|center_horizontal"
+    android:background="@drawable/camp_vetro"
+    android:gravity="center_vertical|center_horizontal"
+    android:orientation="vertical" >
+
+<ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+    
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" android:paddingBottom="40dp">
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:src="@drawable/my_logo" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:gravity="center_vertical|center_horizontal" android:layout_height="fill_parent">
+
+        <ImageView
+            android:id="@+id/buttonNew"
+            android:layout_width="162dp"
+            android:layout_height="141dp"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:src="@drawable/ic_crea_label" />
+
+        <ImageView
+            android:id="@+id/buttonPartite"
+            android:layout_width="wrap_content"
+            android:layout_height="141dp"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:src="@drawable/ic_partite_label" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:gravity="center_vertical|center_horizontal" >
+
+        <ImageView
+            android:id="@+id/buttonFriends"
+            android:layout_width="162dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:src="@drawable/ic_amici_label" />
+
+        <ImageView
+            android:id="@+id/buttonProfilo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/new_user_folder_label" />
+
+    </LinearLayout>
+</LinearLayout>
+</ScrollView>
+</LinearLayout>
