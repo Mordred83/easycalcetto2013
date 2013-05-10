@@ -165,7 +165,7 @@
     <string name="labelNumber">Numero di Telefono:</string>
     <string name="labelFieldNumber"></string>
     <string name="labelButton">Continua</string>
-    <string name="labelTitle2">Per convalidare l\'installazione, inserisci il codice di verifica che hai ricevuto nel sms che ti abbiamo mandato</string>
+    <string name="labelTitle2">Per convalidare l\'installazione, inserisci il codice di verifica che hai ricevuto nel sms</string>
     <string name="labelCode">Codice SMS:</string>
     <string name="labelValidate">Convalida</string>
 	<string name="actionbar">Actionbar</string>
