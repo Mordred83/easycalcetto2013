@@ -3,6 +3,7 @@ package edu.easycalcetto.connection;
 import static edu.easycalcetto.connection.Constants.COM_RESULT_OK;
 import static edu.easycalcetto.connection.Constants.RESULT_ERR_CONNECTION_LOST;
 import static edu.easycalcetto.connection.Constants.RESULT_ERR_GENERIC;
+import static edu.easycalcetto.connection.Constants.COM_RESULT_OK;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.SERVER_HR_ADDRESS;
 
 import java.io.IOException;
@@ -45,6 +46,7 @@ public class ECPostWithBNVPTask extends AsyncTask<BasicNameValuePair, Void, Inte
 				entity = new UrlEncodedFormEntity(paramslist);
 				request.setEntity(entity);
 				response = client.execute(request);
+<<<<<<< HEAD
 				// BufferedReader reader = new BufferedReader(new
 				// InputStreamReader(
 				// response.getEntity().getContent(), "iso-8859-1"), 8);
@@ -54,6 +56,9 @@ public class ECPostWithBNVPTask extends AsyncTask<BasicNameValuePair, Void, Inte
 				// sb.append(line+"\n");
 				// }
 				// Log.d(LOGTAG, "RESPONSE: " +sb.toString());
+=======
+				Log.d(LOGTAG+ "- DEBUGXXXX",response.toString());
+>>>>>>> branch 'master' of https://github.com/Mordred83/easycalcetto2013.git
 				result = COM_RESULT_OK;
 			}else{
 				String msg = "The params passed are not valid";

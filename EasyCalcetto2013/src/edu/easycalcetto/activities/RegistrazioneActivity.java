@@ -392,6 +392,7 @@ public class RegistrazioneActivity extends EasyCalcettoActivity {
 								}else{
 									// RESPONSE FAILURE
 									Log.e(LOGTAG, "the registration is failed");
+									Log.e(LOGTAG + " - DEBUG", getResponse().toString());
 									Toast.makeText(getApplicationContext(), "registration failed", Toast.LENGTH_LONG).show();
 									finish();
 									return;
