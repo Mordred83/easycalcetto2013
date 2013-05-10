@@ -19,48 +19,51 @@
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:src="@drawable/my_logo" />
+        android:layout_height="100dp"
+        android:src="@drawable/my_logo" android:layout_marginBottom="15dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_gravity="center_vertical|center_horizontal"
-        android:gravity="center_vertical|center_horizontal" android:layout_height="fill_parent">
-
+        android:weightSum="100"
+        android:gravity="center_vertical|center_horizontal" android:layout_height="wrap_content" android:layout_marginBottom="60dp">
+
         <ImageView
             android:id="@+id/buttonNew"
-            android:layout_width="162dp"
-            android:layout_height="141dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
-            android:src="@drawable/ic_crea_label" />
-
+            android:src="@drawable/new_crea_partita2" android:layout_weight="50"/>
+
         <ImageView
             android:id="@+id/buttonPartite"
-            android:layout_width="wrap_content"
-            android:layout_height="141dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
-            android:src="@drawable/ic_partite_label" />
+            android:layout_weight="50"
+            android:src="@drawable/new_folder_partite" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="center_vertical|center_horizontal"
+        android:weightSum="100"
         android:gravity="center_vertical|center_horizontal" >
 
         <ImageView
             android:id="@+id/buttonFriends"
-            android:layout_width="162dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical|center_horizontal"
-            android:src="@drawable/ic_amici_label" />
+            android:src="@drawable/new_friends_folder_label" android:layout_weight="50"/>
 
         <ImageView
             android:id="@+id/buttonProfilo"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:src="@drawable/new_user_folder_label" />
+            android:src="@drawable/new_user_folder_label" android:layout_weight="50"/>
 
     </LinearLayout>
 </LinearLayout>
