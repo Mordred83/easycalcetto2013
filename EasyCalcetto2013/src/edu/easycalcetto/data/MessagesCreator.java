@@ -45,21 +45,20 @@ public class MessagesCreator {
 //		m.replyTo = msnger;
 //		m.setData(b);
 //		return m;
+//	}	
+//	public static Message getGetAcquaintanceMessage(Messenger msnger, Long id){
+//		Message m = Message.obtain();
+//		Bundle b = createBundle(ECConnectionMessageConstants.FUNCDESCRIPTOR_GETACQUAINTANCES, "OK_BUDDY", "SORRY_MY_FRIEND");
+//		Map<String,String> map = new HashMap<String, String>();
+//		map.put("id", String.valueOf(id));
+//		b = addParametersToBundle(b, map);
+//		b.putString(ECConnectionMessageConstants.BNDKEY_DATATYPE, long.class.getCanonicalName());
+//		m.what = ECConnectionMessageConstants.MSGWHAT_POST;
+//		m.arg1 = ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETACQUAINTANCES;
+//		m.replyTo = msnger;
+//		m.setData(b);
+//		return m;
 //	}
-	
-	public static Message getGetAcquaintanceMessage(Messenger msnger, Long id){
-		Message m = Message.obtain();
-		Bundle b = createBundle(ECConnectionMessageConstants.FUNCDESCRIPTOR_GETACQUAINTANCES, "OK_BUDDY", "SORRY_MY_FRIEND");
-		Map<String,String> map = new HashMap<String, String>();
-		map.put("id", String.valueOf(id));
-		b = addParametersToBundle(b, map);
-		b.putString(ECConnectionMessageConstants.BNDKEY_DATATYPE, long.class.getCanonicalName());
-		m.what = ECConnectionMessageConstants.MSGWHAT_POST;
-		m.arg1 = ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETACQUAINTANCES;
-		m.replyTo = msnger;
-		m.setData(b);
-		return m;
-	}
 	
 	public static Message getGamePartecipantsMessage(Messenger msnger, Long matchID){
 		Message m = Message.obtain();

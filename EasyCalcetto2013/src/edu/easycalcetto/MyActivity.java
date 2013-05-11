@@ -77,27 +77,27 @@ public class MyActivity extends EasyCalcettoActivity {
 	}
 
 	public void onClick(View view) {
-		Messenger msnger = new Messenger(handler);
-		ECUser creator = new ECUser(5, "0000000", "ciccio", "baliccio", "1964");
-		// ECMatch ecm = new ECMatch(ECMatch.NEW_MATCH_FLAG_ID, creator,
-		// "mondiale1", ECMatch.Status.TO_PLAY.toString(), "campetto", 11,
-		// new Date(2012, 12, 25).getTime(),
-		// new Date(2012, 12, 31).getTime(),
-		// new Date(2013, 1, 1).getTime(), new Date(2013, 1, 2).getTime(),
-		// new Date(2013, 1, 3).getTime());
-		// Message msg = MessagesCreator.getCreateMatchMessage(new Messenger(
-		// handler), ecm);
-		// msg = MessagesCreator.getRegistrationMessage(new Messenger(handler),
-		// registration);
-		Message msg = MessagesCreator.getGetAcquaintanceMessage(msnger, new Long(4).longValue());
-		// MessagesCreator.getGetFriendsMessage(msnger, new Long(1).longValue());
-		try {
-			messenger.send(msg);
-		} catch (RemoteException e) {
-//			Toast.makeText(getApplicationContext(), "DAMN!", Toast.LENGTH_SHORT)
-//					.show();
-			e.printStackTrace();
-		}
+//		Messenger msnger = new Messenger(handler);
+//		ECUser creator = new ECUser(5, "0000000", "ciccio", "baliccio", "1964");
+//		// ECMatch ecm = new ECMatch(ECMatch.NEW_MATCH_FLAG_ID, creator,
+//		// "mondiale1", ECMatch.Status.TO_PLAY.toString(), "campetto", 11,
+//		// new Date(2012, 12, 25).getTime(),
+//		// new Date(2012, 12, 31).getTime(),
+//		// new Date(2013, 1, 1).getTime(), new Date(2013, 1, 2).getTime(),
+//		// new Date(2013, 1, 3).getTime());
+//		// Message msg = MessagesCreator.getCreateMatchMessage(new Messenger(
+//		// handler), ecm);
+//		// msg = MessagesCreator.getRegistrationMessage(new Messenger(handler),
+//		// registration);
+//		Message msg = MessagesCreator.getGetAcquaintanceMessage(msnger, new Long(4).longValue());
+//		// MessagesCreator.getGetFriendsMessage(msnger, new Long(1).longValue());
+//		try {
+//			messenger.send(msg);
+//		} catch (RemoteException e) {
+////			Toast.makeText(getApplicationContext(), "DAMN!", Toast.LENGTH_SHORT)
+////					.show();
+//			e.printStackTrace();
+//		}
 	}
 
 	@Override

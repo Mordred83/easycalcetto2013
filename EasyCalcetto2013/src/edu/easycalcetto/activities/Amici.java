@@ -151,8 +151,9 @@ public class Amici extends EasyCalcettoActivity implements
 			getFriendsFromServer();
 			break;
 		case ALTRI:
-			msg = MessagesCreator.getGetAcquaintanceMessage(msnger,
-					getMyApplication().getOwner().get_id());
+//			msg = MessagesCreator.getGetAcquaintanceMessage(msnger,
+//					getMyApplication().getOwner().get_id());
+			getAcquietancesFromServer();
 			break;
 		}
 		if (msg != null && messenger != null)
@@ -164,8 +165,6 @@ public class Amici extends EasyCalcettoActivity implements
 			}
 
 	}
-
-	
 
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction transaction) {
@@ -607,6 +606,100 @@ public class Amici extends EasyCalcettoActivity implements
 		task.execute(params.toArray(new BasicNameValuePair[]{}));
 	}
 
+	private void getAcquietancesFromServer() {
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair(FUNC, ECConnectionMessageConstants.FUNCDESCRIPTOR_GETACQUAINTANCES));
+		params.add(new BasicNameValuePair("id", String.valueOf(getMyApplication().getOwner().get_id())));
+		ECPostWithBNVPTask task = new ECPostWithBNVPTask() {
+			ProgressDialog pDialog = null;
+			
+			@Override
+			protected void onPreExecute() {
+				pDialog = new ProgressDialog(Amici.this);
+				pDialog.setMessage("Caricando la lista degli ospiti");
+				pDialog.show();
+				super.onPreExecute();
+			}
+
+			@Override
+			protected void onPostExecute(Integer result) {
+				pDialog.dismiss();
+				super.onPostExecute(result);
+			}
+			
+			@Override
+			protected void onSuccessWithNoData() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			protected void onSuccess() {
+				ArrayList<ECUser> al = new ArrayList<ECUser>();
+				try {
+					acquietances = ECUser
+						.createFromJSONArray(getDataJArr());
+				
+					for (ECUser user : acquietances) {
+						if (!user.getPhotoName().equalsIgnoreCase(
+								ECUser.IMAGE_FILE_NAME_DEFAULT)) {
+							File f = new File(getMyApplication()
+									.getImagesDir(), user.getPhotoName());
+							if (!f.exists())
+								al.add(user);
+						}
+					}
+
+					caricaOspiti();
+					if (!al.isEmpty())
+						updatePhotos(al);		
+				} catch (NumberFormatException e) {
+					Log.e(LOGTAG, "number format exception", e);
+					onGenericError();
+				} catch (JSONException e) {
+					Log.e(LOGTAG, "JSON malformed", e);
+					onGenericError();
+				}
+			}
+			
+			@Override
+			protected void onOpResultNULL() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			protected void onJArrNULLCB() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			protected void onGenericError() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			protected void onFailure() {
+				// TODO Auto-generated method stub
+			}
+			
+			@Override
+			protected void onDataNULL() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			protected void onConnectionLost() {
+				// TODO Auto-generated method stub
+				
+			}
+		};
+		
+		task.execute(params.toArray(new BasicNameValuePair[]{}));
+	}
 	@Override
 	protected Handler getConnectionServiceHandler() {
 
