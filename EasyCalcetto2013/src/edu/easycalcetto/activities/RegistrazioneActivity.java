@@ -1,7 +1,7 @@
 package edu.easycalcetto.activities;
 
 import static edu.easycalcetto.ApplicationStatus.REGISTRATION_PENDING;
-import static edu.easycalcetto.connection.Constants.COM_RESULT_OK;
+import static edu.easycalcetto.connection.Constants.RESULT_SUCCESS;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.BNDKEY_RESULT;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNC;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_REGISTRATION;
@@ -15,6 +15,7 @@ import java.util.List;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -150,22 +151,9 @@ public class RegistrazioneActivity extends EasyCalcettoActivity {
 			registration = new ECRegistrationData(nameField.getText()
 					.toString(), surnameField.getText().toString(), ageField
 					.getText().toString(), number);
-			
-			
+
 			executeRegistation();
 			
-			// Messenger msnger = new Messenger(getConnectionServiceHandler());
-			// Message mes = MessagesCreator.getRegistrationMessage(msnger,
-			// registration);
-			// try {
-			//
-			// //messenger.send(mes);
-			// } catch (RemoteException e) {
-			// e.printStackTrace();
-			// Toast.makeText(getApplicationContext(),
-			// "Si è verificato un'errore", Toast.LENGTH_SHORT).show();
-			// finish();
-			// }
 		} else if (number.length() != 10) {
 			Toast.makeText(this, "Inserisci un numero di telefono valido",
 					Toast.LENGTH_LONG).show();
@@ -301,33 +289,8 @@ public class RegistrazioneActivity extends EasyCalcettoActivity {
 
 	@Override
 	protected Handler getConnectionServiceHandler() {
-		return new Handler() {
-			@Override
-			public void handleMessage(Message msg) {
-				switch (msg.arg2) {
-				case ECConnectionMessageConstants.RES_KIND_SUCCESS:
-					long l = msg.getData().getLong(BNDKEY_RESULT);
-					String smsmsg = getResources().getString(R.string.smsfmsg,
-							String.valueOf(l));
-					prepareAndSendSMS(number, smsmsg);
-					Intent intent = new Intent(RegistrazioneActivity.this,
-							Registrazione2Activity.class);
-					// intent.putExtra("new.account", registration);
-					getMyApplication().setOwner(-1, registration);
-					getMyApplication().setApplicationStatus(
-							REGISTRATION_PENDING);
-					startActivityForResult(intent, STARTFLAG_MENU);
-					break;
-				case ECConnectionMessageConstants.RES_KIND_FAILURE:
-					Toast.makeText(getApplicationContext(), "Epic Fail!",
-							Toast.LENGTH_SHORT).show();
-					break;
-				default:
-					break;
-				}
-			}
-
-		};
+		// TODO Remove
+		return null;
 	}
 
 	@Override
@@ -339,19 +302,16 @@ public class RegistrazioneActivity extends EasyCalcettoActivity {
 	protected void onServiceDisconnected() {
 
 	}
-	
-	private void executeRegistation(){
-		
+
+	private void executeRegistation() {
+
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair(FUNC, FUNCDESCRIPTOR_REGISTRATION));
 		params.addAll(registration.getObjectAsNameValuePairList());
-		
-		ECPostWithBNVPTask task = new ECPostWithBNVPTask(){
+
+		ECPostWithBNVPTask task = new ECPostWithBNVPTask() {
 			ProgressDialog pDialog = null;
-			JSONArray jArr = null;
-			JSONArray dataJArr = null;
-			String opResult = null;
-			
+
 			@Override
 			protected void onPreExecute() {
 				pDialog = new ProgressDialog(RegistrazioneActivity.this);
@@ -359,72 +319,78 @@ public class RegistrazioneActivity extends EasyCalcettoActivity {
 				pDialog.show();
 				super.onPreExecute();
 			}
-			
-			
+
 			@Override
 			protected void onPostExecute(Integer result) {
 				pDialog.dismiss();
-				int res = result.intValue();
-				if(res == COM_RESULT_OK){
-					try {
-						if((jArr = JSONParser.getJSONArrayFromHttpResponse(getResponse()))!= null){
-							if((opResult = jArr.getString(RESIND_OPRESULT))!=null){
-								if (opResult.toString().toLowerCase()
-										.contains("OK_BUDDY".toLowerCase())){
-									// RESPONSE SUCCESS
-									if ((dataJArr = jArr.optJSONArray(RESIND_DATA))!=null){
-										long l = Long.valueOf(dataJArr.getString(0));
-										String smsmsg = getResources().getString(R.string.smsfmsg,
-												String.valueOf(l));
-										prepareAndSendSMS(number, smsmsg);
-										Intent intent = new Intent(RegistrazioneActivity.this,
-												Registrazione2Activity.class);
-										getMyApplication().setOwner(-1, registration);
-										getMyApplication().setApplicationStatus(
-												REGISTRATION_PENDING);
-										startActivityForResult(intent, STARTFLAG_MENU);
-									}else{
-										Log.e(LOGTAG, "no data");
-										Toast.makeText(getApplicationContext(), "registration failed", Toast.LENGTH_LONG).show();
-										finish();
-										return;
-									}
-								}else{
-									// RESPONSE FAILURE
-									Log.e(LOGTAG, "the registration is failed");
-									Log.e(LOGTAG + " - DEBUG", getResponse().toString());
-									Toast.makeText(getApplicationContext(), "registration failed", Toast.LENGTH_LONG).show();
-									finish();
-									return;
-								}
-								
-							}else{
-								Log.e(LOGTAG, "no opresult");
-								Toast.makeText(getApplicationContext(), "registration failed", Toast.LENGTH_LONG).show();
-								finish();
-								return;
-							}
-						}else{
-							Log.e(LOGTAG, "no JArr");
-							Toast.makeText(getApplicationContext(), "registration failed", Toast.LENGTH_LONG).show();
-							finish();
-							return;
-						}
-						
-					} catch (Exception e) {
-						Log.e(LOGTAG + " - DEBUG", getResponse().toString(), e);
-						Toast.makeText(getApplicationContext(), "registration failed", Toast.LENGTH_LONG).show();
-						finish();
-						return;
-					}
-				}else{
-					Log.e(LOGTAG,"internal error");
-					Toast.makeText(getApplicationContext(), "registration failed", Toast.LENGTH_LONG).show();
-					finish();
-				}
 				super.onPostExecute(result);
 			}
+
+			@Override
+			protected void onJArrNULLCB() {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			protected void onOpResultNULL() {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			protected void onDataNULL() {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			protected void onSuccess() {
+				try {
+					long l = Long.valueOf(getDataJArr().getString(0));
+					String smsmsg = getResources().getString(
+							R.string.smsfmsg, String.valueOf(l));
+					prepareAndSendSMS(number, smsmsg);
+					Intent intent = new Intent(RegistrazioneActivity.this,
+							Registrazione2Activity.class);
+					getMyApplication().setOwner(-1, registration);
+					getMyApplication().setApplicationStatus(
+							REGISTRATION_PENDING);
+					startActivityForResult(intent, STARTFLAG_MENU);
+				} catch (NumberFormatException e) {
+					Log.e(LOGTAG, "number format exception", e);
+					onGenericError();
+				} catch (JSONException e) {
+					Log.e(LOGTAG, "JSON malformed", e);
+					onGenericError();
+				}
+				
+			}
+
+			@Override
+			protected void onSuccessWithNoData() {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			protected void onFailure() {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			protected void onConnectionLost() {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			protected void onGenericError() {
+				// TODO Auto-generated method stub
+				
+			}
 		};
-		task.execute(params.toArray(new BasicNameValuePair[]{}));
+		task.execute(params.toArray(new BasicNameValuePair[] {}));
 	}
 }

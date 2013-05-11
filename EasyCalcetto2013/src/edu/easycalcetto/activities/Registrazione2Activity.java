@@ -8,13 +8,23 @@ import static edu.easycalcetto.Constants.PREFKEY_OWNER_SURNAME;
 import static edu.easycalcetto.Constants.PREFKEY_OWNER_YOB;
 import static edu.easycalcetto.Constants.PREFS_NAME;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.BNDKEY_RESULT;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNC;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_CONFIRM_REGISTRATION;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_REGISTRATION;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.MSGTASKDESCRIPTOR_CONFIRM_REGISTRATION;
 import static java.util.Calendar.YEAR;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -25,6 +35,7 @@ import android.os.RemoteException;
 import android.provider.SyncStateContract.Constants;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -40,6 +51,7 @@ import edu.easycalcetto.ApplicationStatus;
 import edu.easycalcetto.EasyCalcettoActivity;
 import edu.easycalcetto.R;
 import edu.easycalcetto.connection.ECConnectionMessageConstants;
+import edu.easycalcetto.connection.ECPostWithBNVPTask;
 import edu.easycalcetto.data.ECRegistrationData;
 import edu.easycalcetto.data.ECUser;
 import edu.easycalcetto.data.MessagesCreator;
@@ -121,15 +133,108 @@ public class Registrazione2Activity extends EasyCalcettoActivity {
 	}
 
 	private void sendConfirmation() {
-		Messenger msnger = new Messenger(getConnectionServiceHandler());
-		Message msg = MessagesCreator.getConfirmRegistrationMessage(msnger,
-				registration);
-		try {
-			messenger.send(msg);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair(FUNC, FUNCDESCRIPTOR_CONFIRM_REGISTRATION));
+		params.addAll(registration.getObjectAsNameValuePairList());
+		
+		ECPostWithBNVPTask task = new ECPostWithBNVPTask() {
+			ProgressDialog pDialog = null;
+			
+			@Override
+			protected void onPreExecute() {
+				pDialog = new ProgressDialog(Registrazione2Activity.this);
+				pDialog.setMessage("Inviando la registrazione");
+				pDialog.show();
+				super.onPreExecute();
+			}
+
+			@Override
+			protected void onPostExecute(Integer result) {
+				pDialog.dismiss();
+				super.onPostExecute(result);
+			}
+			
+			@Override
+			protected void onSuccessWithNoData() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			protected void onSuccess() {
+				try {
+				long l = Long.valueOf(getDataJArr().getString(0));
+				
+				getMyApplication().setOwner(l, registration);
+				getMyApplication().setApplicationStatus(
+						REGISTERED);
+				Toast.makeText(getApplicationContext(),
+						"Ti sei Registrato correttamente",
+						Toast.LENGTH_SHORT).show();
+				finish();
+				} catch (NumberFormatException e) {
+					Log.e(LOGTAG, "number format exception", e);
+					onGenericError();
+				} catch (JSONException e) {
+					Log.e(LOGTAG, "JSON malformed", e);
+					onGenericError();
+				}
+			}
+			
+			@Override
+			protected void onOpResultNULL() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			protected void onJArrNULLCB() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			protected void onGenericError() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			protected void onFailure() {
+				Toast t = Toast.makeText(getApplicationContext(),
+						"Il codice inserito non è valido",
+						Toast.LENGTH_LONG);
+				new Handler().postDelayed(new Runnable() {
+
+					@Override
+					public void run() {
+						SMSfield.requestFocus();
+					}
+				}, t.getDuration());
+				t.show();
+				
+			}
+			
+			@Override
+			protected void onDataNULL() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			protected void onConnectionLost() {
+				// TODO Auto-generated method stub
+				
+			}
+		};
+		
+		task.execute(params.toArray(new BasicNameValuePair[]{}));
+//		Messenger msnger = new Messenger(getConnectionServiceHandler());
+//		Message msg = MessagesCreator.getConfirmRegistrationMessage(msnger,
+//				registration);
+		
+		
+		
 
 	}
 
@@ -204,6 +309,8 @@ public class Registrazione2Activity extends EasyCalcettoActivity {
 				});
 		return builder.create();
 	}
+	
+	
 
 	@Override
 	protected Handler getConnectionServiceHandler() {
@@ -214,31 +321,14 @@ public class Registrazione2Activity extends EasyCalcettoActivity {
 				case ECConnectionMessageConstants.RES_KIND_SUCCESS:
 					switch (msg.arg1) {
 					case MSGTASKDESCRIPTOR_CONFIRM_REGISTRATION:
-						long l = msg.getData().getLong(BNDKEY_RESULT);
-						getMyApplication().setOwner(l, registration);
-						getMyApplication().setApplicationStatus(
-								REGISTERED);
-						Toast.makeText(getApplicationContext(),
-								"Ti sei Registrato correttamente",
-								Toast.LENGTH_SHORT).show();
-						finish();
+						
 						break;
 					}
 					break;
 				case ECConnectionMessageConstants.RES_KIND_FAILURE:
 					switch (msg.arg1) {
 					case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_CONFIRM_REGISTRATION:
-						Toast t = Toast.makeText(getApplicationContext(),
-								"Il codice inserito non è valido",
-								Toast.LENGTH_LONG);
-						new Handler().postDelayed(new Runnable() {
-
-							@Override
-							public void run() {
-								SMSfield.requestFocus();
-							}
-						}, t.getDuration());
-						t.show();
+						
 						break;
 					}
 					break;
