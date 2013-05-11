@@ -101,16 +101,16 @@ public class MessagesCreator {
 //		return m;
 //	}
 	
-	public static Message getCreateMatchMessage(Messenger msnger, ECMatch ecm){
-		Message m = Message.obtain();
-		Bundle b = createBundle(ECConnectionMessageConstants.FUNCDESCRIPTOR_CREATEMATCH, "OK_BUDDY", "SORRY_MY_FRIEND");
-		b.putParcelable(ECConnectionMessageConstants.BNDKEY_POST_PARCELABLE, ecm);
-		m.what = ECConnectionMessageConstants.MSGWHAT_POST;
-		m.arg1 = ECConnectionMessageConstants.MSGTASKDESCRIPTOR_CREATEMATCH;
-		m.replyTo = msnger;
-		m.setData(b);
-		return m;
-	}
+//	public static Message getCreateMatchMessage(Messenger msnger, ECMatch ecm){
+//		Message m = Message.obtain();
+//		Bundle b = createBundle(ECConnectionMessageConstants.FUNCDESCRIPTOR_CREATEMATCH, "OK_BUDDY", "SORRY_MY_FRIEND");
+//		b.putParcelable(ECConnectionMessageConstants.BNDKEY_POST_PARCELABLE, ecm);
+//		m.what = ECConnectionMessageConstants.MSGWHAT_POST;
+//		m.arg1 = ECConnectionMessageConstants.MSGTASKDESCRIPTOR_CREATEMATCH;
+//		m.replyTo = msnger;
+//		m.setData(b);
+//		return m;
+//	}
 	
 	public static Message getDowloadPhotoMessage(Messenger msnger, long id) {
 		//TODO:

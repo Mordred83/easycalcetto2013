@@ -1,7 +1,10 @@
 package edu.easycalcetto.activities;
 
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNC;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_CREATEMATCH;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_GETFRIENDS;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_GETMATCHES_CLOSED;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_GETMATCHES_OPEN;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -92,11 +95,13 @@ public class InvitaAmiciNuovaPartita extends EasyCalcettoActivity {
 						countSelected++;
 					}
 				}
-				if(countSelected>0){
+				if (countSelected > 0) {
 					showDialog(PROGRESS_DIALOG);
-					sendAddMatch();
-				}else{
-					Toast.makeText(getApplicationContext(), "Devi scegliere almeno un amico", Toast.LENGTH_SHORT).show();
+					sendCreateMatch();
+				} else {
+					Toast.makeText(getApplicationContext(),
+							"Devi scegliere almeno un amico",
+							Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
@@ -272,11 +277,12 @@ public class InvitaAmiciNuovaPartita extends EasyCalcettoActivity {
 	private void getAmici() {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair(FUNC, FUNCDESCRIPTOR_GETFRIENDS));
-		params.add(new BasicNameValuePair("id", String.valueOf(getMyApplication().getOwner().get_id())));
-		
+		params.add(new BasicNameValuePair("id", String
+				.valueOf(getMyApplication().getOwner().get_id())));
+
 		ECPostWithBNVPTask task = new ECPostWithBNVPTask() {
 			ProgressDialog pDialog = null;
-			
+
 			@Override
 			protected void onPreExecute() {
 				pDialog = new ProgressDialog(InvitaAmiciNuovaPartita.this);
@@ -290,25 +296,26 @@ public class InvitaAmiciNuovaPartita extends EasyCalcettoActivity {
 				pDialog.dismiss();
 				super.onPostExecute(result);
 			}
-			
+
 			@Override
 			protected void onSuccessWithNoData() {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			protected void onSuccess() {
 				ArrayList<ECUser> al = new ArrayList<ECUser>();
 				try {
 					ECUser[] friends = ECUser
-						.createFromJSONArray(getDataJArr());
-				
+							.createFromJSONArray(getDataJArr());
+
 					for (ECUser user : friends) {
 						if (!user.getPhotoName().equalsIgnoreCase(
 								ECUser.IMAGE_FILE_NAME_DEFAULT)) {
-							File f = new File(getMyApplication()
-									.getImagesDir(), user.getPhotoName());
+							File f = new File(
+									getMyApplication().getImagesDir(),
+									user.getPhotoName());
 							if (!f.exists())
 								al.add(user);
 						}
@@ -321,7 +328,7 @@ public class InvitaAmiciNuovaPartita extends EasyCalcettoActivity {
 					people = new CheckWrapper[friends.length];
 					for (int i = 0; i < friends.length; i++)
 						people[i] = new CheckWrapper<ECUser>(friends[i]);
-					caricaAmici();		
+					caricaAmici();
 				} catch (NumberFormatException e) {
 					Log.e(LOGTAG, "number format exception", e);
 					onGenericError();
@@ -330,70 +337,131 @@ public class InvitaAmiciNuovaPartita extends EasyCalcettoActivity {
 					onGenericError();
 				}
 			}
-			
+
 			@Override
 			protected void onOpResultNULL() {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			protected void onJArrNULLCB() {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			protected void onGenericError() {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			protected void onFailure() {
 				// TODO Auto-generated method stub
 			}
-			
+
 			@Override
 			protected void onDataNULL() {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			protected void onConnectionLost() {
 				// TODO Auto-generated method stub
-				
+
 			}
 		};
-		
-		task.execute(params.toArray(new BasicNameValuePair[]{}));
-//		long id = getMyApplication().getOwner().get_id();
-//		Messenger msnger = new Messenger(getConnectionServiceHandler());
-//		Message msg = MessagesCreator.getGetFriendsMessage(msnger, id);
-//		try {
-//			messenger.send(msg);
-//		} catch (RemoteException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+
+		task.execute(params.toArray(new BasicNameValuePair[] {}));
+		// long id = getMyApplication().getOwner().get_id();
+		// Messenger msnger = new Messenger(getConnectionServiceHandler());
+		// Message msg = MessagesCreator.getGetFriendsMessage(msnger, id);
+		// try {
+		// messenger.send(msg);
+		// } catch (RemoteException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
 	}
 
-	private void sendAddMatch() {
+	private void sendCreateMatch() {
 		ECUser[] ecuArr = new ECUser[people.length];
-
 		for (int i = 0; i < people.length; i++) {
 			ecuArr[i] = people[i].getData();
 		}
 		match.setPartecipants(ecuArr);
-		Messenger msnger = new Messenger(getConnectionServiceHandler());
-		Message msg = MessagesCreator.getCreateMatchMessage(msnger, match);
-		try {
-			messenger.send(msg);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair(FUNC, FUNCDESCRIPTOR_CREATEMATCH));
+		params.addAll(match.getObjectAsNameValuePairList());
+
+		ECPostWithBNVPTask task = new ECPostWithBNVPTask() {
+			ProgressDialog pDialog = null;
+
+			@Override
+			protected void onPreExecute() {
+				pDialog = new ProgressDialog(InvitaAmiciNuovaPartita.this);
+				pDialog.setMessage("Carico le partite terminate");
+				pDialog.show();
+				super.onPreExecute();
+			}
+
+			@Override
+			protected void onPostExecute(Integer result) {
+				pDialog.dismiss();
+				super.onPostExecute(result);
+			}
+
+			@Override
+			protected void onSuccessWithNoData() {
+				Toast.makeText(getApplicationContext(),"Partita Creata", Toast.LENGTH_LONG).show();
+				finish();
+			}
+
+			@Override
+			protected void onSuccess() {
+				// TODO Auto-generated method stub
+			}
+
+			@Override
+			protected void onOpResultNULL() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onJArrNULLCB() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onGenericError() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onFailure() {
+				// TODO: Auto-generated method stub
+			}
+
+			@Override
+			protected void onDataNULL() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onConnectionLost() {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		task.execute(params.toArray(new BasicNameValuePair[] {}));
+
 	}
 
 	@Override
@@ -457,7 +525,6 @@ public class InvitaAmiciNuovaPartita extends EasyCalcettoActivity {
 
 		@Override
 		protected void onPostExecute(Void result) {
-
 			super.onPostExecute(result);
 		}
 	}
