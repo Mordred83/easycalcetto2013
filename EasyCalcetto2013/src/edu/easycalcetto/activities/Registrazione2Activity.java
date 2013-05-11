@@ -143,7 +143,7 @@ public class Registrazione2Activity extends EasyCalcettoActivity {
 			@Override
 			protected void onPreExecute() {
 				pDialog = new ProgressDialog(Registrazione2Activity.this);
-				pDialog.setMessage("Inviando la registrazione");
+				pDialog.setMessage("Invio il codice di conferma");
 				pDialog.show();
 				super.onPreExecute();
 			}
@@ -314,30 +314,8 @@ public class Registrazione2Activity extends EasyCalcettoActivity {
 
 	@Override
 	protected Handler getConnectionServiceHandler() {
-		return new Handler() {
-			@Override
-			public void handleMessage(Message msg) {
-				switch (msg.arg2) {
-				case ECConnectionMessageConstants.RES_KIND_SUCCESS:
-					switch (msg.arg1) {
-					case MSGTASKDESCRIPTOR_CONFIRM_REGISTRATION:
-						
-						break;
-					}
-					break;
-				case ECConnectionMessageConstants.RES_KIND_FAILURE:
-					switch (msg.arg1) {
-					case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_CONFIRM_REGISTRATION:
-						
-						break;
-					}
-					break;
-				default:
-					break;
-				}
-
-			}
-		};
+		//TODO Remove
+		return null;
 	}
 
 	@Override

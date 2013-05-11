@@ -12,40 +12,40 @@ import edu.easycalcetto.connection.ECConnectionMessageConstants;
 
 public class MessagesCreator {
 	
-	public static Message getRegistrationMessage(Messenger msnger, ECRegistrationData registration){
-		Message m = Message.obtain();
-		Bundle b = createBundle(FUNCDESCRIPTOR_REGISTRATION, "OK_BUDDY", "SORRY_MY_FRIEND");
-		b.putParcelable(ECConnectionMessageConstants.BNDKEY_POST_PARCELABLE, registration);
-		m.what = ECConnectionMessageConstants.MSGWHAT_POST;
-		m.arg1 = ECConnectionMessageConstants.MSGTASKDESCRIPTOR_REGISTRATON;
-		m.replyTo = msnger;
-		m.setData(b);
-		return m;
-	}
+//	public static Message getRegistrationMessage(Messenger msnger, ECRegistrationData registration){
+//		Message m = Message.obtain();
+//		Bundle b = createBundle(FUNCDESCRIPTOR_REGISTRATION, "OK_BUDDY", "SORRY_MY_FRIEND");
+//		b.putParcelable(ECConnectionMessageConstants.BNDKEY_POST_PARCELABLE, registration);
+//		m.what = ECConnectionMessageConstants.MSGWHAT_POST;
+//		m.arg1 = ECConnectionMessageConstants.MSGTASKDESCRIPTOR_REGISTRATON;
+//		m.replyTo = msnger;
+//		m.setData(b);
+//		return m;
+//	}
 	
-	public static Message getConfirmRegistrationMessage(Messenger msnger, ECRegistrationData registration){
-		Message m = Message.obtain();
-		Bundle b = createBundle(ECConnectionMessageConstants.FUNCDESCRIPTOR_CONFIRM_REGISTRATION, "OK_BUDDY", "SORRY_MY_FRIEND");
-		b.putParcelable(ECConnectionMessageConstants.BNDKEY_POST_PARCELABLE, registration);
-		m.what = ECConnectionMessageConstants.MSGWHAT_POST;
-		m.arg1 = ECConnectionMessageConstants.MSGTASKDESCRIPTOR_CONFIRM_REGISTRATION;
-		m.replyTo = msnger;
-		m.setData(b);
-		return m;
-	}
-	public static Message getGetFriendsMessage(Messenger msnger, Long id){
-		Message m = Message.obtain();
-		Bundle b = createBundle(ECConnectionMessageConstants.FUNCDESCRIPTOR_GETFRIENDS, "OK_BUDDY", "SORRY_MY_FRIEND");
-		Map<String,String> map = new HashMap<String, String>();
-		map.put("id", String.valueOf(id));
-		b = addParametersToBundle(b, map);
-		b.putString(ECConnectionMessageConstants.BNDKEY_DATATYPE, long.class.getCanonicalName());
-		m.what = ECConnectionMessageConstants.MSGWHAT_POST;
-		m.arg1 = ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETFRIENDS;
-		m.replyTo = msnger;
-		m.setData(b);
-		return m;
-	}
+//	public static Message getConfirmRegistrationMessage(Messenger msnger, ECRegistrationData registration){
+//		Message m = Message.obtain();
+//		Bundle b = createBundle(ECConnectionMessageConstants.FUNCDESCRIPTOR_CONFIRM_REGISTRATION, "OK_BUDDY", "SORRY_MY_FRIEND");
+//		b.putParcelable(ECConnectionMessageConstants.BNDKEY_POST_PARCELABLE, registration);
+//		m.what = ECConnectionMessageConstants.MSGWHAT_POST;
+//		m.arg1 = ECConnectionMessageConstants.MSGTASKDESCRIPTOR_CONFIRM_REGISTRATION;
+//		m.replyTo = msnger;
+//		m.setData(b);
+//		return m;
+//	}
+//	public static Message getGetFriendsMessage(Messenger msnger, Long id){
+//		Message m = Message.obtain();
+//		Bundle b = createBundle(ECConnectionMessageConstants.FUNCDESCRIPTOR_GETFRIENDS, "OK_BUDDY", "SORRY_MY_FRIEND");
+//		Map<String,String> map = new HashMap<String, String>();
+//		map.put("id", String.valueOf(id));
+//		b = addParametersToBundle(b, map);
+//		b.putString(ECConnectionMessageConstants.BNDKEY_DATATYPE, long.class.getCanonicalName());
+//		m.what = ECConnectionMessageConstants.MSGWHAT_POST;
+//		m.arg1 = ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETFRIENDS;
+//		m.replyTo = msnger;
+//		m.setData(b);
+//		return m;
+//	}
 	
 	public static Message getGetAcquaintanceMessage(Messenger msnger, Long id){
 		Message m = Message.obtain();

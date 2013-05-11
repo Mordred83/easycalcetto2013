@@ -1,5 +1,10 @@
 package edu.easycalcetto.activities;
 
+import static edu.easycalcetto.ApplicationStatus.REGISTERED;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNC;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_CONFIRM_REGISTRATION;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_GETFRIENDS;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -8,12 +13,17 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.http.NameValuePair;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.ByteArrayBuffer;
+import org.json.JSONException;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -50,6 +60,7 @@ import edu.easycalcetto.R;
 import edu.easycalcetto.connection.ECConnectionMessageConstants;
 import edu.easycalcetto.connection.ECConnectionService;
 import edu.easycalcetto.connection.ECHttpClient;
+import edu.easycalcetto.connection.ECPostWithBNVPTask;
 import edu.easycalcetto.data.ECUser;
 import edu.easycalcetto.data.MessagesCreator;
 import eu.erikw.PullToRefreshListView;
@@ -135,8 +146,9 @@ public class Amici extends EasyCalcettoActivity implements
 		Message msg = null;
 		switch (currentTab) {
 		case AMICI:
-			msg = MessagesCreator.getGetFriendsMessage(msnger,
-					getMyApplication().getOwner().get_id());
+//			msg = MessagesCreator.getGetFriendsMessage(msnger,
+//					getMyApplication().getOwner().get_id());
+			getFriendsFromServer();
 			break;
 		case ALTRI:
 			msg = MessagesCreator.getGetAcquaintanceMessage(msnger,
@@ -152,6 +164,8 @@ public class Amici extends EasyCalcettoActivity implements
 			}
 
 	}
+
+	
 
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction transaction) {
@@ -495,6 +509,102 @@ public class Amici extends EasyCalcettoActivity implements
 		new ImageDownloadTask(client, getMyApplication().getImagesDir())
 				.execute(al.toArray(new ECUser[0]));
 
+	}
+	
+	private void getFriendsFromServer() {
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair(FUNC, FUNCDESCRIPTOR_GETFRIENDS));
+		params.add(new BasicNameValuePair("id", String.valueOf(getMyApplication().getOwner().get_id())));
+		
+		ECPostWithBNVPTask task = new ECPostWithBNVPTask() {
+			ProgressDialog pDialog = null;
+			
+			@Override
+			protected void onPreExecute() {
+				pDialog = new ProgressDialog(Amici.this);
+				pDialog.setMessage("Caricando la lista degli amici");
+				pDialog.show();
+				super.onPreExecute();
+			}
+
+			@Override
+			protected void onPostExecute(Integer result) {
+				pDialog.dismiss();
+				super.onPostExecute(result);
+			}
+			
+			@Override
+			protected void onSuccessWithNoData() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			protected void onSuccess() {
+				ArrayList<ECUser> al = new ArrayList<ECUser>();
+				try {
+					friends = ECUser
+						.createFromJSONArray(getDataJArr());
+				
+					for (ECUser user : friends) {
+						if (!user.getPhotoName().equalsIgnoreCase(
+								ECUser.IMAGE_FILE_NAME_DEFAULT)) {
+							File f = new File(getMyApplication()
+									.getImagesDir(), user.getPhotoName());
+							if (!f.exists())
+								al.add(user);
+						}
+					}
+
+					caricaAmici();
+					if (!al.isEmpty())
+						updatePhotos(al);		
+				} catch (NumberFormatException e) {
+					Log.e(LOGTAG, "number format exception", e);
+					onGenericError();
+				} catch (JSONException e) {
+					Log.e(LOGTAG, "JSON malformed", e);
+					onGenericError();
+				}
+			}
+			
+			@Override
+			protected void onOpResultNULL() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			protected void onJArrNULLCB() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			protected void onGenericError() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			protected void onFailure() {
+				// TODO Auto-generated method stub
+			}
+			
+			@Override
+			protected void onDataNULL() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			protected void onConnectionLost() {
+				// TODO Auto-generated method stub
+				
+			}
+		};
+		
+		task.execute(params.toArray(new BasicNameValuePair[]{}));
 	}
 
 	@Override
