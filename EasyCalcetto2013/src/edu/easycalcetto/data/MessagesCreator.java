@@ -74,19 +74,19 @@ public class MessagesCreator {
 //		return m;
 //	}
 	
-	public static Message getGetOpenMatchesMessage(Messenger msnger, Long id){
-		Message m = Message.obtain();
-		Bundle b = createBundle(ECConnectionMessageConstants.FUNCDESCRIPTOR_GETMATCHES_OPEN, "OK_BUDDY", "SORRY_MY_FRIEND");
-		Map<String,String> map = new HashMap<String, String>();
-		map.put("id", String.valueOf(id));
-		b = addParametersToBundle(b, map);
-		b.putString(ECConnectionMessageConstants.BNDKEY_DATATYPE, long.class.getCanonicalName());
-		m.what = ECConnectionMessageConstants.MSGWHAT_POST;
-		m.arg1 = ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETMATCHES_OPEN;
-		m.replyTo = msnger;
-		m.setData(b);
-		return m;
-	}
+//	public static Message getGetOpenMatchesMessage(Messenger msnger, Long id){
+//		Message m = Message.obtain();
+//		Bundle b = createBundle(ECConnectionMessageConstants.FUNCDESCRIPTOR_GETMATCHES_OPEN, "OK_BUDDY", "SORRY_MY_FRIEND");
+//		Map<String,String> map = new HashMap<String, String>();
+//		map.put("id", String.valueOf(id));
+//		b = addParametersToBundle(b, map);
+//		b.putString(ECConnectionMessageConstants.BNDKEY_DATATYPE, long.class.getCanonicalName());
+//		m.what = ECConnectionMessageConstants.MSGWHAT_POST;
+//		m.arg1 = ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETMATCHES_OPEN;
+//		m.replyTo = msnger;
+//		m.setData(b);
+//		return m;
+//	}
 	
 	public static Message getGetClosedMatchesMessage(Messenger msnger, Long id){
 		Message m = Message.obtain();

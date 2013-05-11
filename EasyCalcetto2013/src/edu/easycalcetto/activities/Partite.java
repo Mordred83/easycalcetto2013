@@ -123,8 +123,9 @@ public class Partite extends EasyCalcettoActivity implements
 		Message msg = null;
 		switch (currentTab) {
 		case APERTE:
-			msg = MessagesCreator.getGetOpenMatchesMessage(msnger,
-					getMyApplication().getOwner().get_id());
+			// msg = MessagesCreator.getGetOpenMatchesMessage(msnger,
+			// getMyApplication().getOwner().get_id());
+			getOpenMatches();
 			break;
 		case GIOCATE:
 			msg = MessagesCreator.getGetClosedMatchesMessage(msnger,
@@ -159,14 +160,11 @@ public class Partite extends EasyCalcettoActivity implements
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
 		/*
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-			menu.add(1, 2, 2, "More")
-					.setIcon(
-							isLight ? R.drawable.ic_action_overflow_black
-									: R.drawable.ic_action_overflow)
-					.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-		}
-		*/
+		 * if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+		 * menu.add(1, 2, 2, "More") .setIcon( isLight ?
+		 * R.drawable.ic_action_overflow_black : R.drawable.ic_action_overflow)
+		 * .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS); }
+		 */
 		return true;
 	}
 
@@ -221,7 +219,7 @@ public class Partite extends EasyCalcettoActivity implements
 			}
 		});
 
-		NewQAAdapterMatchs adapter = new NewQAAdapterMatchs(this); 
+		NewQAAdapterMatchs adapter = new NewQAAdapterMatchs(this);
 		adapter.setData(matchs);
 		mList.setAdapter(adapter);
 
@@ -387,7 +385,7 @@ public class Partite extends EasyCalcettoActivity implements
 					@Override
 					public void onItemClick(QuickAction quickAction, int pos,
 							int actionId) {
-						//TODO
+						// TODO
 						// ActionItem actionItem =
 						// quickAction.getActionItem(pos);
 						// Match match = (Match) mList
@@ -464,72 +462,73 @@ public class Partite extends EasyCalcettoActivity implements
 				});
 		return builder.create();
 	}
-//	TODO
-//	public void ordinaPerData(Match[] matchs) {
-//		Arrays.sort(matchs, new Comparator<Match>() {
-//			int i = -1;
-//			int j = -1;
-//			int temp = -1;
-//			Person tempPerson;
-//
-//			@Override
-//			public int compare(Match lhs, Match rhs) {
-//				MyData d1 = new MyData(lhs.getDate().getGiorno(), lhs.getDate()
-//						.getMese(), lhs.getDate().getAnno());
-//				MyData d2 = new MyData(rhs.getDate().getGiorno(), rhs.getDate()
-//						.getMese(), rhs.getDate().getAnno());
-//				Person person1 = lhs.getOwner();
-//				Person person2 = rhs.getOwner();
-//				Log.e(person1.getName(), person1.getSurname());
-//				Log.e(person2.getName(), person2.getSurname());
-//
-//				if (d1.getAnno() < d2.getAnno()) {
-//					return -1;
-//				} else if (d1.getAnno() == d2.getAnno()) {
-//					if (d1.getMese() < d2.getMese()) {
-//						return -1;
-//					} else if (d1.getMese() == d2.getMese()) {
-//						if (d1.getGiorno() < d2.getGiorno()) {
-//							return -1;
-//						} else if (d1.getGiorno() == d2.getGiorno()) {
-//							return 0;
-//						} else if (d1.getGiorno() > d2.getGiorno()) {
-//							/*
-//							 * i=(Arrays.asList(people)).indexOf(person1);
-//							 * j=(Arrays.asList(people)).indexOf(person2);
-//							 * tempPerson=people[i]; people[i]=people[j];
-//							 * people[j]=tempPerson; Log.i("indice:"+i,
-//							 * people[i].getName()); Log.i("indice:"+j,
-//							 * people[j].getName());
-//							 */
-//							return 1;
-//
-//						}
-//					} else if (d1.getMese() >= d2.getMese()) {
-//						/*
-//						 * i=(Arrays.asList(people)).indexOf(person1);
-//						 * j=(Arrays.asList(people)).indexOf(person2);
-//						 * tempPerson=people[i]; people[i]=people[j];
-//						 * people[j]=tempPerson; Log.i("indice:"+i,
-//						 * people[i].getName()); Log.i("indice:"+j,
-//						 * people[j].getName());
-//						 */
-//						return 1;
-//					}
-//				} else {
-//					/*
-//					 * i=(Arrays.asList(people)).indexOf(person1);
-//					 * j=(Arrays.asList(people)).indexOf(person2);
-//					 * tempPerson=people[i]; people[i]=people[j];
-//					 * people[j]=tempPerson; Log.i("indice:"+i,
-//					 * people[i].getName()); Log.i("indice:"+j,
-//					 * people[j].getName()); return 1;
-//					 */
-//				}
-//				return 0;
-//			}
-//		});
-//	}
+
+	// TODO
+	// public void ordinaPerData(Match[] matchs) {
+	// Arrays.sort(matchs, new Comparator<Match>() {
+	// int i = -1;
+	// int j = -1;
+	// int temp = -1;
+	// Person tempPerson;
+	//
+	// @Override
+	// public int compare(Match lhs, Match rhs) {
+	// MyData d1 = new MyData(lhs.getDate().getGiorno(), lhs.getDate()
+	// .getMese(), lhs.getDate().getAnno());
+	// MyData d2 = new MyData(rhs.getDate().getGiorno(), rhs.getDate()
+	// .getMese(), rhs.getDate().getAnno());
+	// Person person1 = lhs.getOwner();
+	// Person person2 = rhs.getOwner();
+	// Log.e(person1.getName(), person1.getSurname());
+	// Log.e(person2.getName(), person2.getSurname());
+	//
+	// if (d1.getAnno() < d2.getAnno()) {
+	// return -1;
+	// } else if (d1.getAnno() == d2.getAnno()) {
+	// if (d1.getMese() < d2.getMese()) {
+	// return -1;
+	// } else if (d1.getMese() == d2.getMese()) {
+	// if (d1.getGiorno() < d2.getGiorno()) {
+	// return -1;
+	// } else if (d1.getGiorno() == d2.getGiorno()) {
+	// return 0;
+	// } else if (d1.getGiorno() > d2.getGiorno()) {
+	// /*
+	// * i=(Arrays.asList(people)).indexOf(person1);
+	// * j=(Arrays.asList(people)).indexOf(person2);
+	// * tempPerson=people[i]; people[i]=people[j];
+	// * people[j]=tempPerson; Log.i("indice:"+i,
+	// * people[i].getName()); Log.i("indice:"+j,
+	// * people[j].getName());
+	// */
+	// return 1;
+	//
+	// }
+	// } else if (d1.getMese() >= d2.getMese()) {
+	// /*
+	// * i=(Arrays.asList(people)).indexOf(person1);
+	// * j=(Arrays.asList(people)).indexOf(person2);
+	// * tempPerson=people[i]; people[i]=people[j];
+	// * people[j]=tempPerson; Log.i("indice:"+i,
+	// * people[i].getName()); Log.i("indice:"+j,
+	// * people[j].getName());
+	// */
+	// return 1;
+	// }
+	// } else {
+	// /*
+	// * i=(Arrays.asList(people)).indexOf(person1);
+	// * j=(Arrays.asList(people)).indexOf(person2);
+	// * tempPerson=people[i]; people[i]=people[j];
+	// * people[j]=tempPerson; Log.i("indice:"+i,
+	// * people[i].getName()); Log.i("indice:"+j,
+	// * people[j].getName()); return 1;
+	// */
+	// }
+	// return 0;
+	// }
+	// });
+	// }
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -539,42 +538,42 @@ public class Partite extends EasyCalcettoActivity implements
 			getListsFromServer();
 			break;
 		case (2): {
-			//TODO
-//			if (resultCode == Activity.RESULT_OK) {
-//				boolean changes = data.getBooleanExtra("changes", false);
-//				Log.i("changes", "valore: " + changes);
-//				int idMatch = data.getIntExtra("idMatch", -1);
-//				int giornoMatch = data.getIntExtra("dataMatch.giorno", -1);
-//				int meseMatch = data.getIntExtra("dataMatch.mese", -1);
-//				int annoMatch = data.getIntExtra("dataMatch.anno", -1);
-//				String startHour = data.getStringExtra("startHourMatch");
-//				String newPlaceMatch = data.getStringExtra("newPlaceMatch");
-//				boolean changesData = data
-//						.getBooleanExtra("changesData", false);
-//				String nameMatch = data.getStringExtra("nomeMatch");
-//				mDataDisplayed = (TextView) mList.getChildAt(mSelectedRow)
-//						.findViewById(R.id.matchDate);
-//				mNameMatchText = (TextView) mList.getChildAt(mSelectedRow + 1)
-//						.findViewById(R.id.matchName);
-//				mNameMatchText.setText(nameMatch);
-//				if (changes == true) {
-//					for (int i = 0; i < matchs.length; i++) {
-//						if (matchs[i].getIdMatch() == idMatch) {
-//							if (changesData == true) {
-//								mDataDisplayed = (TextView) mList.getChildAt(
-//										i + 1).findViewById(R.id.matchDate);
-//								MyData dataToDisplay = new MyData(giornoMatch,
-//										meseMatch, annoMatch);
-//								matchs[i].setDate(dataToDisplay);
-//								mDataDisplayed
-//										.setText(dataToDisplay.toString());
-//							}
-//							matchs[i].setPlace(newPlaceMatch);
-//							matchs[i].setName(nameMatch);
-//						}
-//					}
-//				}
-//			}
+			// TODO
+			// if (resultCode == Activity.RESULT_OK) {
+			// boolean changes = data.getBooleanExtra("changes", false);
+			// Log.i("changes", "valore: " + changes);
+			// int idMatch = data.getIntExtra("idMatch", -1);
+			// int giornoMatch = data.getIntExtra("dataMatch.giorno", -1);
+			// int meseMatch = data.getIntExtra("dataMatch.mese", -1);
+			// int annoMatch = data.getIntExtra("dataMatch.anno", -1);
+			// String startHour = data.getStringExtra("startHourMatch");
+			// String newPlaceMatch = data.getStringExtra("newPlaceMatch");
+			// boolean changesData = data
+			// .getBooleanExtra("changesData", false);
+			// String nameMatch = data.getStringExtra("nomeMatch");
+			// mDataDisplayed = (TextView) mList.getChildAt(mSelectedRow)
+			// .findViewById(R.id.matchDate);
+			// mNameMatchText = (TextView) mList.getChildAt(mSelectedRow + 1)
+			// .findViewById(R.id.matchName);
+			// mNameMatchText.setText(nameMatch);
+			// if (changes == true) {
+			// for (int i = 0; i < matchs.length; i++) {
+			// if (matchs[i].getIdMatch() == idMatch) {
+			// if (changesData == true) {
+			// mDataDisplayed = (TextView) mList.getChildAt(
+			// i + 1).findViewById(R.id.matchDate);
+			// MyData dataToDisplay = new MyData(giornoMatch,
+			// meseMatch, annoMatch);
+			// matchs[i].setDate(dataToDisplay);
+			// mDataDisplayed
+			// .setText(dataToDisplay.toString());
+			// }
+			// matchs[i].setPlace(newPlaceMatch);
+			// matchs[i].setName(nameMatch);
+			// }
+			// }
+			// }
+			// }
 		}
 		}
 	}
@@ -615,42 +614,45 @@ public class Partite extends EasyCalcettoActivity implements
 			}
 		};
 	}
-	
+
 	private void confirmGame() {
 		Messenger msnger = new Messenger(getConnectionServiceHandler());
-		Message msg = MessagesCreator.getConfirmGameMessage(msnger, getMyApplication().getOwner().get_id(), matchs[mSelectedRow].getIdMatch(), 1);
+		Message msg = MessagesCreator.getConfirmGameMessage(msnger,
+				getMyApplication().getOwner().get_id(),
+				matchs[mSelectedRow].getIdMatch(), 1);
 		try {
 			messenger.send(msg);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
 	}
-/*	VECCHIO METODO COMMENTATO DA STEFANO
-	private void declineGame() {
-		Messenger msnger = new Messenger(getConnectionServiceHandler());
-		Message msg = MessagesCreator.getDeclineGameMessage(msnger, getMyApplication().getOwner().get_id(), matchs[mSelectedRow].getIdMatch(), 1);
-		try {
-			messenger.send(msg);
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-	}
-*/	
+
+	/*
+	 * VECCHIO METODO COMMENTATO DA STEFANO private void declineGame() {
+	 * Messenger msnger = new Messenger(getConnectionServiceHandler()); Message
+	 * msg = MessagesCreator.getDeclineGameMessage(msnger,
+	 * getMyApplication().getOwner().get_id(),
+	 * matchs[mSelectedRow].getIdMatch(), 1); try { messenger.send(msg); } catch
+	 * (RemoteException e) { e.printStackTrace(); } }
+	 */
 
 	private void declineGame() {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair(FUNC, ECConnectionMessageConstants.FUNCDESCRIPTOR_DECLINE_GAME));
-		params.add(new BasicNameValuePair("player_id", String.valueOf(getMyApplication().getOwner().get_id())));
-		params.add(new BasicNameValuePair("match_id",String.valueOf(matchs[mSelectedRow].getIdMatch())));
-		params.add(new BasicNameValuePair("data_id",String.valueOf(1)));
-		
+		params.add(new BasicNameValuePair(FUNC,
+				ECConnectionMessageConstants.FUNCDESCRIPTOR_DECLINE_GAME));
+		params.add(new BasicNameValuePair("player_id", String
+				.valueOf(getMyApplication().getOwner().get_id())));
+		params.add(new BasicNameValuePair("match_id", String
+				.valueOf(matchs[mSelectedRow].getIdMatch())));
+		params.add(new BasicNameValuePair("data_id", String.valueOf(1)));
+
 		ECPostWithBNVPTask task = new ECPostWithBNVPTask() {
 			ProgressDialog pDialog = null;
-			
+
 			@Override
 			protected void onPreExecute() {
 				pDialog = new ProgressDialog(Partite.this);
-				pDialog.setMessage("Invio informazioni...");
+				pDialog.setMessage("CHE CI METTIAMO?");
 				pDialog.show();
 				super.onPreExecute();
 			}
@@ -660,66 +662,61 @@ public class Partite extends EasyCalcettoActivity implements
 				pDialog.dismiss();
 				super.onPostExecute(result);
 			}
-			
+
 			@Override
 			protected void onSuccessWithNoData() {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			protected void onSuccess() {
-			
+
 			}
-			
+
 			@Override
 			protected void onOpResultNULL() {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			protected void onJArrNULLCB() {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			protected void onGenericError() {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			protected void onFailure() {
-				
+
 			}
-			
+
 			@Override
 			protected void onDataNULL() {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			protected void onConnectionLost() {
 				// TODO Auto-generated method stub
-				
+
 			}
 		};
-		
-		task.execute(params.toArray(new BasicNameValuePair[]{}));
-//		Messenger msnger = new Messenger(getConnectionServiceHandler());
-//		Message msg = MessagesCreator.getConfirmRegistrationMessage(msnger,
-//				registration);
-		
-		
-		
 
-	}	
-	
-	
-	
+		task.execute(params.toArray(new BasicNameValuePair[] {}));
+		// Messenger msnger = new Messenger(getConnectionServiceHandler());
+		// Message msg = MessagesCreator.getConfirmRegistrationMessage(msnger,
+		// registration);
+
+	}
+
 	@Override
 	protected void onServiceConnected() {
 		getListsFromServer();
@@ -747,18 +744,22 @@ public class Partite extends EasyCalcettoActivity implements
 			ECMatch[] tmpMatchs = currentTab == TabID.APERTE ? matchs
 					: matchs_played;
 
-			if (tmpMatchs[mSelectedRow].getOwner().equals(getMyApplication().getOwner())) {
-				if(currentTab==TabID.APERTE){
-				intentPartita = new Intent(getApplicationContext(),SchedaPartitaOwner.class);
-				}
-				else{
-				intentPartita = new Intent(getApplicationContext(),SchedaPartitaGiocata.class);
+			if (tmpMatchs[mSelectedRow].getOwner().equals(
+					getMyApplication().getOwner())) {
+				if (currentTab == TabID.APERTE) {
+					intentPartita = new Intent(getApplicationContext(),
+							SchedaPartitaOwner.class);
+				} else {
+					intentPartita = new Intent(getApplicationContext(),
+							SchedaPartitaGiocata.class);
 				}
 			} else {
-				if(currentTab==TabID.APERTE)
-					intentPartita = new Intent(getApplicationContext(),SchedaPartita.class);
+				if (currentTab == TabID.APERTE)
+					intentPartita = new Intent(getApplicationContext(),
+							SchedaPartita.class);
 				else
-					intentPartita = new Intent(getApplicationContext(),SchedaPartitaGiocata.class);
+					intentPartita = new Intent(getApplicationContext(),
+							SchedaPartitaGiocata.class);
 
 			}
 
