@@ -462,7 +462,7 @@ public class InvitedPlayers extends EasyCalcettoActivity implements
 	private void addFriend(ECUser friend) {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair(FUNC,
-				ECConnectionMessageConstants.FUNCDESCRIPTOR_DECLINE_GAME));
+				ECConnectionMessageConstants.FUNCDESCRIPTOR_ADD_FRIEND));
 		params.add(new BasicNameValuePair("user_id", String.valueOf(getMyApplication().getOwner().get_id())));
 		params.add(new BasicNameValuePair("num_tel", String.valueOf(friend.getNum_tel())));
 

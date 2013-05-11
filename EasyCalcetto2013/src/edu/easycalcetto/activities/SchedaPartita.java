@@ -459,6 +459,8 @@ public class SchedaPartita extends EasyCalcettoActivity {
 		// }
 	}
 
+	
+/*VECCHIO METODO COMMENTATO DA STEFANO
 	private void confirmGame() {
 		Messenger msnger = new Messenger(getConnectionServiceHandler());
 		Message msg = MessagesCreator.getConfirmGameMessage(msnger,
@@ -469,6 +471,91 @@ public class SchedaPartita extends EasyCalcettoActivity {
 			e.printStackTrace();
 		}
 	}
+*/
+
+	private void confirmGame() {
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair(FUNC, ECConnectionMessageConstants.FUNCDESCRIPTOR_CONFIRM_GAME));
+		params.add(new BasicNameValuePair("player_id", String.valueOf(getMyApplication().getOwner().get_id())));
+		params.add(new BasicNameValuePair("match_id",String.valueOf(match.getIdMatch())));
+		params.add(new BasicNameValuePair("data_id",String.valueOf(1)));
+		
+		ECPostWithBNVPTask task = new ECPostWithBNVPTask() {
+			ProgressDialog pDialog = null;
+			
+			@Override
+			protected void onPreExecute() {
+				pDialog = new ProgressDialog(SchedaPartita.this);
+				pDialog.setMessage("Invio informazioni...");
+				pDialog.show();
+				super.onPreExecute();
+			}
+
+			@Override
+			protected void onPostExecute(Integer result) {
+				pDialog.dismiss();
+				super.onPostExecute(result);
+			}
+			
+			@Override
+			protected void onSuccessWithNoData() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			protected void onSuccess() {
+			
+			}
+			
+			@Override
+			protected void onOpResultNULL() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			protected void onJArrNULLCB() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			protected void onGenericError() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			protected void onFailure() {
+				
+			}
+			
+			@Override
+			protected void onDataNULL() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			protected void onConnectionLost() {
+				// TODO Auto-generated method stub
+				
+			}
+		};
+		
+		task.execute(params.toArray(new BasicNameValuePair[]{}));
+//		Messenger msnger = new Messenger(getConnectionServiceHandler());
+//		Message msg = MessagesCreator.getConfirmRegistrationMessage(msnger,
+//				registration);
+		
+		
+		
+
+	}		
+	
+	
+	
 /*VECCHIO METODO COMMENTATO DA STEFANO
 	private void declineGame() {
 		Messenger msnger = new Messenger(getConnectionServiceHandler());
