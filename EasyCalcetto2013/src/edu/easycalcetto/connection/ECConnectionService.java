@@ -255,17 +255,16 @@ public class ECConnectionService extends Service {
 										BNDKEY_RESULT_ARRAY, mArr);
 								break;
 							case MSGTASKDESCRIPTOR_GETMATCH_PARTECIPANTS:
-								final String[] statuses = PARTECIPANT_STATUSES;
-								ECUser[][] pMatr = new ECUser[statuses.length][];
-								for (int i = 0; i < statuses.length; i++) {
+								ECUser[][] pMatr = new ECUser[PARTECIPANT_STATUSES.length][];
+								for (int i = 0; i < PARTECIPANT_STATUSES.length; i++) {
 									pMatr[i] = ECUser
 											.createFromJSONArray(dataJArr
 													.getJSONArray(i));
 									resultBundle.putParcelableArray(
-											statuses[i], pMatr[i]);
+											PARTECIPANT_STATUSES[i], pMatr[i]);
 								}
 								resultBundle.putStringArray(
-										BNDKEY_RESULT_ARRAY, statuses);
+										BNDKEY_RESULT_ARRAY, PARTECIPANT_STATUSES);
 								break;
 							}
 						} catch (JSONException e) {

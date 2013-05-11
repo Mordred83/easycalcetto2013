@@ -343,13 +343,18 @@ public class SchedaPartitaGiocata extends EasyCalcettoActivity {
 	}
 
 	private void downloadPartecipants() {
-		Messenger msnger = new Messenger(getConnectionServiceHandler());
-		Message msg = MessagesCreator.getGamePartecipantsMessage(msnger, match.getIdMatch());
-		try {
-			messenger.send(msg);
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
+		
+		
+		
+		
+		
+//		Messenger msnger = new Messenger(getConnectionServiceHandler());
+//		Message msg = MessagesCreator.getGamePartecipantsMessage(msnger, match.getIdMatch());
+//		try {
+//			messenger.send(msg);
+//		} catch (RemoteException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	private void confirmGame() {

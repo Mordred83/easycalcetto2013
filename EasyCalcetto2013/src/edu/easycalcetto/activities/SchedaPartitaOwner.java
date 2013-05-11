@@ -1,12 +1,22 @@
 package edu.easycalcetto.activities;
 
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNC;
+import static edu.easycalcetto.data.ECMatch.PARTECIPANT_STATUSES;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -37,6 +47,7 @@ import com.actionbarsherlock.view.MenuItem;
 import edu.easycalcetto.EasyCalcettoActivity;
 import edu.easycalcetto.R;
 import edu.easycalcetto.connection.ECConnectionMessageConstants;
+import edu.easycalcetto.connection.ECPostWithBNVPTask;
 import edu.easycalcetto.data.ECMatch;
 import edu.easycalcetto.data.ECUser;
 import edu.easycalcetto.data.MessagesCreator;
@@ -397,14 +408,102 @@ public class SchedaPartitaOwner extends EasyCalcettoActivity {
 	}
 
 	private void downloadPartecipants() {
-		Messenger msnger = new Messenger(getConnectionServiceHandler());
-		Message msg = MessagesCreator.getGamePartecipantsMessage(msnger,
-				match.getIdMatch());
-		try {
-			messenger.send(msg);
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
+
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair(
+				FUNC,
+				ECConnectionMessageConstants.FUNCDESCRIPTOR_GETMATCH_PARTECIPANTS));
+		params.add(new BasicNameValuePair("id", String.valueOf(match
+				.getIdMatch())));
+		ECPostWithBNVPTask task = new ECPostWithBNVPTask() {
+			ProgressDialog pDialog = null;
+
+			@Override
+			protected void onPreExecute() {
+				pDialog = new ProgressDialog(SchedaPartita.this);
+				pDialog.setMessage("Caricando la lista degli ospiti");
+				pDialog.show();
+				super.onPreExecute();
+			}
+
+			@Override
+			protected void onPostExecute(Integer result) {
+				pDialog.dismiss();
+				super.onPostExecute(result);
+			}
+
+			@Override
+			protected void onSuccessWithNoData() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onSuccess() {
+				try {
+					for (int i = 0; i < PARTECIPANT_STATUSES.length; i++) {
+						partecipantsMap.put(PARTECIPANT_STATUSES[i], ECUser
+								.createFromJSONArray(getDataJArr()
+										.getJSONArray(i)));
+					}
+
+					field_Confermati
+							.setText(getPartecipantsNumberByStatus(PARTECIPANT_STATUS_CONFIRMED));
+					setStatus();
+				} catch (NumberFormatException e) {
+					Log.e(LOGTAG, "number format exception", e);
+					onGenericError();
+				} catch (JSONException e) {
+					Log.e(LOGTAG, "JSON malformed", e);
+					onGenericError();
+				}
+			}
+
+			@Override
+			protected void onOpResultNULL() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onJArrNULLCB() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onGenericError() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onFailure() {
+				// TODO Auto-generated method stub
+			}
+
+			@Override
+			protected void onDataNULL() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onConnectionLost() {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		task.execute(params.toArray(new BasicNameValuePair[] {}));
+//		Messenger msnger = new Messenger(getConnectionServiceHandler());
+//		Message msg = MessagesCreator.getGamePartecipantsMessage(msnger,
+//				match.getIdMatch());
+//		try {
+//			messenger.send(msg);
+//		} catch (RemoteException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	private void updateMatch() {
