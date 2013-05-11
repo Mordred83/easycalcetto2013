@@ -486,7 +486,7 @@ public class Amici extends EasyCalcettoActivity implements
 
 		return ad.show();
 	}
-	
+/*	
 	private void addFriend(ECUser friend) {
 		Messenger msnger = new Messenger(getConnectionServiceHandler());
 		long userID = getMyApplication().getOwner().get_id();
@@ -500,7 +500,92 @@ public class Amici extends EasyCalcettoActivity implements
 			e.printStackTrace();
 		}
 	}
+*/
+	
+	private void addFriend(ECUser friend) {
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair(FUNC,
+				ECConnectionMessageConstants.FUNCDESCRIPTOR_DECLINE_GAME));
+		params.add(new BasicNameValuePair("user_id", String.valueOf(getMyApplication().getOwner().get_id())));
+		params.add(new BasicNameValuePair("num_tel", String.valueOf(friend.getNum_tel())));
 
+		ECPostWithBNVPTask task = new ECPostWithBNVPTask() {
+			ProgressDialog pDialog = null;
+
+			@Override
+			protected void onPreExecute() {
+				pDialog = new ProgressDialog(Amici.this);
+				pDialog.setMessage("Aggiungo amico...");
+				pDialog.show();
+				super.onPreExecute();
+			}
+
+			@Override
+			protected void onPostExecute(Integer result) {
+				pDialog.dismiss();
+				super.onPostExecute(result);
+			}
+
+			@Override
+			protected void onSuccessWithNoData() {
+				// TODO Auto-generated method stub
+				Toast.makeText(getApplicationContext(),
+						"Hai aggiunto un'amico alla tua lista",
+						Toast.LENGTH_SHORT).show();
+			}
+
+			@Override
+			protected void onSuccess() {
+
+			}
+
+			@Override
+			protected void onOpResultNULL() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onJArrNULLCB() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onGenericError() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onFailure() {
+				Toast.makeText(getApplicationContext(),
+						"Impossibile aggiungere l'amico selezionato",
+						Toast.LENGTH_SHORT).show();
+			}
+
+			@Override
+			protected void onDataNULL() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onConnectionLost() {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		task.execute(params.toArray(new BasicNameValuePair[] {}));
+		// Messenger msnger = new Messenger(getConnectionServiceHandler());
+		// Message msg = MessagesCreator.getConfirmRegistrationMessage(msnger,
+		// registration);
+
+	}
+	
+	
+	
 	private void updatePhotos(ArrayList<ECUser> al) {
 
 		DefaultHttpClient client = new ECHttpClient();
@@ -683,6 +768,7 @@ public class Amici extends EasyCalcettoActivity implements
 			@Override
 			protected void onFailure() {
 				// TODO Auto-generated method stub
+				
 			}
 			
 			@Override
@@ -700,6 +786,9 @@ public class Amici extends EasyCalcettoActivity implements
 		
 		task.execute(params.toArray(new BasicNameValuePair[]{}));
 	}
+	
+	
+	
 	@Override
 	protected Handler getConnectionServiceHandler() {
 
