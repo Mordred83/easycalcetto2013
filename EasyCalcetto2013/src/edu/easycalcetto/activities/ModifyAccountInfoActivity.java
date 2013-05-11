@@ -1,9 +1,20 @@
 package edu.easycalcetto.activities;
 
+import static edu.easycalcetto.ApplicationStatus.REGISTERED;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNC;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_CONFIRM_REGISTRATION;
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -24,6 +35,7 @@ import com.actionbarsherlock.view.MenuItem;
 import edu.easycalcetto.EasyCalcettoActivity;
 import edu.easycalcetto.R;
 import edu.easycalcetto.connection.ECConnectionMessageConstants;
+import edu.easycalcetto.connection.ECPostWithBNVPTask;
 import edu.easycalcetto.data.ECUser;
 import edu.easycalcetto.data.MessagesCreator;
 
@@ -149,7 +161,7 @@ public class ModifyAccountInfoActivity extends EasyCalcettoActivity {
 				dob.get(Calendar.YEAR));
 		dobTextView.setText(data);
 	}
-
+/* COMMENTATO PERCHE' VECCHIO METODO DI CONNESSIONE
 	private void updateUser() {
 		saveButton.setEnabled(false);
 		currentUser.setName(nameStr);
@@ -166,6 +178,108 @@ public class ModifyAccountInfoActivity extends EasyCalcettoActivity {
 			saveButton.setEnabled(true);
 		}
 	}
+*/
+	
+// NUOVA MODIFICA STEFANO	
+	
+	private void updateUser() {
+		saveButton.setEnabled(false);
+		currentUser.setName(nameStr);
+		currentUser.setSurname(surnameStr);
+		currentUser.setYob(String.valueOf(dob.getTimeInMillis()));
+		
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair(FUNC, ECConnectionMessageConstants.FUNCDESCRIPTOR_UPDATEUSER));
+		params.add(new BasicNameValuePair("id", String.valueOf(currentUser.get_id())));
+		params.add(new BasicNameValuePair("name",currentUser.getName()));
+		params.add(new BasicNameValuePair("surname",currentUser.getSurname()));
+		params.add(new BasicNameValuePair("yob",String.valueOf(currentUser.getYob())));
+		
+		ECPostWithBNVPTask task = new ECPostWithBNVPTask() {
+			ProgressDialog pDialog = null;
+			
+			@Override
+			protected void onPreExecute() {
+				pDialog = new ProgressDialog(ModifyAccountInfoActivity.this);
+				pDialog.setMessage("Aggiornando i tuoi dati...");
+				pDialog.show();
+				super.onPreExecute();
+			}
+
+			@Override
+			protected void onPostExecute(Integer result) {
+				pDialog.dismiss();
+				super.onPostExecute(result);
+			}
+			
+			@Override
+			protected void onSuccessWithNoData() {
+				// TODO Auto-generated method stub
+				getMyApplication().updateOwner(currentUser);
+				Toast.makeText(getApplicationContext(),
+							"Dati Modificati Correttamente",
+							Toast.LENGTH_SHORT).show();
+				saveButton.setEnabled(true);
+				//finish(); TODO
+			}
+			
+			@Override
+			protected void onSuccess() {
+				
+			}
+			
+			@Override
+			protected void onOpResultNULL() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			protected void onJArrNULLCB() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			protected void onGenericError() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			protected void onFailure() {
+				Toast.makeText(getApplicationContext(),
+						"Impossibile modificare le informazioni",
+						Toast.LENGTH_SHORT).show();
+				saveButton.setEnabled(true);
+				finish();
+			}
+			
+			@Override
+			protected void onDataNULL() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			protected void onConnectionLost() {
+				// TODO Auto-generated method stub
+				
+			}
+		};
+		
+		task.execute(params.toArray(new BasicNameValuePair[]{}));
+//		Messenger msnger = new Messenger(getConnectionServiceHandler());
+//		Message msg = MessagesCreator.getConfirmRegistrationMessage(msnger,
+//				registration);
+		
+		
+		
+
+	}
+	
+	
+	
 
 	@Override
 	protected Handler getConnectionServiceHandler() {
