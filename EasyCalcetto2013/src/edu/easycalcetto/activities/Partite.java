@@ -4,6 +4,7 @@ import static edu.easycalcetto.ApplicationStatus.REGISTERED;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.BNDKEY_RESULT_ARRAY;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNC;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_CONFIRM_REGISTRATION;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_GETMATCHES_CLOSED;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_GETMATCHES_OPEN;
 
 import java.util.ArrayList;
@@ -130,19 +131,102 @@ public class Partite extends EasyCalcettoActivity implements
 			getOpenMatches();
 			break;
 		case GIOCATE:
-			msg = MessagesCreator.getGetClosedMatchesMessage(msnger,
-					getMyApplication().getOwner().get_id());
+			// msg = MessagesCreator.getGetClosedMatchesMessage(msnger,
+			// getMyApplication().getOwner().get_id());
+			getClosedMatches();
 			break;
 		}
-		if (msg != null && messenger != null)
-			try {
-				messenger.send(msg);
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
-		if (mList.isRefreshing()) {
+		// if (msg != null && messenger != null)
+		// try {
+		// messenger.send(msg);
+		// } catch (RemoteException e) {
+		// e.printStackTrace();
+		// }
+		// if (mList.isRefreshing()) {
+		// }
 
-		}
+	}
+
+	private void getClosedMatches() {
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair(FUNC, FUNCDESCRIPTOR_GETMATCHES_CLOSED));
+		params.add(new BasicNameValuePair("id", String
+				.valueOf(getMyApplication().getOwner().get_id())));
+
+		ECPostWithBNVPTask task = new ECPostWithBNVPTask() {
+			ProgressDialog pDialog = null;
+
+			@Override
+			protected void onPreExecute() {
+				pDialog = new ProgressDialog(Partite.this);
+				pDialog.setMessage("Carico le partite terminate");
+				pDialog.show();
+				super.onPreExecute();
+			}
+
+			@Override
+			protected void onPostExecute(Integer result) {
+				pDialog.dismiss();
+				super.onPostExecute(result);
+			}
+
+			@Override
+			protected void onSuccessWithNoData() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onSuccess() {
+				try {
+					matchs_played = ECMatch.createFromJSONArray(getDataJArr());
+					caricaChiuse();
+				} catch (NumberFormatException e) {
+					Log.e(LOGTAG, "number format exception", e);
+					onGenericError();
+				} catch (JSONException e) {
+					Log.e(LOGTAG, "JSON malformed", e);
+					onGenericError();
+				}
+			}
+
+			@Override
+			protected void onOpResultNULL() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onJArrNULLCB() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onGenericError() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onFailure() {
+				// TODO: Auto-generated method stub
+			}
+
+			@Override
+			protected void onDataNULL() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onConnectionLost() {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		task.execute(params.toArray(new BasicNameValuePair[] {}));
 
 	}
 
@@ -209,7 +293,7 @@ public class Partite extends EasyCalcettoActivity implements
 
 			@Override
 			protected void onFailure() {
-				//TODO: Auto-generated method stub
+				// TODO: Auto-generated method stub
 			}
 
 			@Override

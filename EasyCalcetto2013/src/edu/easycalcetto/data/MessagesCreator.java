@@ -87,20 +87,19 @@ public class MessagesCreator {
 //		m.setData(b);
 //		return m;
 //	}
-	
-	public static Message getGetClosedMatchesMessage(Messenger msnger, Long id){
-		Message m = Message.obtain();
-		Bundle b = createBundle(ECConnectionMessageConstants.FUNCDESCRIPTOR_GETMATCHES_CLOSED, "OK_BUDDY", "SORRY_MY_FRIEND");
-		Map<String,String> map = new HashMap<String, String>();
-		map.put("id", String.valueOf(id));
-		b = addParametersToBundle(b, map);
-		b.putString(ECConnectionMessageConstants.BNDKEY_DATATYPE, long.class.getCanonicalName());
-		m.what = ECConnectionMessageConstants.MSGWHAT_POST;
-		m.arg1 = ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETMATCHES_CLOSED;
-		m.replyTo = msnger;
-		m.setData(b);
-		return m;
-	}
+//	public static Message getGetClosedMatchesMessage(Messenger msnger, Long id){
+//		Message m = Message.obtain();
+//		Bundle b = createBundle(ECConnectionMessageConstants.FUNCDESCRIPTOR_GETMATCHES_CLOSED, "OK_BUDDY", "SORRY_MY_FRIEND");
+//		Map<String,String> map = new HashMap<String, String>();
+//		map.put("id", String.valueOf(id));
+//		b = addParametersToBundle(b, map);
+//		b.putString(ECConnectionMessageConstants.BNDKEY_DATATYPE, long.class.getCanonicalName());
+//		m.what = ECConnectionMessageConstants.MSGWHAT_POST;
+//		m.arg1 = ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETMATCHES_CLOSED;
+//		m.replyTo = msnger;
+//		m.setData(b);
+//		return m;
+//	}
 	
 	public static Message getCreateMatchMessage(Messenger msnger, ECMatch ecm){
 		Message m = Message.obtain();

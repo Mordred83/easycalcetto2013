@@ -1,11 +1,21 @@
 package edu.easycalcetto.activities;
 
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNC;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_GETMATCHES_CLOSED;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -37,6 +47,8 @@ import com.actionbarsherlock.view.MenuItem;
 import edu.easycalcetto.EasyCalcettoActivity;
 import edu.easycalcetto.R;
 import edu.easycalcetto.connection.ECConnectionMessageConstants;
+import edu.easycalcetto.connection.ECPostWithBNVPTask;
+import edu.easycalcetto.data.ECMatch;
 import edu.easycalcetto.data.ECUser;
 import edu.easycalcetto.data.MessagesCreator;
 
@@ -225,13 +237,14 @@ public class ProfiloAmico extends EasyCalcettoActivity {
 
 			File imageFile = new File(getMyApplication().getImagesDir(),
 					user.generatePhotoFileName() + ".jpeg");
-			ExifInterface imageExif = new ExifInterface(imageFile.getAbsolutePath());
-			
+			ExifInterface imageExif = new ExifInterface(
+					imageFile.getAbsolutePath());
+
 			Bitmap myBitmap = BitmapFactory.decodeFile(imgFile
 					.getAbsolutePath());
 
 			avatar.setImageBitmap(myBitmap);
-			
+
 			avatar.setScaleType(ScaleType.FIT_XY);
 
 			FileOutputStream fos = new FileOutputStream(imageFile);
@@ -304,22 +317,120 @@ public class ProfiloAmico extends EasyCalcettoActivity {
 
 	@Override
 	protected void onServiceConnected() {
-		Messenger msnger = new Messenger(getConnectionServiceHandler());
-		Message msg = null;
-		msg = MessagesCreator.getGetClosedMatchesMessage(msnger, user.get_id());
-		if (msg != null && messenger != null)
-			try {
-				messenger.send(msg);
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+
+		getClosedMatches();
+		// Messenger msnger = new Messenger(getConnectionServiceHandler());
+		// Message msg = null;
+		// msg = MessagesCreator.getGetClosedMatchesMessage(msnger,
+		// user.get_id());
+		// if (msg != null && messenger != null)
+		// try {
+		// messenger.send(msg);
+		// } catch (RemoteException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
 
 	}
 
 	@Override
 	protected void onServiceDisconnected() {
 
+	}
+
+	private void getClosedMatches() {
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair(FUNC,
+				FUNCDESCRIPTOR_GETMATCHES_CLOSED));
+		params.add(new BasicNameValuePair("id", String.valueOf(user.get_id())));
+
+		ECPostWithBNVPTask task = new ECPostWithBNVPTask() {
+			ProgressDialog pDialog = null;
+
+			@Override
+			protected void onPreExecute() {
+				pDialog = new ProgressDialog(ProfiloAmico.this);
+				pDialog.setMessage("Carico le partite terminate");
+				pDialog.show();
+				super.onPreExecute();
+			}
+
+			@Override
+			protected void onPostExecute(Integer result) {
+				pDialog.dismiss();
+				super.onPostExecute(result);
+			}
+
+			@Override
+			protected void onSuccessWithNoData() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onSuccess() {
+				try {
+					Object[] oArr = ECMatch.createFromJSONArray(getDataJArr());
+					partiteGiocate = oArr.length;
+					field_Games.setText("" + partiteGiocate);
+				} catch (NumberFormatException e) {
+					Log.e(LOGTAG, "number format exception", e);
+					onGenericError();
+				} catch (JSONException e) {
+					Log.e(LOGTAG, "JSON malformed", e);
+					onGenericError();
+				}
+			}
+
+			@Override
+			protected void onOpResultNULL() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onJArrNULLCB() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onGenericError() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onFailure() {
+				// TODO: Auto-generated method stub
+			}
+
+			@Override
+			protected void onDataNULL() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onConnectionLost() {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		task.execute(params.toArray(new BasicNameValuePair[] {}));
+
+		// Messenger msnger = new Messenger(getConnectionServiceHandler());
+		// Message msg = null;
+		// msg = MessagesCreator.getGetClosedMatchesMessage(msnger,
+		// user.get_id());
+		// if (msg != null && messenger != null)
+		// try {
+		// messenger.send(msg);
+		// } catch (RemoteException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
 	}
 
 }
