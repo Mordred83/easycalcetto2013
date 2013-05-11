@@ -650,7 +650,7 @@ public class Partite extends EasyCalcettoActivity implements
 			@Override
 			protected void onPreExecute() {
 				pDialog = new ProgressDialog(Partite.this);
-				pDialog.setMessage("CHE CI METTIAMO?");
+				pDialog.setMessage("Invio informazioni...");
 				pDialog.show();
 				super.onPreExecute();
 			}

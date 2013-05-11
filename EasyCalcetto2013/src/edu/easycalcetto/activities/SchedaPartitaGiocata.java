@@ -1,10 +1,18 @@
 package edu.easycalcetto.activities;
 
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNC;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -32,6 +40,7 @@ import com.actionbarsherlock.view.MenuItem;
 import edu.easycalcetto.EasyCalcettoActivity;
 import edu.easycalcetto.R;
 import edu.easycalcetto.connection.ECConnectionMessageConstants;
+import edu.easycalcetto.connection.ECPostWithBNVPTask;
 import edu.easycalcetto.data.ECMatch;
 import edu.easycalcetto.data.ECUser;
 import edu.easycalcetto.data.MessagesCreator;
@@ -366,7 +375,7 @@ public class SchedaPartitaGiocata extends EasyCalcettoActivity {
 			e.printStackTrace();
 		}
 	}
-	
+/*VECCHIO METODO COMMENTATO DA STEFANO	
 	private void declineGame() {
 		Messenger msnger = new Messenger(getConnectionServiceHandler());
 		Message msg = MessagesCreator.getDeclineGameMessage(msnger, getMyApplication().getOwner().get_id(), match.getIdMatch(), 1);
@@ -376,8 +385,89 @@ public class SchedaPartitaGiocata extends EasyCalcettoActivity {
 			e.printStackTrace();
 		}
 	}
+*/
+
 	
-	
+	private void declineGame() {
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair(FUNC, ECConnectionMessageConstants.FUNCDESCRIPTOR_DECLINE_GAME));
+		params.add(new BasicNameValuePair("player_id", String.valueOf(getMyApplication().getOwner().get_id())));
+		params.add(new BasicNameValuePair("match_id",String.valueOf(match.getIdMatch())));
+		params.add(new BasicNameValuePair("data_id",String.valueOf(1)));
+		
+		ECPostWithBNVPTask task = new ECPostWithBNVPTask() {
+			ProgressDialog pDialog = null;
+			
+			@Override
+			protected void onPreExecute() {
+				pDialog = new ProgressDialog(SchedaPartitaGiocata.this);
+				pDialog.setMessage("Invio informazioni...");
+				pDialog.show();
+				super.onPreExecute();
+			}
+
+			@Override
+			protected void onPostExecute(Integer result) {
+				pDialog.dismiss();
+				super.onPostExecute(result);
+			}
+			
+			@Override
+			protected void onSuccessWithNoData() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			protected void onSuccess() {
+			
+			}
+			
+			@Override
+			protected void onOpResultNULL() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			protected void onJArrNULLCB() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			protected void onGenericError() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			protected void onFailure() {
+				
+			}
+			
+			@Override
+			protected void onDataNULL() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			protected void onConnectionLost() {
+				// TODO Auto-generated method stub
+				
+			}
+		};
+		
+		task.execute(params.toArray(new BasicNameValuePair[]{}));
+//		Messenger msnger = new Messenger(getConnectionServiceHandler());
+//		Message msg = MessagesCreator.getConfirmRegistrationMessage(msnger,
+//				registration);
+		
+		
+		
+
+	}	
 	
 	private void setStatus(){
 		String tmpStr = null; 
