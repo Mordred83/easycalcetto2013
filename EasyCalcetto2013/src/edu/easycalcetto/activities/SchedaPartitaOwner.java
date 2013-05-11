@@ -3,6 +3,7 @@ package edu.easycalcetto.activities;
 import static edu.easycalcetto.ApplicationStatus.REGISTERED;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNC;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_CONFIRM_REGISTRATION;
+import static edu.easycalcetto.data.ECMatch.PARTECIPANT_STATUSES;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -387,7 +388,6 @@ public class SchedaPartitaOwner extends EasyCalcettoActivity {
 						}
 						field_Confermati
 								.setText(getPartecipantsNumberByStatus(PARTECIPANT_STATUS_CONFIRMED));
-
 						break;
 					case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_UPDATEMATCH:
 						finish();
@@ -409,14 +409,100 @@ public class SchedaPartitaOwner extends EasyCalcettoActivity {
 	}
 
 	private void downloadPartecipants() {
-		Messenger msnger = new Messenger(getConnectionServiceHandler());
-		Message msg = MessagesCreator.getGamePartecipantsMessage(msnger,
-				match.getIdMatch());
-		try {
-			messenger.send(msg);
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
+
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair(
+				FUNC,
+				ECConnectionMessageConstants.FUNCDESCRIPTOR_GETMATCH_PARTECIPANTS));
+		params.add(new BasicNameValuePair("id", String.valueOf(match
+				.getIdMatch())));
+		ECPostWithBNVPTask task = new ECPostWithBNVPTask() {
+			ProgressDialog pDialog = null;
+
+			@Override
+			protected void onPreExecute() {
+				pDialog = new ProgressDialog(SchedaPartitaOwner.this);
+				pDialog.setMessage("Caricando la lista dei partecipanti");
+				pDialog.show();
+				super.onPreExecute();
+			}
+
+			@Override
+			protected void onPostExecute(Integer result) {
+				pDialog.dismiss();
+				super.onPostExecute(result);
+			}
+
+			@Override
+			protected void onSuccessWithNoData() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onSuccess() {
+				try {
+					for (int i = 0; i < PARTECIPANT_STATUSES.length; i++) {
+						partecipantsMap.put(PARTECIPANT_STATUSES[i], ECUser
+								.createFromJSONArray(getDataJArr()
+										.getJSONArray(i)));
+					}
+					field_Confermati
+							.setText(getPartecipantsNumberByStatus(PARTECIPANT_STATUS_CONFIRMED));
+				} catch (NumberFormatException e) {
+					Log.e(LOGTAG, "number format exception", e);
+					onGenericError();
+				} catch (JSONException e) {
+					Log.e(LOGTAG, "JSON malformed", e);
+					onGenericError();
+				}
+			}
+
+			@Override
+			protected void onOpResultNULL() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onJArrNULLCB() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onGenericError() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onFailure() {
+				// TODO Auto-generated method stub
+			}
+
+			@Override
+			protected void onDataNULL() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onConnectionLost() {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		task.execute(params.toArray(new BasicNameValuePair[] {}));
+//		Messenger msnger = new Messenger(getConnectionServiceHandler());
+//		Message msg = MessagesCreator.getGamePartecipantsMessage(msnger,
+//				match.getIdMatch());
+//		try {
+//			messenger.send(msg);
+//		} catch (RemoteException e) {
+//			e.printStackTrace();
+//		}
 	}
 /*VECCHIO METODO COMMENTATO DA STEFANO
 	private void updateMatch() {

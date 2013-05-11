@@ -184,50 +184,50 @@ public class MessagesCreator {
 		return m;
 	}
 	
-	public static Message getDeclineGameMessage(Messenger msnger, long playerID,
-			long matchID, int dataID) {
-		Message m = Message.obtain();
-		Bundle b = createBundle(ECConnectionMessageConstants.FUNCDESCRIPTOR_DECLINE_GAME, "OK_BUDDY", "SORRY_MY_FRIEND");
-		Map<String,String> map = new HashMap<String, String>();
-		map.put("player_id", String.valueOf(playerID));
-		map.put("match_id", String.valueOf(matchID));
-		map.put("data_id", String.valueOf(dataID));
-		b = addParametersToBundle(b, map);
-		b.putString(ECConnectionMessageConstants.BNDKEY_DATATYPE, long.class.getCanonicalName());
-		m.what = ECConnectionMessageConstants.MSGWHAT_POST;
-		m.arg1 = ECConnectionMessageConstants.MSGTASKDESCRIPTOR_DECLINE_GAME;
-		m.replyTo = msnger;
-		m.setData(b);
-		return m;
-	}
+//	public static Message getDeclineGameMessage(Messenger msnger, long playerID,
+//			long matchID, int dataID) {
+//		Message m = Message.obtain();
+//		Bundle b = createBundle(ECConnectionMessageConstants.FUNCDESCRIPTOR_DECLINE_GAME, "OK_BUDDY", "SORRY_MY_FRIEND");
+//		Map<String,String> map = new HashMap<String, String>();
+//		map.put("player_id", String.valueOf(playerID));
+//		map.put("match_id", String.valueOf(matchID));
+//		map.put("data_id", String.valueOf(dataID));
+//		b = addParametersToBundle(b, map);
+//		b.putString(ECConnectionMessageConstants.BNDKEY_DATATYPE, long.class.getCanonicalName());
+//		m.what = ECConnectionMessageConstants.MSGWHAT_POST;
+//		m.arg1 = ECConnectionMessageConstants.MSGTASKDESCRIPTOR_DECLINE_GAME;
+//		m.replyTo = msnger;
+//		m.setData(b);
+//		return m;
+//	}
 
-	public static Message getUpdateMatchMessage(Messenger msnger, ECMatch match) {
-		Message m = Message.obtain();
-		Bundle b = createBundle(ECConnectionMessageConstants.FUNCDESCRIPTOR_UPDATEMATCH, "OK_BUDDY", "SORRY_MY_FRIEND");
-		b.putParcelable(ECConnectionMessageConstants.BNDKEY_POST_PARCELABLE, match);
-		m.what = ECConnectionMessageConstants.MSGWHAT_POST;
-		m.arg1 = ECConnectionMessageConstants.MSGTASKDESCRIPTOR_UPDATEMATCH;
-		m.replyTo = msnger;
-		m.setData(b);
-		return m;
-	}
+//	public static Message getUpdateMatchMessage(Messenger msnger, ECMatch match) {
+//		Message m = Message.obtain();
+//		Bundle b = createBundle(ECConnectionMessageConstants.FUNCDESCRIPTOR_UPDATEMATCH, "OK_BUDDY", "SORRY_MY_FRIEND");
+//		b.putParcelable(ECConnectionMessageConstants.BNDKEY_POST_PARCELABLE, match);
+//		m.what = ECConnectionMessageConstants.MSGWHAT_POST;
+//		m.arg1 = ECConnectionMessageConstants.MSGTASKDESCRIPTOR_UPDATEMATCH;
+//		m.replyTo = msnger;
+//		m.setData(b);
+//		return m;
+//	}
 	
-	public static Message getUpdateUserMessage(Messenger msnger, long id, String name, String surname, long dob) {
-		Message m = Message.obtain();
-		Bundle b = createBundle(ECConnectionMessageConstants.FUNCDESCRIPTOR_UPDATEUSER, "OK_BUDDY", "SORRY_MY_FRIEND");
-		Map<String,String> map = new HashMap<String, String>();
-		map.put("id", String.valueOf(id));
-		map.put("name", name);
-		map.put("surname", surname);
-		map.put("yob", String.valueOf(dob));
-		b = addParametersToBundle(b, map);
-		b.putString(ECConnectionMessageConstants.BNDKEY_DATATYPE, long.class.getCanonicalName());
-		m.what = ECConnectionMessageConstants.MSGWHAT_POST;
-		m.arg1 = ECConnectionMessageConstants.MSGTASKDESCRIPTOR_UPDATEUSER;
-		m.replyTo = msnger;
-		m.setData(b);
-		return m;
-	}
+//	public static Message getUpdateUserMessage(Messenger msnger, long id, String name, String surname, long dob) {
+//		Message m = Message.obtain();
+//		Bundle b = createBundle(ECConnectionMessageConstants.FUNCDESCRIPTOR_UPDATEUSER, "OK_BUDDY", "SORRY_MY_FRIEND");
+//		Map<String,String> map = new HashMap<String, String>();
+//		map.put("id", String.valueOf(id));
+//		map.put("name", name);
+//		map.put("surname", surname);
+//		map.put("yob", String.valueOf(dob));
+//		b = addParametersToBundle(b, map);
+//		b.putString(ECConnectionMessageConstants.BNDKEY_DATATYPE, long.class.getCanonicalName());
+//		m.what = ECConnectionMessageConstants.MSGWHAT_POST;
+//		m.arg1 = ECConnectionMessageConstants.MSGTASKDESCRIPTOR_UPDATEUSER;
+//		m.replyTo = msnger;
+//		m.setData(b);
+//		return m;
+//	}
 
 	
 }
