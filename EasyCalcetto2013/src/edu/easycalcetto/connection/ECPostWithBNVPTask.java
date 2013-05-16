@@ -128,7 +128,7 @@ public abstract class ECPostWithBNVPTask extends
 			onConnectionLost();
 			break;
 		case RESULT_ERR_NULL_JARR:
-			onJArrNULLCB();
+			onJArrNULL();
 			break;
 		case RESULT_ERR_NULL_OPRESULT:
 			onOpResultNULL();
@@ -165,7 +165,7 @@ public abstract class ECPostWithBNVPTask extends
 
 	abstract protected void onFailure();
 
-	abstract protected void onJArrNULLCB();
+	abstract protected void onJArrNULL();
 
 	abstract protected void onOpResultNULL();
 

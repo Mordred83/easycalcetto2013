@@ -421,7 +421,7 @@ public class SchedaPartitaGiocata extends EasyCalcettoActivity {
 			}
 			
 			@Override
-			protected void onJArrNULLCB() {
+			protected void onJArrNULL() {
 				// TODO Auto-generated method stub
 				
 			}
@@ -520,7 +520,7 @@ public class SchedaPartitaGiocata extends EasyCalcettoActivity {
 			}
 			
 			@Override
-			protected void onJArrNULLCB() {
+			protected void onJArrNULL() {
 				// TODO Auto-generated method stub
 				
 			}

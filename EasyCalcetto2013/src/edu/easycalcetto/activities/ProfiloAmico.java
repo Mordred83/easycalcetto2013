@@ -4,8 +4,6 @@ import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNC;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_GETMATCHES_CLOSED;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,22 +17,13 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.CompressFormat;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
-import android.media.ExifInterface;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Messenger;
-import android.os.RemoteException;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.RatingBar;
@@ -50,7 +39,6 @@ import edu.easycalcetto.connection.ECConnectionMessageConstants;
 import edu.easycalcetto.connection.ECPostWithBNVPTask;
 import edu.easycalcetto.data.ECMatch;
 import edu.easycalcetto.data.ECUser;
-import edu.easycalcetto.data.MessagesCreator;
 
 public class ProfiloAmico extends EasyCalcettoActivity {
 	/** Called when the activity is first created. */
@@ -122,18 +110,18 @@ public class ProfiloAmico extends EasyCalcettoActivity {
 			user = (ECUser) getIntent().getExtras().get(EXTRAKEY_ECUSER);
 		} else {
 			user = getMyApplication().getOwner();
-			avatar.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					Intent intentGallery = new Intent(Intent.ACTION_GET_CONTENT);
-					intentGallery.setType("image/*");
-					intentGallery.setAction(Intent.ACTION_GET_CONTENT);
-					// intentGallery.putExtra(EXTRAKEY_ECUSER, user);
-					startActivityForResult(Intent.createChooser(intentGallery,
-							"Seleziona Foto Profilo"), SELECT_PICTURE);
-				}
-			});
+//			avatar.setOnClickListener(new OnClickListener() {
+//
+//				@Override
+//				public void onClick(View v) {
+//					Intent intentGallery = new Intent(Intent.ACTION_GET_CONTENT);
+//					intentGallery.setType("image/*");
+//					intentGallery.setAction(Intent.ACTION_GET_CONTENT);
+//					// intentGallery.putExtra(EXTRAKEY_ECUSER, user);
+//					startActivityForResult(Intent.createChooser(intentGallery,
+//							"Seleziona Foto Profilo"), SELECT_PICTURE);
+//				}
+//			});
 		}
 		initializeFields();
 		recuperaFoto();
@@ -212,11 +200,11 @@ public class ProfiloAmico extends EasyCalcettoActivity {
 				Uri selectedImageUri = data.getData();
 				// user = data.getParcelableExtra(EXTRAKEY_ECUSER);
 				selectedImagePath = getPath(selectedImageUri);
-				try {
-					cambiaFoto(selectedImagePath);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				// try {
+				// //cambiaFoto(selectedImagePath);
+				// } catch (IOException e) {
+				// e.printStackTrace();
+				// }
 			}
 		}
 	}
@@ -229,31 +217,6 @@ public class ProfiloAmico extends EasyCalcettoActivity {
 				.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 		cursor.moveToFirst();
 		return cursor.getString(column_index);
-	}
-
-	public void cambiaFoto(String path) throws IOException {
-		File imgFile = new File(path);
-		if (imgFile.exists()) {
-
-			File imageFile = new File(getMyApplication().getImagesDir(),
-					user.generatePhotoFileName() + ".jpeg");
-			ExifInterface imageExif = new ExifInterface(
-					imageFile.getAbsolutePath());
-
-			Bitmap myBitmap = BitmapFactory.decodeFile(imgFile
-					.getAbsolutePath());
-
-			avatar.setImageBitmap(myBitmap);
-
-			avatar.setScaleType(ScaleType.FIT_XY);
-
-			FileOutputStream fos = new FileOutputStream(imageFile);
-			myBitmap.compress(CompressFormat.JPEG, 90, fos);
-			fos.close();
-			user.setPhotoName(imageFile.getName());
-			uploadPhoto();
-			getMyApplication().updateOwner(user);
-		}
 	}
 
 	public void recuperaFoto() {
@@ -300,19 +263,19 @@ public class ProfiloAmico extends EasyCalcettoActivity {
 	};
 
 	private void uploadPhoto() {
-		Messenger msnger = new Messenger(getConnectionServiceHandler());
-		Message msg = null;
-		msg = MessagesCreator
-				.getUploadPhotoMessage(msnger, user.get_id(), new File(
-						getMyApplication().getImagesDir(), user.getPhotoName())
-						.getAbsolutePath());
-		if (msg != null && messenger != null)
-			try {
-				messenger.send(msg);
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//		Messenger msnger = new Messenger(getConnectionServiceHandler());
+//		Message msg = null;
+//		msg = MessagesCreator
+//				.getUploadPhotoMessage(msnger, user.get_id(), new File(
+//						getMyApplication().getImagesDir(), user.getPhotoName())
+//						.getAbsolutePath());
+//		if (msg != null && messenger != null)
+//			try {
+//				messenger.send(msg);
+//			} catch (RemoteException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 	}
 
 	@Override
@@ -389,7 +352,7 @@ public class ProfiloAmico extends EasyCalcettoActivity {
 			}
 
 			@Override
-			protected void onJArrNULLCB() {
+			protected void onJArrNULL() {
 				// TODO Auto-generated method stub
 
 			}

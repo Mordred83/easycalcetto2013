@@ -282,8 +282,7 @@ public class ECConnectionService extends Service {
 			case ECConnectionMessageConstants.MSGWHAT_POST_IMAGE:
 				final String function = FUNC;
 				final String function_value = FUNCDESCRIPTOR_UPLOAD_PHOTO;
-				final String id = BNDKEY_ID;
-				final String id_value = "" + data.getLong(id);
+				final String id_value = "" + data.getLong(BNDKEY_ID);
 				MultipartEntity mpEntity;
 				request = new HttpPost(SERVER_HR_ADDRESS);
 				File file = new File(
@@ -300,7 +299,7 @@ public class ECConnectionService extends Service {
 				// Normal string data
 				try {
 					mpEntity.addPart(function, new StringBody(function_value));
-					mpEntity.addPart(id, new StringBody(id_value));
+					mpEntity.addPart(BNDKEY_ID, new StringBody(id_value));
 				} catch (UnsupportedEncodingException e2) {
 					// TODO Auto-generated catch block
 					e2.printStackTrace();

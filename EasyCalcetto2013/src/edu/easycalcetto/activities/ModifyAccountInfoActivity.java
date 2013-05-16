@@ -235,7 +235,7 @@ public class ModifyAccountInfoActivity extends EasyCalcettoActivity {
 			}
 			
 			@Override
-			protected void onJArrNULLCB() {
+			protected void onJArrNULL() {
 				// TODO Auto-generated method stub
 				
 			}

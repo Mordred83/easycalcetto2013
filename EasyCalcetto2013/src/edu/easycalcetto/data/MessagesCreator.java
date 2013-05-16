@@ -112,28 +112,28 @@ public class MessagesCreator {
 //		return m;
 //	}
 	
-	public static Message getDowloadPhotoMessage(Messenger msnger, long id) {
-		//TODO:
-		Message m = Message.obtain();
-		Bundle b = createBundle(ECConnectionMessageConstants.FUNCDESCRIPTOR_CREATEMATCH, "OK_BUDDY", "SORRY_MY_FRIEND");
-		m.what = ECConnectionMessageConstants.MSGWHAT_POST;
-		m.arg1 = ECConnectionMessageConstants.MSGTASKDESCRIPTOR_CREATEMATCH;
-		m.replyTo = msnger;
-		m.setData(b);
-		return m;
-	}
+//	public static Message getDowloadPhotoMessage(Messenger msnger, long id) {
+//		//TODO:
+//		Message m = Message.obtain();
+//		Bundle b = createBundle(ECConnectionMessageConstants.FUNCDESCRIPTOR_CREATEMATCH, "OK_BUDDY", "SORRY_MY_FRIEND");
+//		m.what = ECConnectionMessageConstants.MSGWHAT_POST;
+//		m.arg1 = ECConnectionMessageConstants.MSGTASKDESCRIPTOR_CREATEMATCH;
+//		m.replyTo = msnger;
+//		m.setData(b);
+//		return m;
+//	}
 	
-	public static Message getUploadPhotoMessage(Messenger msnger, long id,String photoPath){
-		Message m = Message.obtain();
-		Bundle b = createBundle(ECConnectionMessageConstants.FUNCDESCRIPTOR_UPLOAD_PHOTO, "OK_BUDDY", "SORRY_MY_FRIEND");
-		b.putLong(ECConnectionMessageConstants.BNDKEY_ID, id);
-		b.putString(ECConnectionMessageConstants.BNDKEY_POST_IMAGE_PHOTOPATH, photoPath);
-		m.what = ECConnectionMessageConstants.MSGWHAT_POST_IMAGE;
-		m.arg1 = ECConnectionMessageConstants.MSGTASKDESCRIPTOR_UPLOAD_PHOTO;
-		m.replyTo = msnger;
-		m.setData(b);
-		return m;
-	}
+//	public static Message getUploadPhotoMessage(Messenger msnger, long id,String photoPath){
+//		Message m = Message.obtain();
+//		Bundle b = createBundle(ECConnectionMessageConstants.FUNCDESCRIPTOR_UPLOAD_PHOTO, "OK_BUDDY", "SORRY_MY_FRIEND");
+//		b.putLong(ECConnectionMessageConstants.BNDKEY_ID, id);
+//		b.putString(ECConnectionMessageConstants.BNDKEY_POST_IMAGE_PHOTOPATH, photoPath);
+//		m.what = ECConnectionMessageConstants.MSGWHAT_POST_IMAGE;
+//		m.arg1 = ECConnectionMessageConstants.MSGTASKDESCRIPTOR_UPLOAD_PHOTO;
+//		m.replyTo = msnger;
+//		m.setData(b);
+//		return m;
+//	}
 	
 	private static Bundle createBundle(String funcDescriptor, String resSeccessDescriptor, String resFailureDescriptor){
 		Bundle b = new Bundle();

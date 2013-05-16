@@ -345,7 +345,7 @@ public class InvitaAmiciNuovaPartita extends EasyCalcettoActivity {
 			}
 
 			@Override
-			protected void onJArrNULLCB() {
+			protected void onJArrNULL() {
 				// TODO Auto-generated method stub
 
 			}
@@ -431,7 +431,7 @@ public class InvitaAmiciNuovaPartita extends EasyCalcettoActivity {
 			}
 
 			@Override
-			protected void onJArrNULLCB() {
+			protected void onJArrNULL() {
 				// TODO Auto-generated method stub
 
 			}

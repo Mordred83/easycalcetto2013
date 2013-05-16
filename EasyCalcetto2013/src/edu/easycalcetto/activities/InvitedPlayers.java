@@ -393,7 +393,7 @@ public class InvitedPlayers extends EasyCalcettoActivity implements
 							break;
 						default:
 							Toast.makeText(getApplicationContext(),
-									"Funzionalità  in fase di sviluppo",
+									"Funzionalitï¿½ in fase di sviluppo",
 									Toast.LENGTH_SHORT).show();
 							break;
 						}
@@ -503,7 +503,7 @@ public class InvitedPlayers extends EasyCalcettoActivity implements
 			}
 
 			@Override
-			protected void onJArrNULLCB() {
+			protected void onJArrNULL() {
 				// TODO Auto-generated method stub
 
 			}

@@ -418,12 +418,6 @@ public class SchedaPartita extends EasyCalcettoActivity {
 			}
 
 			@Override
-			protected void onJArrNULLCB() {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
 			protected void onGenericError() {
 				// TODO Auto-generated method stub
 
@@ -444,6 +438,12 @@ public class SchedaPartita extends EasyCalcettoActivity {
 			protected void onConnectionLost() {
 				// TODO Auto-generated method stub
 
+			}
+
+			@Override
+			protected void onJArrNULL() {
+				// TODO Auto-generated method stub
+				
 			}
 		};
 
@@ -515,12 +515,6 @@ public class SchedaPartita extends EasyCalcettoActivity {
 			}
 			
 			@Override
-			protected void onJArrNULLCB() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
 			protected void onGenericError() {
 				// TODO Auto-generated method stub
 				
@@ -539,6 +533,12 @@ public class SchedaPartita extends EasyCalcettoActivity {
 			
 			@Override
 			protected void onConnectionLost() {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			protected void onJArrNULL() {
 				// TODO Auto-generated method stub
 				
 			}
@@ -611,12 +611,6 @@ public class SchedaPartita extends EasyCalcettoActivity {
 			}
 			
 			@Override
-			protected void onJArrNULLCB() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
 			protected void onGenericError() {
 				// TODO Auto-generated method stub
 				
@@ -635,6 +629,12 @@ public class SchedaPartita extends EasyCalcettoActivity {
 			
 			@Override
 			protected void onConnectionLost() {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			protected void onJArrNULL() {
 				// TODO Auto-generated method stub
 				
 			}

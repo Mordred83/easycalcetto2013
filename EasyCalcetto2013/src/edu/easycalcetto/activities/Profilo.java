@@ -1,7 +1,10 @@
 package edu.easycalcetto.activities;
 
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.BNDKEY_ID;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.BNDKEY_POST_IMAGE_PHOTOPATH;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNC;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_GETMATCHES_CLOSED;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_UPLOAD_PHOTO;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -25,12 +28,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Messenger;
-import android.os.RemoteException;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -48,9 +48,9 @@ import edu.easycalcetto.EasyCalcettoActivity;
 import edu.easycalcetto.R;
 import edu.easycalcetto.connection.ECConnectionMessageConstants;
 import edu.easycalcetto.connection.ECPostWithBNVPTask;
+import edu.easycalcetto.connection.ECPostWithMPETask;
 import edu.easycalcetto.data.ECMatch;
 import edu.easycalcetto.data.ECUser;
-import edu.easycalcetto.data.MessagesCreator;
 
 public class Profilo extends EasyCalcettoActivity {
 	/** Called when the activity is first created. */
@@ -136,6 +136,7 @@ public class Profilo extends EasyCalcettoActivity {
 			});
 		}
 		initializeFields();
+		getClosedMatches();
 		recuperaFoto();
 	}
 
@@ -300,24 +301,88 @@ public class Profilo extends EasyCalcettoActivity {
 	};
 
 	private void uploadPhoto() {
-		Messenger msnger = new Messenger(getConnectionServiceHandler());
-		Message msg = null;
-		msg = MessagesCreator
-				.getUploadPhotoMessage(msnger, user.get_id(), new File(
-						getMyApplication().getImagesDir(), user.getPhotoName())
-						.getAbsolutePath());
-		if (msg != null && messenger != null)
-			try {
-				messenger.send(msg);
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		List<BasicNameValuePair> params= new ArrayList<BasicNameValuePair>();
+		params.add(new BasicNameValuePair(FUNC, FUNCDESCRIPTOR_UPLOAD_PHOTO));
+		params.add(new BasicNameValuePair(BNDKEY_ID, String.valueOf(getMyApplication().getOwner().get_id())));
+		params.add(new BasicNameValuePair(BNDKEY_POST_IMAGE_PHOTOPATH, 
+				new File(getMyApplication().getImagesDir(), getMyApplication().getOwner().getPhotoName()).getAbsolutePath()));
+		ECPostWithMPETask task = new ECPostWithMPETask(){
+			ProgressDialog pDialog ;
+			
+			@Override
+			protected void onPreExecute() {
+				pDialog = new ProgressDialog(Profilo.this);
+				pDialog.setMessage("Uploading the photo");
+				pDialog.show();
+				super.onPreExecute();
 			}
+
+			@Override
+			protected void onPostExecute(Integer result) {
+				pDialog.dismiss();
+				super.onPostExecute(result);
+			}
+			
+			
+			
+			@Override
+			protected void onSuccessWithNoData() {
+				Toast.makeText(getApplicationContext(), "Nuova foto caricata con successo", Toast.LENGTH_SHORT).show();
+			}
+			
+			@Override
+			protected void onSuccess() {
+				// TODO Auto-generated method stub
+			}
+			
+			@Override
+			protected void onOpResultNULL() {
+				// TODO Auto-generated method stub
+			}
+			
+			@Override
+			protected void onJArrNULL() {
+				// TODO Auto-generated method stub
+			}
+			
+			@Override
+			protected void onGenericError() {
+				// TODO Auto-generated method stub
+			}
+			
+			@Override
+			protected void onFailure() {
+				Toast.makeText(getApplicationContext(), "Impossibile caricare la foto", Toast.LENGTH_SHORT).show();
+			}
+			
+			@Override
+			protected void onDataNULL() {
+				// TODO Auto-generated method stub
+			}
+			
+			@Override
+			protected void onConnectionLost() {
+				// TODO Auto-generated method stub
+			}
+		};
+		
+		// Messenger msnger = new Messenger(getConnectionServiceHandler());
+		// Message msg = null;
+		// msg = MessagesCreator
+		// .getUploadPhotoMessage(msnger, user.get_id(), new File(
+		// getMyApplication().getImagesDir(), user.getPhotoName())
+		// .getAbsolutePath());
+		// if (msg != null && messenger != null)
+		// try {
+		// messenger.send(msg);
+		// } catch (RemoteException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
 	}
 
 	@Override
 	protected void onServiceConnected() {
-		getClosedMatches();
 	}
 
 	private void getClosedMatches() {
@@ -372,7 +437,7 @@ public class Profilo extends EasyCalcettoActivity {
 			}
 
 			@Override
-			protected void onJArrNULLCB() {
+			protected void onJArrNULL() {
 				// TODO Auto-generated method stub
 
 			}
