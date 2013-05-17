@@ -1,24 +1,15 @@
 package edu.easycalcetto.activities;
 
-import static edu.easycalcetto.ApplicationStatus.REGISTERED;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNC;
-import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_CONFIRM_REGISTRATION;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_GETFRIENDS;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FilenameFilter;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.ByteArrayBuffer;
 import org.json.JSONException;
 
 import android.app.AlertDialog;
@@ -28,16 +19,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
-import android.os.Messenger;
-import android.os.Parcelable;
-import android.os.RemoteException;
 import android.support.v4.app.FragmentTransaction;
-import android.text.AlteredCharSequence;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -54,15 +38,12 @@ import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-import edu.easycalcetto.ECApplication;
 import edu.easycalcetto.EasyCalcettoActivity;
 import edu.easycalcetto.R;
 import edu.easycalcetto.connection.ECConnectionMessageConstants;
-import edu.easycalcetto.connection.ECConnectionService;
 import edu.easycalcetto.connection.ECHttpClient;
 import edu.easycalcetto.connection.ECPostWithBNVPTask;
 import edu.easycalcetto.data.ECUser;
-import edu.easycalcetto.data.MessagesCreator;
 import eu.erikw.PullToRefreshListView;
 import eu.erikw.PullToRefreshListView.OnRefreshListener;
 
@@ -107,6 +88,7 @@ public class Amici extends EasyCalcettoActivity implements
 	@Override
 	public void onResume() {
 		super.onResume();
+		getListsFromServer();
 		mList.setRefreshing();
 	}
 
@@ -141,29 +123,14 @@ public class Amici extends EasyCalcettoActivity implements
 	}
 
 	private void getListsFromServer() {
-
-		Messenger msnger = new Messenger(getConnectionServiceHandler());
-		Message msg = null;
 		switch (currentTab) {
 		case AMICI:
-//			msg = MessagesCreator.getGetFriendsMessage(msnger,
-//					getMyApplication().getOwner().get_id());
 			getFriendsFromServer();
 			break;
 		case ALTRI:
-//			msg = MessagesCreator.getGetAcquaintanceMessage(msnger,
-//					getMyApplication().getOwner().get_id());
 			getAcquietancesFromServer();
 			break;
 		}
-		if (msg != null && messenger != null)
-			try {
-				messenger.send(msg);
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
 	}
 
 	@Override
@@ -786,92 +753,19 @@ public class Amici extends EasyCalcettoActivity implements
 		
 		task.execute(params.toArray(new BasicNameValuePair[]{}));
 	}
+<<<<<<< HEAD
+=======
 	
 	
 	
 	@Override
 	protected Handler getConnectionServiceHandler() {
+>>>>>>> branch 'master' of https://github.com/Mordred83/easycalcetto2013.git
 
-		return new Handler() {
-			@Override
-			public void handleMessage(Message msg) {
-				ArrayList<ECUser> al = new ArrayList<ECUser>();
-				switch (msg.arg2) {
-				case ECConnectionMessageConstants.RES_KIND_SUCCESS:
-					switch (msg.arg1) {
-					case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETFRIENDS:
-						friends = (ECUser[]) msg
-								.getData()
-								.getParcelableArray(
-										ECConnectionMessageConstants.BNDKEY_RESULT_ARRAY);
-
-						for (ECUser user : friends) {
-							if (!user.getPhotoName().equalsIgnoreCase(
-									ECUser.IMAGE_FILE_NAME_DEFAULT)) {
-								File f = new File(getMyApplication()
-										.getImagesDir(), user.getPhotoName());
-								if (!f.exists())
-									al.add(user);
-							}
-						}
-
-						caricaAmici();
-						if (!al.isEmpty())
-							updatePhotos(al);
-						break;
-					case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETACQUAINTANCES:
-						acquietances = (ECUser[]) msg
-								.getData()
-								.getParcelableArray(
-										ECConnectionMessageConstants.BNDKEY_RESULT_ARRAY);
-						for (ECUser user : acquietances) {
-							if (user.getPhotoName().equalsIgnoreCase(
-									ECUser.IMAGE_FILE_NAME_DEFAULT)) {
-								File f = new File(getMyApplication()
-										.getImagesDir(), user.getPhotoName());
-								if (!f.exists())
-									al.add(user);
-							}
-						}
-
-						caricaOspiti();
-						if (!al.isEmpty())
-							updatePhotos(al);
-						break;
-					case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_ADD_FRIEND:
-						Toast.makeText(getApplicationContext(),
-								"Hai aggiunto un'amico alla tua lista",
-								Toast.LENGTH_SHORT).show();
-						break;
-					}
-					break;
-				case ECConnectionMessageConstants.RES_KIND_FAILURE:
-					switch (msg.arg1) {
-					case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_ADD_FRIEND:
-						Toast.makeText(getApplicationContext(),
-								"Impossibile aggiungere l'amico selezionato",
-								Toast.LENGTH_SHORT).show();
-						break;
-					}
-					break;
-				default:
-					break;
-				}
-				mList.onRefreshComplete();
-			}
-		};
-	}
-
-	@Override
-	protected void onServiceConnected() {
-		getListsFromServer();
-	}
-
-	@Override
-	protected void onServiceDisconnected() {
-		// TODO Auto-generated method stub
-	}
-
+	/**
+	 * @author fabrizio
+	 *
+	 */
 	private class ImageDownloadTask extends AsyncTask<ECUser, Void, Void> {
 
 		DefaultHttpClient client;
@@ -889,7 +783,7 @@ public class Amici extends EasyCalcettoActivity implements
 					final long userId = ecu.get_id();
 					final File file = new File(getMyApplication()
 							.getImagesDir(), ecu.getPhotoName());
-					URL url = new URL(ECConnectionService.SERVER_HR_ADDRESS
+					URL url = new URL(SERVER_HR_ADDRESS
 							+ "/images/" + ecu.getPhotoName());
 					URLConnection ucon = url.openConnection();
 					InputStream is = ucon.getInputStream();
