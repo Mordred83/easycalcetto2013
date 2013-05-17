@@ -12,6 +12,7 @@ import android.os.Messenger;
 import com.actionbarsherlock.app.SherlockActivity;
 
 import edu.easycalcetto.connection.ECConnectionService;
+import edu.easycalcetto.data.ECUser;
 
 public abstract class EasyCalcettoActivity extends SherlockActivity {
 	/** Called when the activity is first created. */
@@ -20,7 +21,6 @@ public abstract class EasyCalcettoActivity extends SherlockActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
 	}
 
 	@Override
@@ -42,6 +42,10 @@ public abstract class EasyCalcettoActivity extends SherlockActivity {
 
 	public ECApplication getMyApplication() {
 		return (ECApplication) getApplication();
+	}
+	
+	public ECUser getOwner(){
+		return getMyApplication().getOwner();
 	}
 
 	@Override
