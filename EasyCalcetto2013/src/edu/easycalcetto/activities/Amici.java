@@ -2,14 +2,22 @@ package edu.easycalcetto.activities;
 
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNC;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_GETFRIENDS;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.SERVER_HR_ADDRESS;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FilenameFilter;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.ByteArrayBuffer;
 import org.json.JSONException;
 
 import android.app.AlertDialog;
@@ -19,6 +27,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
@@ -753,14 +762,8 @@ public class Amici extends EasyCalcettoActivity implements
 		
 		task.execute(params.toArray(new BasicNameValuePair[]{}));
 	}
-<<<<<<< HEAD
-=======
-	
-	
-	
-	@Override
-	protected Handler getConnectionServiceHandler() {
->>>>>>> branch 'master' of https://github.com/Mordred83/easycalcetto2013.git
+
+
 
 	/**
 	 * @author fabrizio
@@ -829,6 +832,24 @@ public class Amici extends EasyCalcettoActivity implements
 
 	private enum TabID {
 		AMICI, ALTRI
+	}
+
+	@Override
+	protected Handler getConnectionServiceHandler() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected void onServiceConnected() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void onServiceDisconnected() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
