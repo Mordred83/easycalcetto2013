@@ -70,13 +70,6 @@ public class RequestRegistrationActivity extends EasyCalcettoActivity {
 						isLight ? R.drawable.info_buttondark
 								: R.drawable.info_button_white)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-
-		/*
-		 * // per ora non ci serve il tasto destro menu.add(1, 2, 2, "More")
-		 * .setIcon( isLight ? R.drawable.ic_action_overflow_black :
-		 * R.drawable.ic_action_overflow)
-		 * .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-		 */
 		return true;
 	}
 
@@ -85,7 +78,7 @@ public class RequestRegistrationActivity extends EasyCalcettoActivity {
 		// requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setTheme(SampleList.THEME); // Used for theme switching in samples
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.reg1);
+		setContentView(R.layout.activity_requestregistration);
 		ImageButton infoButton = (ImageButton) findViewById(R.id.infoButton);
 		Button continueButton = (Button) findViewById(R.id.continueButton);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);

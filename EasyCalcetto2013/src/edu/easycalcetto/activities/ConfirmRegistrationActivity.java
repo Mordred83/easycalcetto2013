@@ -60,7 +60,7 @@ public class ConfirmRegistrationActivity extends EasyCalcettoActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		setTheme(SampleList.THEME);
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.reg2);
+		setContentView(R.layout.activity_confirmregistration);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		registration = getTempOwnerData();
 		if(registration == null){
