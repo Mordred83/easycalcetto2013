@@ -80,9 +80,6 @@
             android:screenOrientation="portrait" >
         </activity>
 
-        <service android:name=".connection.ECConnectionService">
-        </service>
-
         <activity
             android:name=".activities.Profilo"
             android:configChanges="orientation|keyboardHidden"
