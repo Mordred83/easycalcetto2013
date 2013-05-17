@@ -156,16 +156,6 @@ public class Amici extends EasyCalcettoActivity implements
 						isLight ? R.drawable.info_buttondark
 								: R.drawable.ic_action_help)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-		/*
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-			menu.add(1, 2, 2, "More")
-					.setIcon(
-							isLight ? R.drawable.ic_action_overflow_black
-									: R.drawable.ic_action_overflow)
-					.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-		}
-		 */
-		
 		return true;
 	}
 

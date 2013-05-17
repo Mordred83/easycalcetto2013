@@ -70,7 +70,7 @@ public class MenuActivity extends EasyCalcettoActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		setContentView(R.layout.menu_activity);
 		if(getIntent().getExtras() != null && getIntent().getExtras().containsKey(EXTRA_MESSAGE))
 			new Handler().postDelayed(new Runnable() {
 				
