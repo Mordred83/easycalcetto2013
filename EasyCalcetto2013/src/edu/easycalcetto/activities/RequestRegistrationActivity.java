@@ -38,7 +38,7 @@ import edu.easycalcetto.R;
 import edu.easycalcetto.connection.ECPostWithBNVPTask;
 import edu.easycalcetto.data.ECRegistrationData;
 
-public class RegistrazioneActivity extends EasyCalcettoActivity {
+public class RequestRegistrationActivity extends EasyCalcettoActivity {
 	/** Called when the activity is first created. */
 
 	private EditText nameField;
@@ -302,7 +302,7 @@ public class RegistrazioneActivity extends EasyCalcettoActivity {
 
 			@Override
 			protected void onPreExecute() {
-				pDialog = new ProgressDialog(RegistrazioneActivity.this);
+				pDialog = new ProgressDialog(RequestRegistrationActivity.this);
 				pDialog.setMessage("Inviando la registrazione");
 				pDialog.show();
 				super.onPreExecute();
@@ -339,8 +339,8 @@ public class RegistrazioneActivity extends EasyCalcettoActivity {
 					String smsmsg = getResources().getString(
 							R.string.smsfmsg, String.valueOf(l));
 					prepareAndSendSMS(number, smsmsg);
-					Intent intent = new Intent(RegistrazioneActivity.this,
-							Registrazione2Activity.class);
+					Intent intent = new Intent(RequestRegistrationActivity.this,
+							ConfirmRegistrationActivity.class);
 					getMyApplication().setOwner(-1, registration);
 					getMyApplication().setApplicationStatus(
 							REGISTRATION_PENDING);

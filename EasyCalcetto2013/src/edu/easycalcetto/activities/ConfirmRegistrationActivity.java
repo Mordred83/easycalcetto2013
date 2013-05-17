@@ -45,7 +45,7 @@ import edu.easycalcetto.R;
 import edu.easycalcetto.connection.ECPostWithBNVPTask;
 import edu.easycalcetto.data.ECRegistrationData;
 
-public class Registrazione2Activity extends EasyCalcettoActivity {
+public class ConfirmRegistrationActivity extends EasyCalcettoActivity {
 	private static final int INFO_SMS_DIALOG = 3;
 	/** Called when the activity is first created. */
 
@@ -131,7 +131,7 @@ public class Registrazione2Activity extends EasyCalcettoActivity {
 			
 			@Override
 			protected void onPreExecute() {
-				pDialog = new ProgressDialog(Registrazione2Activity.this);
+				pDialog = new ProgressDialog(ConfirmRegistrationActivity.this);
 				pDialog.setMessage("Invio il codice di conferma");
 				pDialog.show();
 				super.onPreExecute();

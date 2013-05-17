@@ -60,14 +60,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.RegistrazioneActivity"
+            android:name="edu.easycalcetto.activities.RequestRegistrationActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:noHistory="true"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".activities.Registrazione2Activity"
+            android:name="edu.easycalcetto.activities.ConfirmRegistrationActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:noHistory="true"

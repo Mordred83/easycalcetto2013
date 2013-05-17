@@ -28,8 +28,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 
 import edu.easycalcetto.R;
-import edu.easycalcetto.activities.Registrazione2Activity;
-import edu.easycalcetto.activities.RegistrazioneActivity;
+import edu.easycalcetto.activities.ConfirmRegistrationActivity;
+import edu.easycalcetto.activities.RequestRegistrationActivity;
 import edu.easycalcetto.data.JSONParser;
 
 import android.content.Intent;

@@ -64,12 +64,12 @@ public class SplashActivity extends EasyCalcettoActivity {
         	Intent intent= new Intent();
         	if(msg.what==0){
         		super.handleMessage(msg);
-                intent.setClass(SplashActivity.this, RegistrazioneActivity.class);
+                intent.setClass(SplashActivity.this, RequestRegistrationActivity.class);
                 startActivity(intent);
                 SplashActivity.this.finish();
         	}else if(msg.what==1){
         		super.handleMessage(msg);
-            	intent.setClass(SplashActivity.this, Registrazione2Activity.class);
+            	intent.setClass(SplashActivity.this, ConfirmRegistrationActivity.class);
                 startActivity(intent);
                 SplashActivity.this.finish();
         	}else{
