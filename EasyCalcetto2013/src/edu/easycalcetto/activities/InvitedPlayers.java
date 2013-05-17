@@ -16,9 +16,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Messenger;
 import android.os.Parcelable;
-import android.os.RemoteException;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.AdapterView;
@@ -33,14 +31,13 @@ import com.actionbarsherlock.view.MenuItem;
 
 import edu.easycalcetto.EasyCalcettoActivity;
 import edu.easycalcetto.R;
-//import edu.easycalcetto.activities.Amici.TabID;
 import edu.easycalcetto.connection.ECConnectionMessageConstants;
 import edu.easycalcetto.connection.ECPostWithBNVPTask;
 import edu.easycalcetto.data.ECUser;
-import edu.easycalcetto.data.MessagesCreator;
 import edu.easycalcetto.data.MyCheckable;
 import eu.erikw.PullToRefreshListView;
 import eu.erikw.PullToRefreshListView.OnRefreshListener;
+//import edu.easycalcetto.activities.Amici.TabID;
 
 public class InvitedPlayers extends EasyCalcettoActivity implements
 		ActionBar.TabListener {

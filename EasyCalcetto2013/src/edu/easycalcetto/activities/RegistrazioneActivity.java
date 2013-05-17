@@ -1,20 +1,14 @@
 package edu.easycalcetto.activities;
 
 import static edu.easycalcetto.ApplicationStatus.REGISTRATION_PENDING;
-import static edu.easycalcetto.connection.Constants.RESULT_SUCCESS;
-import static edu.easycalcetto.connection.ECConnectionMessageConstants.BNDKEY_RESULT;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNC;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_REGISTRATION;
-import static edu.easycalcetto.connection.ECConnectionMessageConstants.MSGRESDESCTIPTION_SUCCESS;
-import static edu.easycalcetto.connection.ECConnectionMessageConstants.RESIND_DATA;
-import static edu.easycalcetto.connection.ECConnectionMessageConstants.RESIND_OPRESULT;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
 import org.json.JSONException;
 
 import android.app.AlertDialog;
@@ -24,8 +18,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
-import android.os.Messenger;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
@@ -43,12 +35,8 @@ import com.actionbarsherlock.view.MenuItem;
 
 import edu.easycalcetto.EasyCalcettoActivity;
 import edu.easycalcetto.R;
-import edu.easycalcetto.connection.Constants;
-import edu.easycalcetto.connection.ECConnectionMessageConstants;
 import edu.easycalcetto.connection.ECPostWithBNVPTask;
 import edu.easycalcetto.data.ECRegistrationData;
-import edu.easycalcetto.data.JSONParser;
-import edu.easycalcetto.data.MessagesCreator;
 
 public class RegistrazioneActivity extends EasyCalcettoActivity {
 	/** Called when the activity is first created. */

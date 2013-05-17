@@ -17,12 +17,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Messenger;
-import android.os.RemoteException;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -43,7 +40,6 @@ import edu.easycalcetto.connection.ECConnectionMessageConstants;
 import edu.easycalcetto.connection.ECPostWithBNVPTask;
 import edu.easycalcetto.data.ECMatch;
 import edu.easycalcetto.data.ECUser;
-import edu.easycalcetto.data.MessagesCreator;
 
 public class SchedaPartitaGiocata extends EasyCalcettoActivity {
 	/** Called when the activity is first created. */

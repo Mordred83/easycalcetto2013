@@ -1,8 +1,6 @@
 package edu.easycalcetto.activities;
 
-import static edu.easycalcetto.ApplicationStatus.REGISTERED;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNC;
-import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_CONFIRM_REGISTRATION;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -10,7 +8,6 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -18,11 +15,8 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Messenger;
-import android.os.RemoteException;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -37,7 +31,6 @@ import edu.easycalcetto.R;
 import edu.easycalcetto.connection.ECConnectionMessageConstants;
 import edu.easycalcetto.connection.ECPostWithBNVPTask;
 import edu.easycalcetto.data.ECUser;
-import edu.easycalcetto.data.MessagesCreator;
 
 public class ModifyAccountInfoActivity extends EasyCalcettoActivity {
 

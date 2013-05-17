@@ -1,28 +1,23 @@
 package edu.easycalcetto.activities;
 
-import static edu.easycalcetto.ApplicationStatus.REGISTERED;
-import static edu.easycalcetto.connection.ECConnectionMessageConstants.BNDKEY_RESULT_ARRAY;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNC;
-import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_CONFIRM_REGISTRATION;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_CONFIRM_GAME;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_DECLINE_GAME;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_GETMATCHES_CLOSED;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_GETMATCHES_OPEN;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -32,7 +27,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -49,7 +43,6 @@ import edu.easycalcetto.R;
 import edu.easycalcetto.connection.ECConnectionMessageConstants;
 import edu.easycalcetto.connection.ECPostWithBNVPTask;
 import edu.easycalcetto.data.ECMatch;
-import edu.easycalcetto.data.MessagesCreator;
 import eu.erikw.PullToRefreshListView;
 import eu.erikw.PullToRefreshListView.OnRefreshListener;
 
@@ -785,30 +778,9 @@ public class Partite extends EasyCalcettoActivity implements
 	}
 
 	private void confirmGame() {
-		Messenger msnger = new Messenger(getConnectionServiceHandler());
-		Message msg = MessagesCreator.getConfirmGameMessage(msnger,
-				getMyApplication().getOwner().get_id(),
-				matchs[mSelectedRow].getIdMatch(), 1);
-		try {
-			messenger.send(msg);
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-	}
-
-	/*
-	 * VECCHIO METODO COMMENTATO DA STEFANO private void declineGame() {
-	 * Messenger msnger = new Messenger(getConnectionServiceHandler()); Message
-	 * msg = MessagesCreator.getDeclineGameMessage(msnger,
-	 * getMyApplication().getOwner().get_id(),
-	 * matchs[mSelectedRow].getIdMatch(), 1); try { messenger.send(msg); } catch
-	 * (RemoteException e) { e.printStackTrace(); } }
-	 */
-
-	private void declineGame() {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair(FUNC,
-				ECConnectionMessageConstants.FUNCDESCRIPTOR_DECLINE_GAME));
+				FUNCDESCRIPTOR_CONFIRM_GAME));
 		params.add(new BasicNameValuePair("player_id", String
 				.valueOf(getMyApplication().getOwner().get_id())));
 		params.add(new BasicNameValuePair("match_id", String
@@ -880,10 +852,83 @@ public class Partite extends EasyCalcettoActivity implements
 		};
 
 		task.execute(params.toArray(new BasicNameValuePair[] {}));
-		// Messenger msnger = new Messenger(getConnectionServiceHandler());
-		// Message msg = MessagesCreator.getConfirmRegistrationMessage(msnger,
-		// registration);
+	}
 
+	private void declineGame() {
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair(FUNC,
+				FUNCDESCRIPTOR_DECLINE_GAME));
+		params.add(new BasicNameValuePair("player_id", String
+				.valueOf(getMyApplication().getOwner().get_id())));
+		params.add(new BasicNameValuePair("match_id", String
+				.valueOf(matchs[mSelectedRow].getIdMatch())));
+		params.add(new BasicNameValuePair("data_id", String.valueOf(1)));
+
+		ECPostWithBNVPTask task = new ECPostWithBNVPTask() {
+			ProgressDialog pDialog = null;
+
+			@Override
+			protected void onPreExecute() {
+				pDialog = new ProgressDialog(Partite.this);
+				pDialog.setMessage("Invio Informazioni");
+				pDialog.show();
+				super.onPreExecute();
+			}
+
+			@Override
+			protected void onPostExecute(Integer result) {
+				pDialog.dismiss();
+				super.onPostExecute(result);
+			}
+
+			@Override
+			protected void onSuccessWithNoData() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onSuccess() {
+
+			}
+
+			@Override
+			protected void onOpResultNULL() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onJArrNULL() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onGenericError() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onFailure() {
+
+			}
+
+			@Override
+			protected void onDataNULL() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			protected void onConnectionLost() {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		task.execute(params.toArray(new BasicNameValuePair[] {}));
 	}
 
 	@Override

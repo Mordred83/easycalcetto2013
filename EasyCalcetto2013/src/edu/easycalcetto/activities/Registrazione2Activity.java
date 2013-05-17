@@ -7,11 +7,8 @@ import static edu.easycalcetto.Constants.PREFKEY_OWNER_NUMBER;
 import static edu.easycalcetto.Constants.PREFKEY_OWNER_SURNAME;
 import static edu.easycalcetto.Constants.PREFKEY_OWNER_YOB;
 import static edu.easycalcetto.Constants.PREFS_NAME;
-import static edu.easycalcetto.connection.ECConnectionMessageConstants.BNDKEY_RESULT;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNC;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_CONFIRM_REGISTRATION;
-import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_REGISTRATION;
-import static edu.easycalcetto.connection.ECConnectionMessageConstants.MSGTASKDESCRIPTOR_CONFIRM_REGISTRATION;
 import static java.util.Calendar.YEAR;
 
 import java.util.ArrayList;
@@ -29,10 +26,6 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
-import android.os.Messenger;
-import android.os.RemoteException;
-import android.provider.SyncStateContract.Constants;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -47,14 +40,10 @@ import android.widget.Toast;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-import edu.easycalcetto.ApplicationStatus;
 import edu.easycalcetto.EasyCalcettoActivity;
 import edu.easycalcetto.R;
-import edu.easycalcetto.connection.ECConnectionMessageConstants;
 import edu.easycalcetto.connection.ECPostWithBNVPTask;
 import edu.easycalcetto.data.ECRegistrationData;
-import edu.easycalcetto.data.ECUser;
-import edu.easycalcetto.data.MessagesCreator;
 
 public class Registrazione2Activity extends EasyCalcettoActivity {
 	private static final int INFO_SMS_DIALOG = 3;
