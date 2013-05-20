@@ -98,11 +98,11 @@ public class Amici extends EasyCalcettoActivity implements
 	public void onResume() {
 		super.onResume();
 		getListsFromServer();
-		mList.setRefreshing();
 	}
 
 	@Override
 	public void onTabReselected(Tab tab, FragmentTransaction transaction) {
+		onTabSelected(tab, transaction);
 	}
 
 	@Override
@@ -544,10 +544,6 @@ public class Amici extends EasyCalcettoActivity implements
 		};
 
 		task.execute(params.toArray(new BasicNameValuePair[] {}));
-		// Messenger msnger = new Messenger(getConnectionServiceHandler());
-		// Message msg = MessagesCreator.getConfirmRegistrationMessage(msnger,
-		// registration);
-
 	}
 	
 	
@@ -567,19 +563,16 @@ public class Amici extends EasyCalcettoActivity implements
 		params.add(new BasicNameValuePair("id", String.valueOf(getMyApplication().getOwner().get_id())));
 		
 		ECPostWithBNVPTask task = new ECPostWithBNVPTask() {
-			ProgressDialog pDialog = null;
 			
 			@Override
 			protected void onPreExecute() {
-				pDialog = new ProgressDialog(Amici.this);
-				pDialog.setMessage("Caricando la lista degli amici");
-				pDialog.show();
+				mList.setRefreshing();
 				super.onPreExecute();
 			}
 
 			@Override
 			protected void onPostExecute(Integer result) {
-				pDialog.dismiss();
+				mList.onRefreshComplete();
 				super.onPostExecute(result);
 			}
 			
@@ -666,22 +659,19 @@ public class Amici extends EasyCalcettoActivity implements
 			
 			@Override
 			protected void onPreExecute() {
-				pDialog = new ProgressDialog(Amici.this);
-				pDialog.setMessage("Caricando la lista degli ospiti");
-				pDialog.show();
+				mList.setRefreshing();
 				super.onPreExecute();
 			}
 
 			@Override
 			protected void onPostExecute(Integer result) {
-				pDialog.dismiss();
+				mList.onRefreshComplete();
 				super.onPostExecute(result);
 			}
 			
 			@Override
 			protected void onSuccessWithNoData() {
 				// TODO Auto-generated method stub
-				
 			}
 			
 			@Override
