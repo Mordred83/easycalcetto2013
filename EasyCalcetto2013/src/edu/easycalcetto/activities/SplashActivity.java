@@ -82,26 +82,5 @@ public class SplashActivity extends EasyCalcettoActivity {
             //Toast.makeText(getApplicationContext(), "Valore "+msg.what, Toast.LENGTH_SHORT).show();
           }
     }
-
-
-	@Override
-	protected Handler getConnectionServiceHandler() {
-		// TODO Auto-generated method stub
-		return new Handler();
-	}
-
-
-	@Override
-	protected void onServiceConnected() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	protected void onServiceDisconnected() {
-		// TODO Auto-generated method stub
-		
-	}
  
 }

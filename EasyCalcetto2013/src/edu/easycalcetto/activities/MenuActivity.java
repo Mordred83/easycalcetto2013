@@ -4,6 +4,7 @@ package edu.easycalcetto.activities;
 import static edu.easycalcetto.CommonUtilities.EXTRA_MESSAGE;
 import static edu.easycalcetto.CommonUtilities.SENDER_ID;
 import static edu.easycalcetto.CommonUtilities.SERVER_URL;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.SERVER_HR_ADDRESS;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,7 +26,6 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -49,7 +49,6 @@ import edu.easycalcetto.EasyCalcettoActivity;
 import edu.easycalcetto.R;
 import edu.easycalcetto.ServerUtilities;
 import edu.easycalcetto.connection.ECConnectionMessageConstants;
-import edu.easycalcetto.connection.ECConnectionService;
 import edu.easycalcetto.data.ECUser;
 import edu.easycalcetto.data.JSONParser;
 
@@ -434,7 +433,7 @@ public class MenuActivity extends EasyCalcettoActivity {
 			try {
 
 				HttpPost request = new HttpPost(
-						ECConnectionService.SERVER_HR_ADDRESS);
+						SERVER_HR_ADDRESS);
 				ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
 				list.add(new BasicNameValuePair(
 						ECConnectionMessageConstants.FUNC,
@@ -476,24 +475,6 @@ public class MenuActivity extends EasyCalcettoActivity {
 			}
 			return null;
 		}
-
-	}
-
-	@Override
-	protected Handler getConnectionServiceHandler() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected void onServiceConnected() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void onServiceDisconnected() {
-		// TODO Auto-generated method stub
 
 	}
 

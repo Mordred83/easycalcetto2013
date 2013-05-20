@@ -146,6 +146,7 @@ public class SchedaPartita extends EasyCalcettoActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		downloadPartecipants();
 		aggiornaPreferenze();
 	}
 
@@ -299,58 +300,6 @@ public class SchedaPartita extends EasyCalcettoActivity {
 			}
 		}
 		return result;
-	}
-
-	@Override
-	protected Handler getConnectionServiceHandler() {
-
-		return new Handler() {
-			@Override
-			public void handleMessage(Message msg) {
-				switch (msg.arg2) {
-				case ECConnectionMessageConstants.RES_KIND_SUCCESS:
-					switch (msg.arg1) {
-					case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETMATCH_PARTECIPANTS:
-						Bundle b = msg.getData();
-						String[] resultKeys = b
-								.getStringArray(ECConnectionMessageConstants.BNDKEY_RESULT_ARRAY);
-
-						for (String iStatus : partecipantsMap.keySet()) {
-							for (String rStatus : resultKeys) {
-								if (iStatus.trim().equalsIgnoreCase(
-										rStatus.trim())) {
-									partecipantsMap.put(iStatus, ((ECUser[]) b
-											.getParcelableArray(rStatus)));
-								}
-							}
-						}
-						field_Confermati
-								.setText(getPartecipantsNumberByStatus(PARTECIPANT_STATUS_CONFIRMED));
-
-						setStatus();
-						break;
-					case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_CONFIRM_GAME:
-					case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_DECLINE_GAME:
-						Log.d("messaggio", "accettato/rifiutato");
-						SchedaPartita.this.finish();
-						break;
-					}
-					break;
-				case ECConnectionMessageConstants.RES_KIND_FAILURE:
-					Log.d("fallimento", "accettato/rifiutato");
-					break;
-				default:
-					Log.d("default", "accettato/rifiutato");
-					break;
-				}
-
-			}
-		};
-	}
-
-	@Override
-	protected void onServiceConnected() {
-		downloadPartecipants();
 	}
 
 	private void downloadPartecipants() {
@@ -662,10 +611,6 @@ public class SchedaPartita extends EasyCalcettoActivity {
 		status = tmpStr;
 		Log.d("status", status);
 		caricaDatiPartita();
-	}
-
-	@Override
-	protected void onServiceDisconnected() {
 	}
 
 }

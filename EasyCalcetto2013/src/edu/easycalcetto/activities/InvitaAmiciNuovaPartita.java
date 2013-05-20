@@ -3,6 +3,7 @@ package edu.easycalcetto.activities;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNC;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_CREATEMATCH;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_GETFRIENDS;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.SERVER_HR_ADDRESS;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -25,8 +26,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -41,8 +40,6 @@ import com.actionbarsherlock.view.MenuItem;
 
 import edu.easycalcetto.EasyCalcettoActivity;
 import edu.easycalcetto.R;
-import edu.easycalcetto.connection.ECConnectionMessageConstants;
-import edu.easycalcetto.connection.ECConnectionService;
 import edu.easycalcetto.connection.ECHttpClient;
 import edu.easycalcetto.connection.ECPostWithBNVPTask;
 import edu.easycalcetto.data.ECMatch;
@@ -215,55 +212,6 @@ public class InvitaAmiciNuovaPartita extends EasyCalcettoActivity {
 					}
 				});
 		return builder.create();
-	}
-
-	@Override
-	protected Handler getConnectionServiceHandler() {
-
-		return new Handler() {
-			@Override
-			public void handleMessage(Message msg) {
-				ArrayList<ECUser> al = new ArrayList<ECUser>();
-				switch (msg.arg2) {
-				case ECConnectionMessageConstants.RES_KIND_SUCCESS:
-					switch (msg.arg1) {
-					case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETFRIENDS:
-						ECUser[] friends = (ECUser[]) msg
-								.getData()
-								.getParcelableArray(
-										ECConnectionMessageConstants.BNDKEY_RESULT_ARRAY);
-
-						for (ECUser user : friends) {
-							File f = new File(
-									getMyApplication().getImagesDir(),
-									user.getPhotoName());
-							if (!f.exists())
-								al.add(user);
-						}
-						if (al.isEmpty()) {
-							caricaAmici();
-						} else {
-							updatePhotos(al);
-						}
-						people = new CheckWrapper[friends.length];
-						for (int i = 0; i < friends.length; i++)
-							people[i] = new CheckWrapper<ECUser>(friends[i]);
-						caricaAmici();
-						break;
-					case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_CREATEMATCH:
-						Toast.makeText(getApplicationContext(),
-								"Partita Creata", Toast.LENGTH_LONG).show();
-						finish();
-						break;
-					}
-					break;
-				case ECConnectionMessageConstants.RES_KIND_FAILURE:
-					break;
-				default:
-					break;
-				}
-			}
-		};
 	}
 
 	private void getAmici() {
@@ -456,17 +404,6 @@ public class InvitaAmiciNuovaPartita extends EasyCalcettoActivity {
 
 	}
 
-	@Override
-	protected void onServiceConnected() {
-		getAmici();
-	}
-
-	@Override
-	protected void onServiceDisconnected() {
-		// TODO Auto-generated method stub
-
-	}
-
 	private void updatePhotos(ArrayList<ECUser> al) {
 
 		DefaultHttpClient client = new ECHttpClient();
@@ -492,7 +429,7 @@ public class InvitaAmiciNuovaPartita extends EasyCalcettoActivity {
 				try {
 					File file = new File(getMyApplication().getImagesDir(),
 							ecu.getPhotoName());
-					URL url = new URL(ECConnectionService.SERVER_HR_ADDRESS
+					URL url = new URL(SERVER_HR_ADDRESS
 							+ "/images/" + ecu.getPhotoName());
 					URLConnection ucon = url.openConnection();
 					InputStream is = ucon.getInputStream();

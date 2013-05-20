@@ -268,22 +268,6 @@ public class RequestRegistrationActivity extends EasyCalcettoActivity {
 		sms.sendTextMessage(phoneNumber, null, message, null, null);
 	}
 
-	@Override
-	protected Handler getConnectionServiceHandler() {
-		// TODO Remove
-		return null;
-	}
-
-	@Override
-	protected void onServiceConnected() {
-
-	}
-
-	@Override
-	protected void onServiceDisconnected() {
-
-	}
-
 	private void executeRegistation() {
 
 		List<NameValuePair> params = new ArrayList<NameValuePair>();

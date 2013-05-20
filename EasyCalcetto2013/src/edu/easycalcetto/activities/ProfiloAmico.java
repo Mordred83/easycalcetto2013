@@ -231,37 +231,6 @@ public class ProfiloAmico extends EasyCalcettoActivity {
 		avatar.setScaleType(ScaleType.FIT_XY);
 	}
 
-	@Override
-	protected Handler getConnectionServiceHandler() {
-		return serviceHandler;
-	}
-
-	private Handler serviceHandler = new Handler() {
-		@Override
-		public void handleMessage(Message msg) {
-			switch (msg.arg2) {
-			case ECConnectionMessageConstants.RES_KIND_SUCCESS:
-				switch (msg.arg1) {
-				case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETMATCHES_CLOSED:
-					Object[] oArr = msg.getData().getParcelableArray(
-							ECConnectionMessageConstants.BNDKEY_RESULT_ARRAY);
-
-					partiteGiocate = oArr.length;
-					field_Games.setText("" + partiteGiocate);
-					break;
-				}
-
-				break;
-			case ECConnectionMessageConstants.RES_KIND_FAILURE:
-
-				break;
-			default:
-
-				break;
-			}
-		}
-	};
-
 	private void uploadPhoto() {
 //		Messenger msnger = new Messenger(getConnectionServiceHandler());
 //		Message msg = null;
@@ -276,29 +245,6 @@ public class ProfiloAmico extends EasyCalcettoActivity {
 //				// TODO Auto-generated catch block
 //				e.printStackTrace();
 //			}
-	}
-
-	@Override
-	protected void onServiceConnected() {
-
-		getClosedMatches();
-		// Messenger msnger = new Messenger(getConnectionServiceHandler());
-		// Message msg = null;
-		// msg = MessagesCreator.getGetClosedMatchesMessage(msnger,
-		// user.get_id());
-		// if (msg != null && messenger != null)
-		// try {
-		// messenger.send(msg);
-		// } catch (RemoteException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-
-	}
-
-	@Override
-	protected void onServiceDisconnected() {
-
 	}
 
 	private void getClosedMatches() {

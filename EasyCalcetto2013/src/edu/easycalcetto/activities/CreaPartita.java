@@ -454,21 +454,4 @@ public class CreaPartita extends EasyCalcettoActivity {
 		return (match_name.length()>0 && match_place.length()>0 && dataSetted && timeSetted);
 	}
 
-	@Override
-	protected Handler getConnectionServiceHandler() {
-		return new Handler();
-	}
-
-	@Override
-	protected void onServiceConnected() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void onServiceDisconnected() {
-		// TODO Auto-generated method stub
-
-	}
-
 }

@@ -114,9 +114,6 @@ public class Partite extends EasyCalcettoActivity implements
 	}
 
 	private void getListsFromServer() {
-		mList.setRefreshing();
-		Messenger msnger = new Messenger(getConnectionServiceHandler());
-		Message msg = null;
 		switch (currentTab) {
 		case APERTE:
 			// msg = MessagesCreator.getGetOpenMatchesMessage(msnger,
@@ -740,43 +737,6 @@ public class Partite extends EasyCalcettoActivity implements
 		}
 	}
 
-	@Override
-	protected Handler getConnectionServiceHandler() {
-
-		return new Handler() {
-			@Override
-			public void handleMessage(Message msg) {
-				switch (msg.arg2) {
-				case ECConnectionMessageConstants.RES_KIND_SUCCESS:
-					switch (msg.arg1) {
-					case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETMATCHES_OPEN:
-						matchs = (ECMatch[]) msg
-								.getData()
-								.getParcelableArray(
-										ECConnectionMessageConstants.BNDKEY_RESULT_ARRAY);
-						caricaAperte();
-						break;
-					case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETMATCHES_CLOSED:
-						matchs_played = (ECMatch[]) msg
-								.getData()
-								.getParcelableArray(
-										ECConnectionMessageConstants.BNDKEY_RESULT_ARRAY);
-
-						caricaChiuse();
-						break;
-					}
-
-					break;
-				case ECConnectionMessageConstants.RES_KIND_FAILURE:
-					break;
-				default:
-					break;
-				}
-				mList.onRefreshComplete();
-			}
-		};
-	}
-
 	private void confirmGame() {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair(FUNC,
@@ -929,17 +889,6 @@ public class Partite extends EasyCalcettoActivity implements
 		};
 
 		task.execute(params.toArray(new BasicNameValuePair[] {}));
-	}
-
-	@Override
-	protected void onServiceConnected() {
-		getListsFromServer();
-	}
-
-	@Override
-	protected void onServiceDisconnected() {
-		// TODO Auto-generated method stub
-
 	}
 
 	private enum TabID {

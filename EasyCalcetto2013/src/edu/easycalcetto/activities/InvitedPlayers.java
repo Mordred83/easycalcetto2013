@@ -537,57 +537,6 @@ public class InvitedPlayers extends EasyCalcettoActivity implements
 		// registration);
 
 	}
-	
-	
-	@Override
-	protected Handler getConnectionServiceHandler() {
-
-		return new Handler() {
-			@Override
-			public void handleMessage(Message msg) {
-
-				switch (msg.arg2) {
-				case ECConnectionMessageConstants.RES_KIND_SUCCESS:
-					switch (msg.arg1) {
-					case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_ADD_FRIEND:
-						Toast.makeText(getApplicationContext(),
-								"Hai aggiunto un'amico alla tua lista",
-								Toast.LENGTH_SHORT).show();
-						break;
-					}
-
-					// Log.d("friends", "" + friends.length);
-					// Log.d("acquietances", "" + acquietances.length);
-					// ((NewQAAdapter)((HeaderViewListAdapter)
-					// mList.getAdapter()).getWrappedAdapter())
-					// .notifyDataSetChanged();
-					break;
-				case ECConnectionMessageConstants.RES_KIND_FAILURE:
-					switch (msg.arg1) {
-					case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_ADD_FRIEND:
-						Toast.makeText(getApplicationContext(),
-								"Impossibile aggiungere l'amico selezionato",
-								Toast.LENGTH_SHORT).show();
-						break;
-					}
-					break;
-				default:
-					break;
-				}
-			}
-		};
-	}
-
-	@Override
-	protected void onServiceConnected() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	protected void onServiceDisconnected() {
-		// TODO Auto-generated method stub
-
-	}
 
 	private class ECUserWrapper implements MyCheckable<ECUser> {
 

@@ -298,24 +298,5 @@ public class ConfirmRegistrationActivity extends EasyCalcettoActivity {
 				});
 		return builder.create();
 	}
-	
-	
-
-	@Override
-	protected Handler getConnectionServiceHandler() {
-		//TODO Remove
-		return null;
-	}
-
-	@Override
-	protected void onServiceConnected() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	protected void onServiceDisconnected() {
-		// TODO Auto-generated method stub
-
-	}
 
 }

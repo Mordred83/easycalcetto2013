@@ -264,53 +264,9 @@ public class ModifyAccountInfoActivity extends EasyCalcettoActivity {
 		task.execute(params.toArray(new BasicNameValuePair[]{}));
 //		Messenger msnger = new Messenger(getConnectionServiceHandler());
 //		Message msg = MessagesCreator.getConfirmRegistrationMessage(msnger,
-//				registration);
-		
-		
-		
-
+//				registration);	
 	}
 	
-	
-	
-
-	@Override
-	protected Handler getConnectionServiceHandler() {
-		return new Handler() {
-			@Override
-			public void handleMessage(Message msg) {
-
-				switch (msg.arg2) {
-				case ECConnectionMessageConstants.RES_KIND_SUCCESS:
-					switch (msg.arg1) {
-					case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_UPDATEUSER:
-						getMyApplication().updateOwner(currentUser);
-						Toast.makeText(getApplicationContext(),
-								"Dati Modificati Correttamente",
-								Toast.LENGTH_SHORT).show();
-						saveButton.setEnabled(true);
-						finish();
-						break;
-					}
-					break;
-				case ECConnectionMessageConstants.RES_KIND_FAILURE:
-					switch (msg.arg1) {
-					case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_UPDATEUSER:
-						Toast.makeText(getApplicationContext(),
-								"Impossibile modificare le informazioni",
-								Toast.LENGTH_SHORT).show();
-						saveButton.setEnabled(true);
-						finish();
-						break;
-					}
-					break;
-				default:
-					break;
-				}
-			}
-		};
-	}
-
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
@@ -321,18 +277,6 @@ public class ModifyAccountInfoActivity extends EasyCalcettoActivity {
 		default:
 			return super.onCreateDialog(id);
 		}
-	}
-
-	@Override
-	protected void onServiceConnected() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void onServiceDisconnected() {
-		// TODO Auto-generated method stub
-
 	}
 
 }

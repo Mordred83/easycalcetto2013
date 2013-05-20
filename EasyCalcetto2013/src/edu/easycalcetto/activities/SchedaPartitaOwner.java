@@ -223,6 +223,7 @@ public class SchedaPartitaOwner extends EasyCalcettoActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		downloadPartecipants();
 	}
 
 	@SuppressWarnings("deprecation")
@@ -353,51 +354,6 @@ public class SchedaPartitaOwner extends EasyCalcettoActivity {
 			}
 		}
 		return result;
-	}
-
-	@Override
-	protected Handler getConnectionServiceHandler() {
-
-		return new Handler() {
-			@Override
-			public void handleMessage(Message msg) {
-				switch (msg.arg2) {
-				case ECConnectionMessageConstants.RES_KIND_SUCCESS:
-					switch (msg.arg1) {
-					case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_GETMATCH_PARTECIPANTS:
-						Bundle b = msg.getData();
-						String[] resultKeys = b
-								.getStringArray(ECConnectionMessageConstants.BNDKEY_RESULT_ARRAY);
-
-						for (String iStatus : partecipantsMap.keySet()) {
-							for (String rStatus : resultKeys) {
-								if (iStatus.trim().equalsIgnoreCase(
-										rStatus.trim())) {
-									partecipantsMap.put(iStatus, ((ECUser[]) b
-											.getParcelableArray(rStatus)));
-								}
-							}
-						}
-						field_Confermati
-								.setText(getPartecipantsNumberByStatus(PARTECIPANT_STATUS_CONFIRMED));
-						break;
-					case ECConnectionMessageConstants.MSGTASKDESCRIPTOR_UPDATEMATCH:
-						finish();
-						break;
-					}
-					break;
-				case ECConnectionMessageConstants.RES_KIND_FAILURE:
-					break;
-				default:
-					break;
-				}
-
-			}
-		};
-	}
-	@Override
-	protected void onServiceConnected() {
-		downloadPartecipants();
 	}
 
 	private void downloadPartecipants() {
@@ -585,14 +541,6 @@ public class SchedaPartitaOwner extends EasyCalcettoActivity {
 		
 		
 		
-
-	}
-	
-	
-	
-	@Override
-	protected void onServiceDisconnected() {
-		// TODO Auto-generated method stub
 
 	}
 
