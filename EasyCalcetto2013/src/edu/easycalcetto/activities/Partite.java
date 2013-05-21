@@ -15,15 +15,11 @@ import org.json.JSONException;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.os.Messenger;
-import android.os.RemoteException;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -40,14 +36,13 @@ import com.actionbarsherlock.view.MenuItem;
 
 import edu.easycalcetto.EasyCalcettoActivity;
 import edu.easycalcetto.R;
-import edu.easycalcetto.connection.ECConnectionMessageConstants;
 import edu.easycalcetto.connection.ECPostWithBNVPTask;
 import edu.easycalcetto.data.ECMatch;
 import eu.erikw.PullToRefreshListView;
 import eu.erikw.PullToRefreshListView.OnRefreshListener;
 
 public class Partite extends EasyCalcettoActivity implements
-		ActionBar.TabListener {
+		ActionBar.TabListener{
 
 	private final static int INFO_DIALOG = 1;
 	private static final int ID_ACCEPT = 1;
@@ -95,11 +90,22 @@ public class Partite extends EasyCalcettoActivity implements
 	}
 
 	@Override
-	public void onTabReselected(Tab tab, FragmentTransaction transaction) {
+	public void onTabUnselected(Tab tab,
+			android.support.v4.app.FragmentTransaction ft) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
-	public void onTabSelected(Tab tab, FragmentTransaction transaction) {
+	public void onTabReselected(Tab tab,
+			android.support.v4.app.FragmentTransaction ft) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void onTabSelected(Tab tab,
+			android.support.v4.app.FragmentTransaction ft) {
 		if (tab.getText().equals("Aperte")) {
 			currentTab = TabID.APERTE;
 			setContentView(R.layout.tab_navigation_match_opened);
@@ -126,15 +132,6 @@ public class Partite extends EasyCalcettoActivity implements
 			getClosedMatches();
 			break;
 		}
-		// if (msg != null && messenger != null)
-		// try {
-		// messenger.send(msg);
-		// } catch (RemoteException e) {
-		// e.printStackTrace();
-		// }
-		// if (mList.isRefreshing()) {
-		// }
-
 	}
 
 	private void getClosedMatches() {
@@ -301,10 +298,6 @@ public class Partite extends EasyCalcettoActivity implements
 
 		task.execute(params.toArray(new BasicNameValuePair[] {}));
 
-	}
-
-	@Override
-	public void onTabUnselected(Tab tab, FragmentTransaction transaction) {
 	}
 
 	@Override
@@ -931,5 +924,7 @@ public class Partite extends EasyCalcettoActivity implements
 		}
 
 	}
+
+	
 
 }
