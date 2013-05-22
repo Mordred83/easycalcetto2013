@@ -1,17 +1,21 @@
 package edu.easycalcetto.activities;
 
 import static android.content.Context.MODE_PRIVATE;
+import static android.widget.ImageView.ScaleType.FIT_XY;
 import static edu.easycalcetto.Constants.PREFS_NAME;
 
 import java.io.File;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
@@ -73,25 +77,29 @@ public class NewQAAdapter extends BaseAdapter {
 		// ViewHolder holder = (ViewHolder) convertView.getTag();
 		viewHolder.nameText.setText(data[position].getName());
 		viewHolder.surnameText.setText(data[position].getSurname());
+		//BitmapDrawable bdrw = new BitmapDrawable(context.getResources(), "/sdcard/tmp/test.jpg");
+		//viewHolder.contactImage.setImageDrawable(bdrw);
+		viewHolder.contactImage.setImageResource(R.drawable.default_avatar);
+		viewHolder.contactImage.setScaleType(FIT_XY);
 		
-		SharedPreferences pref = context.getSharedPreferences(
-				PREFS_NAME, MODE_PRIVATE);
-		String imageDir = pref.getString(CommonUtilities.PREFNAME_IMAGEDIR,
-				null);
-		boolean imageExists = false;
-		if (imageDir != null) {
-			File imageFile = new File(imageDir, data[position].getPhotoName());
-			if (imageFile != null && imageFile.exists()) {
-				imageExists = true;
-				viewHolder.contactImage.setImageBitmap(BitmapFactory
-						.decodeFile(imageFile.getAbsolutePath()));
-			}
-		}
-		if(!imageExists){
-			viewHolder.contactImage.setImageResource(R.drawable.default_avatar);
-		}
-		
-		viewHolder.contactImage.setScaleType(ScaleType.FIT_XY);
+//		SharedPreferences pref = context.getSharedPreferences(
+//				PREFS_NAME, MODE_PRIVATE);
+//		String imageDir = pref.getString(CommonUtilities.PREFNAME_IMAGEDIR,
+//				null);
+//		boolean imageExists = false;
+//		if (imageDir != null) {
+//			File imageFile = new File(imageDir, data[position].getPhotoName());
+//			if (imageFile != null && imageFile.exists()) {
+//				imageExists = true;
+//				viewHolder.contactImage.setImageBitmap(BitmapFactory
+//						.decodeFile(imageFile.getAbsolutePath()));
+//			}
+//		}
+//		if(!imageExists){
+//			viewHolder.contactImage.setImageResource(R.drawable.default_avatar);
+//		}
+//		
+//		viewHolder.contactImage.setScaleType(ScaleType.FIT_XY);
 
 		return convertView;
 	}
@@ -100,5 +108,10 @@ public class NewQAAdapter extends BaseAdapter {
 		TextView nameText;
 		TextView surnameText;
 		ImageView contactImage;
+	}
+	
+	private File getImage(){
+		File result = null;
+		return result;
 	}
 }

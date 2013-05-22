@@ -302,20 +302,11 @@ public class Amici extends EasyCalcettoActivity implements
 				getResources().getDrawable(R.drawable.profilo_utente));
 		ActionItem sendItem = new ActionItem(ID_SEND, "Email", getResources()
 				.getDrawable(R.drawable.send_email));
-		/*
-		ActionItem blockItem = new ActionItem(ID_BLOCK, "Blocca",
-				getResources().getDrawable(R.drawable.blocca_amico));
-		ActionItem deleteItem = new ActionItem(ID_BLOCK, "Elimina",
-				getResources().getDrawable(R.drawable.elimina_amico));
-		*/
+		
 		final QuickAction mQuickAction = new QuickAction(this);
 
 		mQuickAction.addActionItem(profileItem);
 		mQuickAction.addActionItem(sendItem);
-		//mQuickAction.addActionItem(blockItem);
-		//mQuickAction.addActionItem(deleteItem);
-
-		// setup the action item click listener
 		mQuickAction
 				.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
 					@Override
@@ -452,21 +443,6 @@ public class Amici extends EasyCalcettoActivity implements
 
 		return ad.show();
 	}
-/*	
-	private void addFriend(ECUser friend) {
-		Messenger msnger = new Messenger(getConnectionServiceHandler());
-		long userID = getMyApplication().getOwner().get_id();
-		String friendPhone = friend.getNum_tel();
-		Message msg = MessagesCreator.getAddFriendMessage(msnger, userID,
-				friendPhone);
-		try {
-			messenger.send(msg);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-*/
 	
 	private void addFriend(ECUser friend) {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -476,19 +452,16 @@ public class Amici extends EasyCalcettoActivity implements
 		params.add(new BasicNameValuePair("num_tel", String.valueOf(friend.getNum_tel())));
 
 		ECPostWithBNVPTask task = new ECPostWithBNVPTask() {
-			ProgressDialog pDialog = null;
 
 			@Override
 			protected void onPreExecute() {
-				pDialog = new ProgressDialog(Amici.this);
-				pDialog.setMessage("Aggiungo amico...");
-				pDialog.show();
+				mList.setRefreshing();
 				super.onPreExecute();
 			}
 
 			@Override
 			protected void onPostExecute(Integer result) {
-				pDialog.dismiss();
+				mList.onRefreshComplete();
 				super.onPostExecute(result);
 			}
 
@@ -579,7 +552,6 @@ public class Amici extends EasyCalcettoActivity implements
 			@Override
 			protected void onSuccessWithNoData() {
 				// TODO Auto-generated method stub
-				
 			}
 			
 			@Override
@@ -655,7 +627,6 @@ public class Amici extends EasyCalcettoActivity implements
 		params.add(new BasicNameValuePair(FUNC, ECConnectionMessageConstants.FUNCDESCRIPTOR_GETACQUAINTANCES));
 		params.add(new BasicNameValuePair("id", String.valueOf(getMyApplication().getOwner().get_id())));
 		ECPostWithBNVPTask task = new ECPostWithBNVPTask() {
-			ProgressDialog pDialog = null;
 			
 			@Override
 			protected void onPreExecute() {

@@ -15,7 +15,6 @@ import org.json.JSONException;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -141,19 +140,16 @@ public class Partite extends EasyCalcettoActivity implements
 				.valueOf(getMyApplication().getOwner().get_id())));
 
 		ECPostWithBNVPTask task = new ECPostWithBNVPTask() {
-			ProgressDialog pDialog = null;
 
 			@Override
 			protected void onPreExecute() {
-				pDialog = new ProgressDialog(Partite.this);
-				pDialog.setMessage("Carico le partite terminate");
-				pDialog.show();
+				mList.setRefreshing();
 				super.onPreExecute();
 			}
 
 			@Override
 			protected void onPostExecute(Integer result) {
-				pDialog.dismiss();
+				mList.onRefreshComplete();
 				super.onPostExecute(result);
 			}
 
@@ -224,19 +220,16 @@ public class Partite extends EasyCalcettoActivity implements
 				.valueOf(getMyApplication().getOwner().get_id())));
 
 		ECPostWithBNVPTask task = new ECPostWithBNVPTask() {
-			ProgressDialog pDialog = null;
 
 			@Override
 			protected void onPreExecute() {
-				pDialog = new ProgressDialog(Partite.this);
-				pDialog.setMessage("Carico le partite in sospeso");
-				pDialog.show();
+				mList.setRefreshing();
 				super.onPreExecute();
 			}
 
 			@Override
 			protected void onPostExecute(Integer result) {
-				pDialog.dismiss();
+				mList.onRefreshComplete();
 				super.onPostExecute(result);
 			}
 
@@ -741,19 +734,16 @@ public class Partite extends EasyCalcettoActivity implements
 		params.add(new BasicNameValuePair("data_id", String.valueOf(1)));
 
 		ECPostWithBNVPTask task = new ECPostWithBNVPTask() {
-			ProgressDialog pDialog = null;
 
 			@Override
 			protected void onPreExecute() {
-				pDialog = new ProgressDialog(Partite.this);
-				pDialog.setMessage("Invio Informazioni");
-				pDialog.show();
+				mList.setRefreshing();
 				super.onPreExecute();
 			}
 
 			@Override
 			protected void onPostExecute(Integer result) {
-				pDialog.dismiss();
+				mList.onRefreshComplete();
 				super.onPostExecute(result);
 			}
 
@@ -818,19 +808,16 @@ public class Partite extends EasyCalcettoActivity implements
 		params.add(new BasicNameValuePair("data_id", String.valueOf(1)));
 
 		ECPostWithBNVPTask task = new ECPostWithBNVPTask() {
-			ProgressDialog pDialog = null;
 
 			@Override
 			protected void onPreExecute() {
-				pDialog = new ProgressDialog(Partite.this);
-				pDialog.setMessage("Invio Informazioni");
-				pDialog.show();
+				mList.setRefreshing();
 				super.onPreExecute();
 			}
 
 			@Override
 			protected void onPostExecute(Integer result) {
-				pDialog.dismiss();
+				mList.onRefreshComplete();
 				super.onPostExecute(result);
 			}
 
