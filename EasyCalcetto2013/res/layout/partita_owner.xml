@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/lib/com.google.ads"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_gravity="center_vertical|center_horizontal"
     android:background="@drawable/camp_vetro"
     android:orientation="vertical" >
-
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
-
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="529dp"
             android:baselineAligned="true"
             android:orientation="vertical" >
-
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -47,7 +48,7 @@
                         android:textStyle="italic" />
                 </LinearLayout>
             </LinearLayout>
-
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -73,7 +74,7 @@
                         android:textColor="@color/black"
                         android:textSize="25dp"
                         android:textStyle="bold" />
-
+
                     <TextView
                         android:id="@+id/field_Confermati"
                         android:layout_width="wrap_content"
@@ -83,7 +84,7 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@color/red"
                         android:textSize="25dp" />
-
+
                     <ImageView
                         android:id="@+id/buttonViewPlayers"
                         android:layout_width="30dp"
@@ -179,12 +180,12 @@
                         android:text="Ora di inizio" android:textColor="@color/black" android:layout_marginLeft="15dp"/>
 
                 </LinearLayout>
-
+
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="100dp"
                     android:gravity="center_vertical|center_horizontal" >
-
+
                     <Button
                         android:id="@+id/buttonSaveValue"
                         android:layout_width="105dp"
@@ -199,5 +200,13 @@
         </LinearLayout>
 
     </ScrollView>
-
-</LinearLayout>
+ <com.google.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+        android:id="@+id/ad"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        app:adSize="BANNER"
+        app:adUnitId="a15196004307e8f" android:layout_gravity="center_vertical|center_horizontal">
+    </com.google.ads.AdView>
+</RelativeLayout>

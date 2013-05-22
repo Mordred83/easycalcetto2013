@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center_vertical|center_horizontal"
@@ -9,12 +9,16 @@
 <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >    
-    
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        
+        
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="170dp" >
-
-        <LinearLayout
+        <LinearLayout
             android:layout_width="131dp"
             android:layout_height="133dp"
             android:background="@drawable/box2"
@@ -23,7 +27,7 @@
             android:paddingBottom="12dp"
             android:paddingLeft="2dp"
             android:paddingTop="10dp" android:layout_marginTop="10dp" android:layout_marginLeft="5dp">
-
+
             <ImageView
                 android:id="@+id/imageAvatar"
                 android:layout_width="114dp"
@@ -31,7 +35,7 @@
                 android:src="@drawable/default_avatar" />
 
         </LinearLayout>
-
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,7 +50,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/black"
                 android:textSize="25dp" android:textStyle="bold"/>
-
+
             <TextView
                 android:id="@+id/field_Name"
                 android:layout_width="match_parent"
@@ -65,7 +69,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/black"
                 android:textSize="25dp" android:textStyle="bold"/>
-
+
             <TextView
                 android:id="@+id/field_Surname"
                 android:layout_width="match_parent"
@@ -121,7 +125,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/black"
                 android:textSize="23dp" android:textStyle="bold" android:layout_marginLeft="5dp"/>
-
+
             <TextView
                 android:id="@+id/field_Games"
                 android:layout_width="80dp"
@@ -141,7 +145,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/black"
             android:textSize="23dp" android:textStyle="bold" android:layout_marginLeft="5dp" android:layout_marginBottom="10dp"/>
-
+
         <RatingBar
             android:id="@+id/ratingBar"
             style="@style/myRatingBar"
@@ -153,5 +157,6 @@
             android:stepSize="0.5" android:layout_marginLeft="5dp"/>
 
     </LinearLayout>
+    </LinearLayout>
 </ScrollView>
-</LinearLayout>
+</RelativeLayout>

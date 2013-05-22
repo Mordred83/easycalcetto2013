@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/lib/com.google.ads"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_gravity="center_vertical|center_horizontal"
@@ -8,8 +9,9 @@
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
-
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="529dp"
@@ -29,9 +31,8 @@
                     android:textColor="@color/red"
                     android:textSize="30dp"
                     android:textStyle="italic" android:hint="Nome partita" android:layout_gravity="center_vertical|center_horizontal" android:layout_margin="5dp" android:gravity="center_vertical|center_horizontal"/>
-
             </LinearLayout>
-
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="71dp"
@@ -63,7 +64,7 @@
                         android:textStyle="italic" />
                 </LinearLayout>
             </LinearLayout>
-
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -112,7 +113,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp" >
-
+
                     <TextView
                         android:id="@+id/field_Luogo"
                         android:layout_width="match_parent"
@@ -162,7 +163,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="34dp"
                     android:gravity="center_vertical|center_horizontal" android:layout_gravity="center_vertical|center_horizontal">
-
+
                     <ImageView
                         android:id="@+id/indicatorYes"
                         android:layout_width="fill_parent"
@@ -199,5 +200,13 @@
         </LinearLayout>
 
     </ScrollView>
-
-</LinearLayout>
+ <com.google.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+        android:id="@+id/ad"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        app:adSize="BANNER"
+        app:adUnitId="a15196004307e8f" android:layout_gravity="center_vertical|center_horizontal">
+    </com.google.ads.AdView>
+</RelativeLayout>
