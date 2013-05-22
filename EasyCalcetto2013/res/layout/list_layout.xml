@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="60dp" 
-    android:paddingTop="5dp">
+    android:layout_height="60dp"
+    android:paddingTop="5dp" >
 
     <ImageView
         android:id="@+id/personImage"
         android:layout_width="65dip"
-        android:layout_height="65dip" >
+        android:layout_height="65dip"
+        android:layout_centerVertical="true"
+        android:src="@drawable/default_avatar"
+        android:scaleType="fitXY"
+        tools:ignore="ContentDescription" >
     </ImageView>
 
     <TextView
@@ -18,7 +23,8 @@
         android:layout_toRightOf="@+id/personImage"
         android:paddingLeft="15dp"
         android:text="Nome"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/personSurname"
@@ -26,9 +32,10 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/personName"
         android:layout_alignParentBottom="true"
-        android:text="Cognome"
         android:paddingLeft="15dp"
+        android:text="Cognome"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#6b71f1" />
+        android:textColor="#6b71f1"
+        tools:ignore="HardcodedText" />
 
 </RelativeLayout>

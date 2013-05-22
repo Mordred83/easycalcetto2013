@@ -13,7 +13,7 @@ import edu.easycalcetto.R;
  * Definition of the list adapter...uses the View Holder pattern to
  * optimize performance.
  */
-public class ListImageMatchAdapter extends ArrayAdapter {
+public class ListImageMatchAdapter extends ArrayAdapter<ListImageMatch> {
 
 	private static final int RESOURCE = R.layout.list_image_match_dialog;
 	private LayoutInflater inflater;

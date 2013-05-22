@@ -3,7 +3,9 @@ package edu.easycalcetto.data;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -21,7 +23,6 @@ public class ECUser implements Parcelable, HTTPPostable{
 
 	public static final long serialVersionUID = 1014215480574712987L;
 	public static final String IMAGE_FILE_NAME_DEFAULT = "default.png";
-	//private static final String IMAGES_DIRECTORY_NAME = ECApplication.IMAGES_DIRECTORY_NAME;
 	
 	private long _id;
 	private String num_tel;
@@ -29,13 +30,6 @@ public class ECUser implements Parcelable, HTTPPostable{
 	private String surname;
 	private String yob;
 	private String photoName;
-    //private int answerRes;
-    //private boolean isCheck = false;
-
-	// private String role;
-	// private double rating;
-	// private int votes;
-	//private long _id_comment;
 
 	/**
 	 * @param _id
@@ -52,7 +46,7 @@ public class ECUser implements Parcelable, HTTPPostable{
 	 * @param _id_comment
 	 */
 	public ECUser(long _id, String num_tel, String name, String surname,
-			String yob/*, String role, double rating, int votes, long _id_comment*/) {
+			String yob) {
 
 		if (num_tel.length() > 20 || name.length() > 30
 				|| surname.length() > 30)
@@ -64,10 +58,6 @@ public class ECUser implements Parcelable, HTTPPostable{
 		this.name = name;
 		this.surname = surname;
 		this.yob = yob;
-		// this.role = role;
-		// this.rating = rating;
-		// this.votes = votes;
-		//this._id_comment = _id_comment;
 	}
 
 	public ECUser(Parcel source) {
@@ -77,10 +67,6 @@ public class ECUser implements Parcelable, HTTPPostable{
 		surname = source.readString();
 		yob = source.readString();
 		photoName = source.readString();
-		// role = source.readString();
-		// rating = source.readDouble();
-		// votes = source.readInt();
-		// _id_comment = source.readLong();
 	}
 
 	public ECUser(JSONObject jO) {
@@ -91,14 +77,9 @@ public class ECUser implements Parcelable, HTTPPostable{
 			surname = jO.getString("surname");
 			yob = jO.getString("yob");
 			String tmp = jO.getString("photo");
-			Log.d("photoUrl: ", "farasa "+tmp);
 			tmp = tmp.substring(tmp.lastIndexOf("/")+1).trim();
 			photoName = tmp.replace("\\", "");
 			Log.d("photoName: ", photoName);
-			// role = jO.getString("role");
-			// rating = jO.getDouble("rating");
-			// votes = jO.getInt("votes");
-			// _id_comment = jO.getLong("_id_comment");
 		} catch (JSONException e) {
 			e.printStackTrace();
 			throw new IllegalArgumentException(e.getMessage());
