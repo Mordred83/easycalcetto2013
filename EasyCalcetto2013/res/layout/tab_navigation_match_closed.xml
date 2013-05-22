@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/lib/com.google.ads"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
@@ -14,11 +15,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ratingText"
-        android:textAppearance="?android:attr/textAppearanceSmall" android:layout_gravity="right" android:layout_marginRight="10dp"/>
-    
+        android:textAppearance="?android:attr/textAppearanceSmall" android:layout_gravity="right" android:layout_marginRight="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"/>
+    	
      <eu.erikw.PullToRefreshListView
         android:id="@+id/list"
         android:layout_height="fill_parent"
         android:layout_width="fill_parent"
+        android:layout_marginTop="30dp"
          />
-</LinearLayout>
+           <com.google.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+        android:id="@+id/ad"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        app:adSize="BANNER"
+        app:adUnitId="a15196004307e8f" android:layout_gravity="center_vertical|center_horizontal">
+    </com.google.ads.AdView>
+</RelativeLayout>

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/lib/com.google.ads"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:paddingTop="15dip"
+    android:paddingTop="10dip"
     android:paddingLeft="5dp"
     android:paddingRight="5dp"
     >
@@ -15,8 +16,8 @@
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|center_horizontal"
-        android:layout_marginBottom="40dp"
-        android:text="@string/label_button_invita" />
+        android:text="@string/label_button_invita" 
+        android:layout_centerHorizontal="true"/>
     
      <!--  
      <ListView
@@ -24,9 +25,22 @@
     	android:layout_width="fill_parent" 
     	android:layout_height="fill_parent"/>
      -->
+
      <eu.erikw.PullToRefreshListView
-        android:id="@+id/list"
-        android:layout_height="fill_parent"
+         android:id="@+id/list"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:layout_marginTop="50dp"
+         android:layout_marginBottom="50dp" />
+
+      <com.google.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+        android:id="@+id/ad"
         android:layout_width="fill_parent"
-         />
-</LinearLayout>
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        app:adSize="BANNER"
+        app:adUnitId="a15196004307e8f" android:layout_gravity="center_vertical|center_horizontal">
+    </com.google.ads.AdView>
+     
+</RelativeLayout>

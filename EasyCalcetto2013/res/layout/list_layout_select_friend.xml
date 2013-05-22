@@ -6,8 +6,6 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:paddingTop="20dip"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
     >
 
     <TextView
@@ -41,16 +39,13 @@
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:gravity="center_vertical|center_horizontal">
-    </LinearLayout>
 
      <ListView
     	android:id="@+id/list"
     	android:layout_width="fill_parent" 
     	android:layout_height="fill_parent"
     	android:layout_marginTop="65dp"
+    	android:layout_marginBottom="50dp"
     	/>
      
       <com.google.ads.AdView
@@ -59,7 +54,7 @@
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        app:adSize="BANNER"
+        app:adSize="SMART_BANNER"
         app:adUnitId="a15196004307e8f" android:layout_gravity="center_vertical|center_horizontal">
     </com.google.ads.AdView>
 
