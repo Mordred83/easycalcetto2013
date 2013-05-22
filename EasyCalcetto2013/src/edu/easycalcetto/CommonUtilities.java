@@ -12,8 +12,6 @@ public final class CommonUtilities {
     /**
      * Base URL of the Demo Server (such as http://my_host:8080/gcm-demo)
      */
-    public static final String SERVER_URL = "http://www.easycalcetto.altervista.org/index.php";
-
     /**
      * Google API project id registered to use GCM.
      */

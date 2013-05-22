@@ -1,7 +1,7 @@
 package edu.easycalcetto;
 
-import static edu.easycalcetto.CommonUtilities.SERVER_URL;
-//import static edu.easycalcetto.CommonUtilities.displayMessage;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.SERVER_HR_ADDRESS;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -19,6 +19,7 @@ import android.util.Log;
 import com.google.android.gcm.GCMRegistrar;
 
 import edu.easycalcetto.connection.ECConnectionMessageConstants;
+//import static edu.easycalcetto.CommonUtilities.displayMessage;
 
 public final class ServerUtilities {
 
@@ -41,7 +42,7 @@ public final class ServerUtilities {
 	public static boolean register(final Context context, final String regId,
 			final long userId) {
 		Log.i(TAG, "registering device (regId = " + regId + ")");
-		String serverUrl = SERVER_URL;
+		String serverUrl = SERVER_HR_ADDRESS;
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(ECConnectionMessageConstants.FUNC, "gcm_register"); // TODO:move
 		params.put("id", "" + userId);
@@ -90,7 +91,7 @@ public final class ServerUtilities {
 	 */
 	static void unregister(final Context context, final String userId) {
 		Log.i(TAG, "unregistering device (regId = " + userId + ")");
-		String serverUrl = SERVER_URL;
+		String serverUrl = SERVER_HR_ADDRESS;
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(ECConnectionMessageConstants.FUNC, "gcm_unregister");
 		params.put("id", userId);
@@ -185,7 +186,7 @@ public final class ServerUtilities {
 		@Override
 		public void run() {
 			Log.i(TAG, "registering device (regId = " + regId + ")");
-			String serverUrl = SERVER_URL;
+			String serverUrl = SERVER_HR_ADDRESS;
 			Map<String, String> params = new HashMap<String, String>();
 			params.put(ECConnectionMessageConstants.FUNC, "gcm_register"); // TODO:move
 			params.put("id", "" + userId);
