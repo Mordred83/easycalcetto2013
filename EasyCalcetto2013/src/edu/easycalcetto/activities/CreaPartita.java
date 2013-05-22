@@ -33,6 +33,8 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
 
 import edu.easycalcetto.EasyCalcettoActivity;
 import edu.easycalcetto.R;
@@ -75,11 +77,14 @@ public class CreaPartita extends EasyCalcettoActivity {
 
 	private String match_name = "";
 	private String match_place = "";
-
+	private AdView adView;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.crea_partita);
+		//admob widget
+	       adView = (AdView)findViewById(R.id.ad);
+	       adView.loadAd(new AdRequest());
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setTitle("Nuova Partita 1/2");
 		

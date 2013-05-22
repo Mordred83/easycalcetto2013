@@ -37,6 +37,8 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
 
 import edu.easycalcetto.EasyCalcettoActivity;
 import edu.easycalcetto.R;
@@ -60,11 +62,15 @@ public class InvitaAmiciNuovaPartita extends EasyCalcettoActivity {
 	int maxBarValue = 200;
 
 	private ECMatch match;
-
+	private AdView adView;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.list_layout_select_friend);
+		//admob widget
+	       adView = (AdView)findViewById(R.id.ad);
+	       adView.loadAd(new AdRequest());
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setTitle("Nuova partita 2/2");
 		getSupportActionBar().setSubtitle("Spunta gli amici che vuoi invitare");
