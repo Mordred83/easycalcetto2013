@@ -203,6 +203,9 @@
         mandato (o ti stiamo per mandare). Controlla se lo hai già ricevuto!!</string>
         
     <!-- FABRIZIO -->
+    <string name="msg_no_network">No Network has been found</string>
+    <string name="lbl_exit">Exit</string>
+    <string name="lbl_open_network_preferences">Open Network Preferences</string>
     <string name="rowView_date_format">%1$02d - %2$02d - %3$4d</string>
     <string name="rowView_time_format">%1$02d : %2$02d</string>
     <!-- SMS -->

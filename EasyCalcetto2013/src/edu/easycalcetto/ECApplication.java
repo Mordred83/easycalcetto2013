@@ -1,26 +1,7 @@
 package edu.easycalcetto;
 
-import java.io.File;
-
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.StreamCorruptedException;
-
-import com.google.android.gcm.GCMRegistrar;
-
-import android.app.Application;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.util.Log;
-import android.widget.Toast;
-import edu.easycalcetto.data.ECRegistrationData;
-import edu.easycalcetto.data.ECUser;
 import static edu.easycalcetto.ApplicationStatus.ERROR;
 import static edu.easycalcetto.ApplicationStatus.UNINITIALIZED;
-import static edu.easycalcetto.ApplicationStatus.UNREGISTERED;
 import static edu.easycalcetto.CommonUtilities.PREFNAME_IMAGEDIR;
 import static edu.easycalcetto.Constants.IMAGES_DIRECTORY_NAME;
 import static edu.easycalcetto.Constants.PREFKEY_OWNER_ID;
@@ -31,6 +12,21 @@ import static edu.easycalcetto.Constants.PREFKEY_OWNER_SURNAME;
 import static edu.easycalcetto.Constants.PREFKEY_OWNER_YOB;
 import static edu.easycalcetto.Constants.PREFKEY_REGSTATUS;
 import static edu.easycalcetto.Constants.PREFS_NAME;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.StreamCorruptedException;
+
+import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.util.Log;
+import android.widget.Toast;
+import edu.easycalcetto.data.ECRegistrationData;
+import edu.easycalcetto.data.ECUser;
 
 public class ECApplication extends Application {
 	private static final String LOGTAG = "ECApplication";
@@ -155,6 +151,13 @@ public class ECApplication extends Application {
 				String.valueOf(registration.getAge()));
 		owner.setPhotoName(ECUser.IMAGE_FILE_NAME_DEFAULT);
 		return updateOwner(owner);
+	}
+	
+	public boolean isNetworkAvailable() {
+	    ConnectivityManager connectivityManager 
+	          = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+	    return activeNetworkInfo != null && activeNetworkInfo.isConnected();
 	}
 
 }

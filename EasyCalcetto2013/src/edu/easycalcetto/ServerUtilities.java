@@ -45,7 +45,7 @@ public final class ServerUtilities {
 		Log.i(TAG, "registering device (regId = " + regId + ")");
 		String serverUrl = SERVER_HR_ADDRESS;
 		Map<String, String> params = new HashMap<String, String>();
-		params.put(ECConnectionMessageConstants.FUNC, "gcm_register"); // TODO:move
+		params.put(ECConnectionMessageConstants.FUNC, "gcm_register");
 		params.put("id", "" + userId);
 		params.put("gcm_id", regId);
 		long backoff = BACKOFF_MILLI_SECONDS + random.nextInt(1000);
@@ -58,7 +58,6 @@ public final class ServerUtilities {
 				// displayMessage(context, "prova");
 				post(serverUrl, params);
 				GCMRegistrar.setRegisteredOnServer(context, true);
-				String message = "register";
 				// CommonUtilities.displayMessage(context, message);
 				return true;
 			} catch (IOException e) {
@@ -82,7 +81,6 @@ public final class ServerUtilities {
 				backoff *= 2;
 			}
 		}
-		String message = "register error";
 		// CommonUtilities.displayMessage(context, message);
 		return false;
 	}
@@ -100,7 +98,6 @@ public final class ServerUtilities {
 		try {
 			post(serverUrl, params);
 			GCMRegistrar.setRegisteredOnServer(context, false);
-			String message = "unregister";
 			// CommonUtilities.displayMessage(context, message);
 		} catch (IOException e) {
 			// At this point the device is unregistered from GCM, but still
@@ -108,7 +105,6 @@ public final class ServerUtilities {
 			// We could try to unregister again, but it is not necessary:
 			// if the server tries to send a message to the device, it will get
 			// a "NotRegistered" error message and should unregister the device.
-			String message = "unregister error";
 			// CommonUtilities.displayMessage(context, message);
 		}
 	}
@@ -179,81 +175,5 @@ public final class ServerUtilities {
 			
 		}.execute();
 		
-	}
-
-	private class RegisterRunnable implements Runnable {
-		final Context context;
-		final String regId;
-		final long userId;
-		boolean returnValue = false;
-
-		public RegisterRunnable(final Context context, final String regId,
-				final long userId) {
-			this.context = context;
-			this.regId = regId;
-			this.userId = userId;
-		}
-
-		@Override
-		public void run() {
-			Log.i(TAG, "registering device (regId = " + regId + ")");
-			String serverUrl = SERVER_HR_ADDRESS;
-			Map<String, String> params = new HashMap<String, String>();
-			params.put(ECConnectionMessageConstants.FUNC, "gcm_register"); // TODO:move
-			params.put("id", "" + userId);
-			params.put("gcm_id", regId);
-			long backoff = BACKOFF_MILLI_SECONDS + random.nextInt(1000);
-			// Once GCM returns a registration id, we need to register it in the
-			// demo server. As the server might be down, we will retry it a
-			// couple
-			// times.
-			for (int i = 1; i <= MAX_ATTEMPTS; i++) {
-				Log.d(TAG, "Attempt #" + i + " to register");
-				try {
-					// displayMessage(context, "prova");
-					post(serverUrl, params);
-					GCMRegistrar.setRegisteredOnServer(context, true);
-					String message = "register";
-					// CommonUtilities.displayMessage(context, message);
-					// return true;
-					returnValue = true;
-					return;
-				} catch (IOException e) {
-					// Here we are simplifying and retrying on any error; in a
-					// real
-					// application, it should retry only on unrecoverable errors
-					// (like HTTP error code 503).
-					Log.e(TAG, "Failed to register on attempt " + i, e);
-					if (i == MAX_ATTEMPTS) {
-						break;
-					}
-					try {
-						Log.d(TAG, "Sleeping for " + backoff
-								+ " ms before retry");
-						Thread.sleep(backoff);
-					} catch (InterruptedException e1) {
-						// Activity finished before we complete - exit.
-						Log.d(TAG,
-								"Thread interrupted: abort remaining retries!");
-						Thread.currentThread().interrupt();
-						// return false;
-						returnValue = false;
-						return;
-					}
-					// increase backoff exponentially
-					backoff *= 2;
-				}
-			}
-			String message = "register error";
-			// CommonUtilities.displayMessage(context, message);
-			// return false;
-			returnValue = false;
-			return;
-		}
-		
-		public boolean getReturnValue(){
-			return returnValue;
-		}
-
 	}
 }
