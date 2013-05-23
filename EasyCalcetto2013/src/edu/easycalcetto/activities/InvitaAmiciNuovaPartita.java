@@ -74,7 +74,6 @@ public class InvitaAmiciNuovaPartita extends EasyCalcettoActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setTitle("Nuova partita 2/2");
 		getSupportActionBar().setSubtitle("Spunta gli amici che vuoi invitare");
-		caricaAmici();
 
 		buttonCreaPartita = (Button) findViewById(R.id.buttonCreaPartita);
 
@@ -145,7 +144,8 @@ public class InvitaAmiciNuovaPartita extends EasyCalcettoActivity {
 			Toast.makeText(getApplicationContext(),
 					"Si è verificato un'Errore", Toast.LENGTH_SHORT).show();
 		}
-
+		getAmici();
+		caricaAmici();
 	}
 
 	@Override
@@ -225,7 +225,6 @@ public class InvitaAmiciNuovaPartita extends EasyCalcettoActivity {
 		params.add(new BasicNameValuePair(FUNC, FUNCDESCRIPTOR_GETFRIENDS));
 		params.add(new BasicNameValuePair("id", String
 				.valueOf(getMyApplication().getOwner().get_id())));
-
 		ECPostWithBNVPTask task = new ECPostWithBNVPTask() {
 			ProgressDialog pDialog = null;
 

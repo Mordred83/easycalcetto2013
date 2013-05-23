@@ -15,7 +15,7 @@ import org.json.JSONException;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,6 +35,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 import edu.easycalcetto.EasyCalcettoActivity;
 import edu.easycalcetto.R;
+import edu.easycalcetto.connection.ECConnectionMessageConstants;
 import edu.easycalcetto.connection.ECPostWithBNVPTask;
 import edu.easycalcetto.data.ECMatch;
 import eu.erikw.PullToRefreshListView;
@@ -86,36 +87,6 @@ public class Partite extends EasyCalcettoActivity implements
 	public void onResume() {
 		super.onResume();
 		mList.setRefreshing();
-	}
-
-	@Override
-	public void onTabUnselected(Tab tab,
-			android.support.v4.app.FragmentTransaction ft) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onTabReselected(Tab tab,
-			android.support.v4.app.FragmentTransaction ft) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
-	public void onTabSelected(Tab tab,
-			android.support.v4.app.FragmentTransaction ft) {
-		if (tab.getText().equals("Aperte")) {
-			currentTab = TabID.APERTE;
-			setContentView(R.layout.tab_navigation_match_opened);
-			caricaAperte();
-		} else if (tab.getText().equals("Giocate")) {
-			setContentView(R.layout.tab_navigation_match_closed);
-			currentTab = TabID.GIOCATE;
-			caricaChiuse();
-		}
-		mList.setRefreshing();
-		getListsFromServer();
 	}
 
 	private void getListsFromServer() {
@@ -912,6 +883,37 @@ public class Partite extends EasyCalcettoActivity implements
 
 	}
 
+	@Override
+	public void onTabSelected(Tab tab,
+			android.support.v4.app.FragmentTransaction ft) {
+		if (tab.getText().equals("Aperte")) {
+			currentTab = TabID.APERTE;
+			setContentView(R.layout.tab_navigation_match_opened);
+			caricaAperte();
+		} else if (tab.getText().equals("Giocate")) {
+			setContentView(R.layout.tab_navigation_match_closed);
+			currentTab = TabID.GIOCATE;
+			caricaChiuse();
+		}
+		mList.setRefreshing();
+		getListsFromServer();
+	}
+
+	@Override
+	public void onTabUnselected(Tab tab,
+			android.support.v4.app.FragmentTransaction ft) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onTabReselected(Tab tab,
+			android.support.v4.app.FragmentTransaction ft) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 }
+

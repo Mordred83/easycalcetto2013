@@ -95,7 +95,7 @@ public class MenuActivity extends EasyCalcettoActivity {
 						getApplicationContext(), R.anim.pressed));
 				Intent intentCreaPartita = new Intent(getApplicationContext(),
 						CreaPartita.class);
-				startActivity(intentCreaPartita);
+				startActivityForResult(intentCreaPartita, 0);
 			}
 		});
 
@@ -106,7 +106,7 @@ public class MenuActivity extends EasyCalcettoActivity {
 						getApplicationContext(), R.anim.pressed));
 				Intent intentPartite = new Intent(getApplicationContext(),
 						Partite.class);
-				startActivity(intentPartite);
+				startActivityForResult(intentPartite, 0);
 			}
 		});
 
@@ -117,7 +117,7 @@ public class MenuActivity extends EasyCalcettoActivity {
 						getApplicationContext(), R.anim.pressed));
 				Intent intentAmici = new Intent(getApplicationContext(),
 						Amici.class);
-				startActivity(intentAmici);
+				startActivityForResult(intentAmici, 0);
 			}
 		});
 
@@ -128,7 +128,7 @@ public class MenuActivity extends EasyCalcettoActivity {
 						getApplicationContext(), R.anim.pressed));
 				Intent intentProfilo = new Intent(getApplicationContext(),
 						Profilo.class);
-				startActivity(intentProfilo);
+				startActivityForResult(intentProfilo, 0);
 			}
 		});
 

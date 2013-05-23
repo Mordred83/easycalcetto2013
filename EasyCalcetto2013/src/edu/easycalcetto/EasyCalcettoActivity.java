@@ -1,8 +1,6 @@
 package edu.easycalcetto;
 
 import android.app.AlertDialog;
-import android.app.DialogFragment;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,10 +11,13 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockActivity;
 
 import edu.easycalcetto.data.ECUser;
-import edu.easycalcetto.fragments.NoNetworkDialogFragment;
 
 public abstract class EasyCalcettoActivity extends SherlockActivity implements OnClickListener{
 	/** Called when the activity is first created. */
+	protected static final int RESULT_NO_NETWORK = -254;
+	protected static final int RESULT_EXIT = -255;
+	
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -57,14 +58,15 @@ public abstract class EasyCalcettoActivity extends SherlockActivity implements O
 		
 	}
 	
-	private void showNoNetworkDialog() {
+	protected void showNoNetworkDialog() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage(R.string.msg_no_network);
 		builder.setPositiveButton(R.string.lbl_exit, new DialogInterface.OnClickListener() {
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				Toast.makeText(getApplicationContext(), "ExitYeah", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(getApplicationContext(), "ExitYeah", Toast.LENGTH_SHORT).show();
+				setResult(RESULT_NO_NETWORK);
 				finish();
 				
 			}
@@ -78,5 +80,14 @@ public abstract class EasyCalcettoActivity extends SherlockActivity implements O
 			}
 		});
 		builder.create().show();
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(resultCode == RESULT_NO_NETWORK || resultCode == RESULT_EXIT){
+			setResult(resultCode);
+			finish();
+		}
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 }
