@@ -12,7 +12,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 
 import edu.easycalcetto.data.ECUser;
 
-public abstract class EasyCalcettoActivity extends SherlockActivity implements OnClickListener{
+public abstract class EasyCalcettoActivity extends SherlockActivity {
 	/** Called when the activity is first created. */
 	protected static final int RESULT_NO_NETWORK = -254;
 	protected static final int RESULT_EXIT = -255;
@@ -41,21 +41,6 @@ public abstract class EasyCalcettoActivity extends SherlockActivity implements O
 	
 	protected boolean isNetworkAvaliable(){
 		return getMyApplication().isNetworkAvailable();
-	}
-	
-	@Override
-	public void onClick(View v) {
-		switch(v.getId()){
-		case R.id.exit_button:
-			Toast.makeText(getApplicationContext(), "ExitYeah", Toast.LENGTH_SHORT).show();
-			finish();
-			break;
-		case R.id.open_network_button:
-			Toast.makeText(getApplicationContext(), "OpenYeah", Toast.LENGTH_SHORT).show();
-			finish();
-			break;
-		}
-		
 	}
 	
 	protected void showNoNetworkDialog() {
