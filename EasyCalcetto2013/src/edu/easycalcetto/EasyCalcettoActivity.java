@@ -17,7 +17,6 @@ public abstract class EasyCalcettoActivity extends SherlockActivity {
 	protected static final int RESULT_NO_NETWORK = -254;
 	protected static final int RESULT_EXIT = -255;
 	
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
