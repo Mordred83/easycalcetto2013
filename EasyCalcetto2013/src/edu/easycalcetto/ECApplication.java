@@ -36,7 +36,9 @@ public class ECApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		try {
 		getApplicationStatus();
+		
 		switch (status) {
 		case UNINITIALIZED:
 			try {
@@ -51,14 +53,9 @@ public class ECApplication extends Application {
 		case REGISTERED:
 		case REGISTRATION_PENDING:
 		case ERROR:
-			try {
-			initImagesDir();
-			} catch (IOException e) {
-				Log.e(LOGTAG, "Merda secca", e);
-			}
 			break;
 		}
-		try {
+		
 
 		} catch (Exception e) {
 			e.printStackTrace();
