@@ -10,12 +10,15 @@ import android.util.Log;
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
 
 import edu.easycalcetto.R;
 
 public class PreferenceProfilo extends SherlockPreferenceActivity{
 	
 	private final static int INFO_DIALOG = 1;	
+	private AdView adView;
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //Used to put dark icons on light action bar
@@ -34,6 +37,9 @@ public class PreferenceProfilo extends SherlockPreferenceActivity{
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences_profilo);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+      //admob widget
+	    adView = (AdView)findViewById(R.id.ad);
+	    adView.loadAd(new AdRequest());
         String preferencesName = this.getPreferenceManager().getSharedPreferencesName();
         Log.i("nomePreferences",preferencesName);
     }

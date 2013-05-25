@@ -32,6 +32,8 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
 
 import edu.easycalcetto.EasyCalcettoActivity;
 import edu.easycalcetto.R;
@@ -56,11 +58,14 @@ public class ProfiloAmico extends EasyCalcettoActivity {
 
 	private ECUser user;
 	private Integer partiteGiocate = null;
-
+	private AdView adView;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.profilo);
+		//admob widget
+	    adView = (AdView)findViewById(R.id.ad);
+	    adView.loadAd(new AdRequest());
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setTitle("Profilo Amico");
 		field_Name = (TextView) findViewById(R.id.field_Name);

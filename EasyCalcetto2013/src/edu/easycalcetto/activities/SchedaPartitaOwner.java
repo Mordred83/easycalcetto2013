@@ -38,6 +38,8 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
 
 import edu.easycalcetto.EasyCalcettoActivity;
 import edu.easycalcetto.R;
@@ -79,11 +81,15 @@ public class SchedaPartitaOwner extends EasyCalcettoActivity {
 	private ECMatch match;
 	private HashMap<String, ECUser[]> partecipantsMap;
 	private String status;
-
+	private AdView adView;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.partita_owner);
+		//admob widget
+	    adView = (AdView)findViewById(R.id.ad);
+	    adView.loadAd(new AdRequest());
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setTitle("Scheda Partita");
 

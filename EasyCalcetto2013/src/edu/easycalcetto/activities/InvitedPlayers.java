@@ -28,6 +28,8 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
 
 import edu.easycalcetto.EasyCalcettoActivity;
 import edu.easycalcetto.R;
@@ -52,6 +54,7 @@ public class InvitedPlayers extends EasyCalcettoActivity implements
 	private MyCheckable<ECUser>[] match_confirmed_partecipants;
 	private MyCheckable<ECUser>[] match_invited_partecipants;
 	private String tabString;
+	private AdView adView;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -103,6 +106,9 @@ public class InvitedPlayers extends EasyCalcettoActivity implements
 		tabOspiti.setText("Invitati");
 		tabOspiti.setTabListener(this);
 		getSupportActionBar().addTab(tabOspiti);
+		//admob widget
+	    adView = (AdView)findViewById(R.id.ad);
+	    adView.loadAd(new AdRequest());
 
 	}
 
@@ -115,9 +121,15 @@ public class InvitedPlayers extends EasyCalcettoActivity implements
 		tabString = tab.getText().toString();
 		if (tab.getText().equals("Confermati")) {
 			setContentView(R.layout.tab_navigation_confermati);
+			//admob widget
+		    adView = (AdView)findViewById(R.id.ad);
+		    adView.loadAd(new AdRequest());
 			caricaConfermati();
 		} else if (tab.getText().equals("Invitati")) {
 			setContentView(R.layout.tab_navigation_invitati);
+			//admob widget
+		    adView = (AdView)findViewById(R.id.ad);
+		    adView.loadAd(new AdRequest());
 			caricaInvitati();
 		}
 

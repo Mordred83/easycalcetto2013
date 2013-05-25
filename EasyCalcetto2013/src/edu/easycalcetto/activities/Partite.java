@@ -31,6 +31,8 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
 
 import edu.easycalcetto.EasyCalcettoActivity;
 import edu.easycalcetto.R;
@@ -62,7 +64,7 @@ public class Partite extends EasyCalcettoActivity implements
 	public int posElement;
 	private TabID currentTab = null;
 	private AdapterView.OnItemClickListener rowListener = new RowListner();
-
+	private AdView adView;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -80,6 +82,9 @@ public class Partite extends EasyCalcettoActivity implements
 		tabChiuse.setText("Giocate");
 		tabChiuse.setTabListener(this);
 		getSupportActionBar().addTab(tabChiuse);
+		//admob widget
+	    adView = (AdView)findViewById(R.id.ad);
+	    adView.loadAd(new AdRequest());
 	}
 
 	@Override
@@ -93,6 +98,7 @@ public class Partite extends EasyCalcettoActivity implements
 		case APERTE:
 			// msg = MessagesCreator.getGetOpenMatchesMessage(msnger,
 			// getMyApplication().getOwner().get_id());
+			
 			getOpenMatches();
 			break;
 		case GIOCATE:
@@ -888,9 +894,15 @@ public class Partite extends EasyCalcettoActivity implements
 		if (tab.getText().equals("Aperte")) {
 			currentTab = TabID.APERTE;
 			setContentView(R.layout.tab_navigation_match_opened);
+			//admob widget
+		    adView = (AdView)findViewById(R.id.ad);
+		    adView.loadAd(new AdRequest());
 			caricaAperte();
 		} else if (tab.getText().equals("Giocate")) {
 			setContentView(R.layout.tab_navigation_match_closed);
+			//admob widget
+		    adView = (AdView)findViewById(R.id.ad);
+		    adView.loadAd(new AdRequest());
 			currentTab = TabID.GIOCATE;
 			caricaChiuse();
 		}

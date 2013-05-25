@@ -25,6 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.view.MenuItem;
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
 
 import edu.easycalcetto.EasyCalcettoActivity;
 import edu.easycalcetto.R;
@@ -49,7 +51,8 @@ public class ModifyAccountInfoActivity extends EasyCalcettoActivity {
 
 	// ***** CONTROL VARS
 	private TextWatcher watcher = new TextWatcher() {
-
+	
+	
 		@Override
 		public void onTextChanged(CharSequence s, int start, int before,
 				int count) {
@@ -99,11 +102,14 @@ public class ModifyAccountInfoActivity extends EasyCalcettoActivity {
 	private EditText nameEditText, surnameEditText;
 	private TextView dobTextView;
 	private Button saveButton, changeDOBButton;
-
+	private AdView adView;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.profile_modification);
+		//admob widget
+	    adView = (AdView)findViewById(R.id.ad);
+	    adView.loadAd(new AdRequest());
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setTitle("Modifica Profilo");
 		nameEditText = (EditText) findViewById(R.id.name_EditText);

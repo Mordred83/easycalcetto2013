@@ -80,9 +80,7 @@ public class Amici extends EasyCalcettoActivity implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tab_navigation_friend);
-		//admob widget
-	    adView = (AdView)findViewById(R.id.ad);
-	    adView.loadAd(new AdRequest());
+		
 		currentTab = TabID.AMICI;
 		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -96,6 +94,9 @@ public class Amici extends EasyCalcettoActivity implements
 		tabOspiti.setText("Altri");
 		tabOspiti.setTabListener(this);
 		getSupportActionBar().addTab(tabOspiti);
+		//admob widget
+	    adView = (AdView)findViewById(R.id.ad);
+	    adView.loadAd(new AdRequest());
 		loadListImageSendEC();
 	}
 
@@ -124,11 +125,16 @@ public class Amici extends EasyCalcettoActivity implements
 				}
 
 			});
-
+			//admob widget
+		    adView = (AdView)findViewById(R.id.ad);
+		    adView.loadAd(new AdRequest());
 			caricaAmici();
 		} else if (tab.getText().equals("Altri")) {
 			currentTab = TabID.ALTRI;
 			setContentView(R.layout.tab_navigation_others);
+			//admob widget
+		    adView = (AdView)findViewById(R.id.ad);
+		    adView.loadAd(new AdRequest());
 			caricaOspiti();
 		}
 		mList.setRefreshing();

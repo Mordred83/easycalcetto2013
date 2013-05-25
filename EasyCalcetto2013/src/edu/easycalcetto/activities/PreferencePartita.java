@@ -9,11 +9,14 @@ import android.os.Bundle;
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
 
 import edu.easycalcetto.R;
 
 public class PreferencePartita extends SherlockPreferenceActivity{
 	
+	private AdView adView;
 	private final static int INFO_DIALOG = 1;	
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -32,6 +35,9 @@ public class PreferencePartita extends SherlockPreferenceActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences_partita);
+      //admob widget
+	    adView = (AdView)findViewById(R.id.ad);
+	    adView.loadAd(new AdRequest());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 

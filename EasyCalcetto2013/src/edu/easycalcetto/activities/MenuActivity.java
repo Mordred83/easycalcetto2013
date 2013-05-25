@@ -42,6 +42,8 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
 import com.google.android.gcm.GCMRegistrar;
 
 import edu.easycalcetto.EasyCalcettoActivity;
@@ -64,11 +66,14 @@ public class MenuActivity extends EasyCalcettoActivity {
 	private static final String TAG = "MenuActivity";
 	private ListImageMatch[] dialogImages;
 	private AsyncTask<Void, Void, Void> mRegisterTask;
-
+	private AdView adView;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.menu_activity);
+		//admob widget
+	    adView = (AdView)findViewById(R.id.ad);
+	    adView.loadAd(new AdRequest());
 		if(getIntent().getExtras() != null && getIntent().getExtras().containsKey(EXTRA_MESSAGE))
 			new Handler().postDelayed(new Runnable() {
 				
