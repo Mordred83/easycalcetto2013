@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/lib/com.google.ads"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:ignore="TextFields,HardcodedText" >
+    
+<ScrollView 
+    android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" 
+        android:layout_marginBottom="50dp">
+    
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -97,6 +104,8 @@
             android:minWidth="150dp"
             android:text="Salva" />
     </LinearLayout>
+
+</ScrollView>
  <com.google.ads.AdView
         xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
         android:id="@+id/ad"
@@ -106,5 +115,4 @@
         app:adSize="BANNER"
         app:adUnitId="a15196004307e8f" android:layout_gravity="center_vertical|center_horizontal">
     </com.google.ads.AdView>
-    
-</ScrollView>
+</RelativeLayout>
