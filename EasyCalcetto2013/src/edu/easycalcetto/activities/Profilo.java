@@ -56,7 +56,8 @@ import edu.easycalcetto.data.ECUser;
 
 public class Profilo extends EasyCalcettoActivity {
 	/** Called when the activity is first created. */
-
+	
+	private static final String LOGTAG = Profilo.class.getSimpleName(); 
 	private TextView field_Name;
 	private TextView field_Surname;
 	private TextView field_Age;
@@ -242,13 +243,11 @@ public class Profilo extends EasyCalcettoActivity {
 		if (imgFile.exists()) {
 
 			File imageFile = new File(getMyApplication().getImagesDir(),
-					user.generatePhotoFileName() + ".jpeg");
-			ExifInterface imageExif = new ExifInterface(
-					imageFile.getAbsolutePath());
+					user.generatePhotoFileName() + ".jpg");
 
 			Bitmap myBitmap = BitmapFactory.decodeFile(imgFile
 					.getAbsolutePath());
-
+			Log.d(LOGTAG, "questa chiamata viene invocata");
 			avatar.setImageBitmap(myBitmap);
 
 			avatar.setScaleType(ScaleType.FIT_XY);

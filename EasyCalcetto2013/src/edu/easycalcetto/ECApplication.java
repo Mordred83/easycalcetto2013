@@ -2,7 +2,7 @@ package edu.easycalcetto;
 
 import static edu.easycalcetto.ApplicationStatus.ERROR;
 import static edu.easycalcetto.ApplicationStatus.UNINITIALIZED;
-import static edu.easycalcetto.CommonUtilities.PREFNAME_IMAGEDIR;
+import static edu.easycalcetto.CommonUtilities.PREFKEY_IMAGEDIR_PATH;
 import static edu.easycalcetto.Constants.IMAGES_DIRECTORY_NAME;
 import static edu.easycalcetto.Constants.PREFKEY_OWNER_ID;
 import static edu.easycalcetto.Constants.PREFKEY_OWNER_NAME;
@@ -30,7 +30,6 @@ import edu.easycalcetto.data.ECUser;
 
 public class ECApplication extends Application {
 	private static final String LOGTAG = "ECApplication";
-	private File imagesDir;
 	private ECUser owner = null;
 	private ApplicationStatus status = null;
 
@@ -52,6 +51,11 @@ public class ECApplication extends Application {
 		case REGISTERED:
 		case REGISTRATION_PENDING:
 		case ERROR:
+			try {
+			initImagesDir();
+			} catch (IOException e) {
+				Log.e(LOGTAG, "Merda secca", e);
+			}
 			break;
 		}
 		try {
@@ -84,7 +88,8 @@ public class ECApplication extends Application {
 	}
 
 	public File getImagesDir() {
-		return imagesDir;
+		SharedPreferences pref = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+		return new File(pref.getString(PREFKEY_IMAGEDIR_PATH, null));
 	}
 
 	private void initialize() throws StreamCorruptedException, IOException,
@@ -95,14 +100,13 @@ public class ECApplication extends Application {
 	private void initImagesDir() throws IOException {
 		File imagesDir = new File(getFilesDir(), IMAGES_DIRECTORY_NAME);
 		if (!imagesDir.exists()) {
-			imagesDir.mkdir();
+			if(!imagesDir.mkdir()) throw new IOException("Can't create images Directory");
 			new File(imagesDir, ".nomedia").createNewFile();
 		}
 		SharedPreferences pref = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 		Editor editor = pref.edit();
-		editor.putString(PREFNAME_IMAGEDIR, imagesDir.getAbsolutePath());
+		editor.putString(PREFKEY_IMAGEDIR_PATH, imagesDir.getAbsolutePath());
 		editor.commit();
-		this.imagesDir = imagesDir;
 	}
 
 	public boolean updateOwner(ECUser owner) {

@@ -48,5 +48,5 @@ public final class CommonUtilities {
 	// context.sendBroadcast(intent);
 	// }
     
-    public static final String PREFNAME_IMAGEDIR = "IMAGEDIR";
+    public static final String PREFKEY_IMAGEDIR_PATH = "IMAGEDIR";
 }

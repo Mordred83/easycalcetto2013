@@ -82,7 +82,7 @@ public class NewQAAdapterSelectFriends extends BaseAdapter {
 		viewHolder.surnameText.setText(user.getSurname());
 		SharedPreferences pref = context.getSharedPreferences(
 				PREFS_NAME, ECApplication.MODE_PRIVATE);
-		String imageDir = pref.getString(CommonUtilities.PREFNAME_IMAGEDIR,
+		String imageDir = pref.getString(CommonUtilities.PREFKEY_IMAGEDIR_PATH,
 				null);
 		boolean imageExists = false;
 		if (imageDir != null) {
