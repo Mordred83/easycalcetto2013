@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/lib/com.google.ads"
+    android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:layout_gravity="center_vertical|center_horizontal"
-    android:background="@drawable/camp_vetro"
+    android:background="@drawable/sfondo_ec"
     android:gravity="center_vertical|center_horizontal"
     android:orientation="vertical" >
 
@@ -14,31 +15,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:orientation="vertical"
-            android:paddingBottom="40dp" >
+            android:orientation="vertical" >
 
             <ImageView
                 android:id="@+id/imageView1"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:layout_marginBottom="15dp"
                 android:src="@drawable/my_logo" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|center_horizontal"
-                android:layout_marginBottom="60dp"
-                android:gravity="center_vertical|center_horizontal"
-                android:weightSum="100" >
+                android:layout_height="150dp"
+                android:layout_gravity="top"
+                android:gravity="center_horizontal"
+                android:weightSum="120" >
 
                 <ImageView
                     android:id="@+id/buttonNew"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|center_horizontal"
-                    android:layout_weight="50"
-                    android:src="@drawable/new_crea_partita2" />
+                    android:layout_height="match_parent"
+                    android:layout_weight="49.10"
+                    android:src="@drawable/nuova_partita_ec" />
 
                 <ImageView
                     android:id="@+id/buttonPartite"
@@ -46,32 +43,41 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|center_horizontal"
                     android:layout_weight="50"
-                    android:src="@drawable/new_folder_partite" />
+                    android:src="@drawable/partite_ec" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="150dp"
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:gravity="center_vertical|center_horizontal"
-                android:weightSum="100" >
+                android:weightSum="120" >
 
                 <ImageView
                     android:id="@+id/buttonFriends"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|center_horizontal"
                     android:layout_weight="50"
-                    android:src="@drawable/new_friends_folder_label" />
+                    android:src="@drawable/amici_ec" />
 
                 <ImageView
                     android:id="@+id/buttonProfilo"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="50"
-                    android:src="@drawable/new_user_folder_label" />
+                    android:src="@drawable/profilo_ec" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+         <com.google.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+        android:id="@+id/ad"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        app:adSize="BANNER"
+        app:adUnitId="a15196004307e8f" android:layout_gravity="center_vertical|center_horizontal">
+    </com.google.ads.AdView>
 
-</LinearLayout>
+</RelativeLayout>

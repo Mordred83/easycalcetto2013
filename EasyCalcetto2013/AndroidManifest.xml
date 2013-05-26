@@ -29,9 +29,9 @@
 
     <application
         android:name="ECApplication"
-        android:icon="@drawable/referee"
+        android:icon="@drawable/logo_ec"
         android:label="@string/app_name"
-        android:logo="@drawable/referee"
+        android:logo="@drawable/logo_ec"
         android:theme="@style/Theme.Sherlock" >
         
         <receiver

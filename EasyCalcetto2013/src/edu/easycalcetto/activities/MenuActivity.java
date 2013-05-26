@@ -70,7 +70,9 @@ public class MenuActivity extends EasyCalcettoActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.menu_activity);
+		//setContentView(R.layout.menu_activity);
+		setContentView(R.layout.main_new);
+
 		//admob widget
 	    adView = (AdView)findViewById(R.id.ad);
 	    adView.loadAd(new AdRequest());
