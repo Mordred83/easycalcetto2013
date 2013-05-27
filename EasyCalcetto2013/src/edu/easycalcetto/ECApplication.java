@@ -37,25 +37,24 @@ public class ECApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 		try {
-		getApplicationStatus();
-		
-		switch (status) {
-		case UNINITIALIZED:
-			try {
-				initialize();
-			} catch (Exception e) {
-				setApplicationStatus(ERROR);
-				Log.e(LOGTAG, "Error occurred during initialization", e);
+			getApplicationStatus();
+
+			switch (status) {
+			case UNINITIALIZED:
+				try {
+					initialize();
+				} catch (Exception e) {
+					setApplicationStatus(ERROR);
+					Log.e(LOGTAG, "Error occurred during initialization", e);
+				}
+				setApplicationStatus(ApplicationStatus.UNREGISTERED);
+				break;
+			case UNREGISTERED:
+			case REGISTERED:
+			case REGISTRATION_PENDING:
+			case ERROR:
+				break;
 			}
-			setApplicationStatus(ApplicationStatus.UNREGISTERED);
-			break;
-		case UNREGISTERED:
-		case REGISTERED:
-		case REGISTRATION_PENDING:
-		case ERROR:
-			break;
-		}
-		
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -97,7 +96,8 @@ public class ECApplication extends Application {
 	private void initImagesDir() throws IOException {
 		File imagesDir = new File(getFilesDir(), IMAGES_DIRECTORY_NAME);
 		if (!imagesDir.exists()) {
-			if(!imagesDir.mkdir()) throw new IOException("Can't create images Directory");
+			if (!imagesDir.mkdir())
+				throw new IOException("Can't create images Directory");
 			new File(imagesDir, ".nomedia").createNewFile();
 		}
 		SharedPreferences pref = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
@@ -131,7 +131,7 @@ public class ECApplication extends Application {
 		SharedPreferences pref = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 		Editor e = pref.edit();
 		e.putString(PREFKEY_REGSTATUS, appStatus.toString());
-		if(result = e.commit())
+		if (result = e.commit())
 			status = appStatus;
 		return result;
 	}
@@ -153,12 +153,12 @@ public class ECApplication extends Application {
 		owner.setPhotoName(ECUser.IMAGE_FILE_NAME_DEFAULT);
 		return updateOwner(owner);
 	}
-	
+
 	public boolean isNetworkAvailable() {
-	    ConnectivityManager connectivityManager 
-	          = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-	    return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+		ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo activeNetworkInfo = connectivityManager
+				.getActiveNetworkInfo();
+		return activeNetworkInfo != null && activeNetworkInfo.isConnected();
 	}
 
 }
