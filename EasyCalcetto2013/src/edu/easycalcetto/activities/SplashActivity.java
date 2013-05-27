@@ -38,7 +38,7 @@ public class SplashActivity extends EasyCalcettoActivity {
         // set the layout for this activity
         setContentView(R.layout.activity_splash); 
         ImageView splashImage=(ImageView)findViewById(R.id.splashImage);
-        splashImage.setImageResource(R.drawable.splash_image);
+        splashImage.setImageResource(R.drawable.splash_activity_ec);
         splashImage.setScaleType(ScaleType.FIT_XY);
         // Create a Message object
         Message msg = new Message();

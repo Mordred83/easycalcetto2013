@@ -13,7 +13,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 import edu.easycalcetto.data.ECUser;
 
-public abstract class EasyCalcettoActivity extends SherlockFragmentActivity {
+public abstract class EasyCalcettoActivity extends SherlockActivity {
 	/** Called when the activity is first created. */
 	protected static final int RESULT_NO_NETWORK = -254;
 	protected static final int RESULT_EXIT = -255;
