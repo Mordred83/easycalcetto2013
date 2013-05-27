@@ -32,7 +32,7 @@ public class SplashActivity extends EasyCalcettoActivity {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-		
+		//commento a buffo
         //Create an object of type SplashHandler
         SplashHandler mHandler = new SplashHandler();
         // set the layout for this activity

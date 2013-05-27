@@ -7,7 +7,7 @@
     android:background="@drawable/sfondo_ec"
     android:gravity="center_vertical|center_horizontal"
     android:orientation="vertical" >
-
+<!-- commento a buffo -->
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
