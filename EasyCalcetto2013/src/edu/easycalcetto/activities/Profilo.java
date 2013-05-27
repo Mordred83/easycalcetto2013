@@ -6,7 +6,10 @@ import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNC;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_GETMATCHES_CLOSED;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_UPLOAD_PHOTO;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,11 +29,8 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -48,7 +48,6 @@ import com.google.ads.AdView;
 
 import edu.easycalcetto.EasyCalcettoActivity;
 import edu.easycalcetto.R;
-import edu.easycalcetto.connection.ECConnectionMessageConstants;
 import edu.easycalcetto.connection.ECPostWithBNVPTask;
 import edu.easycalcetto.connection.ECPostWithMPETask;
 import edu.easycalcetto.data.ECMatch;
@@ -56,8 +55,8 @@ import edu.easycalcetto.data.ECUser;
 
 public class Profilo extends EasyCalcettoActivity {
 	/** Called when the activity is first created. */
-	
-	private static final String LOGTAG = Profilo.class.getSimpleName(); 
+
+	private static final String LOGTAG = Profilo.class.getSimpleName();
 	private TextView field_Name;
 	private TextView field_Surname;
 	private TextView field_Age;
@@ -67,18 +66,20 @@ public class Profilo extends EasyCalcettoActivity {
 	private static String selectedImagePath = "null";
 	private final static int INFO_DIALOG = 1;
 	private static final int SELECT_PICTURE = 1;
+	private static final int CROP_PICTURE = 2;
 	public static final String EXTRAKEY_ECUSER = "USER";
 
 	private ECUser user;
 	private Integer partiteGiocate = null;
 	private AdView adView;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.profilo);
-		//admob widget
-	    adView = (AdView)findViewById(R.id.ad);
-	    adView.loadAd(new AdRequest());
+		// admob widget
+		adView = (AdView) findViewById(R.id.ad);
+		adView.loadAd(new AdRequest());
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setTitle("Il tuo Profilo");
 		field_Name = (TextView) findViewById(R.id.field_Name);
@@ -100,14 +101,6 @@ public class Profilo extends EasyCalcettoActivity {
 							isLight ? R.drawable.info_buttondark
 									: R.drawable.ic_action_help)
 					.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-
-			/*
-			 * if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-			 * menu.add(1, 2, 2, "More") .setIcon( isLight ?
-			 * R.drawable.ic_action_overflow_black :
-			 * R.drawable.ic_action_overflow)
-			 * .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS); }
-			 */
 
 			menu.add(2, 3, 2, "Cambia Foto").setIcon(R.drawable.edit_foto)
 					.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
@@ -132,10 +125,9 @@ public class Profilo extends EasyCalcettoActivity {
 
 				@Override
 				public void onClick(View v) {
-					Intent intentGallery = new Intent(Intent.ACTION_GET_CONTENT);
+					Intent intentGallery = new Intent();
 					intentGallery.setType("image/*");
 					intentGallery.setAction(Intent.ACTION_GET_CONTENT);
-					// intentGallery.putExtra(EXTRAKEY_ECUSER, user);
 					startActivityForResult(Intent.createChooser(intentGallery,
 							"Seleziona Foto Profilo"), SELECT_PICTURE);
 				}
@@ -215,15 +207,58 @@ public class Profilo extends EasyCalcettoActivity {
 
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
-			if (requestCode == SELECT_PICTURE) {
-				Uri selectedImageUri = data.getData();
-				// user = data.getParcelableExtra(EXTRAKEY_ECUSER);
-				selectedImagePath = getPath(selectedImageUri);
-				try {
-					cambiaFoto(selectedImagePath);
-				} catch (IOException e) {
-					e.printStackTrace();
+			if (requestCode == CROP_PICTURE) {
+				Bundle extras = data.getExtras();
+				if (extras != null) {
+					File oldImage = new File(getMyApplication().getImagesDir(),
+							getOwner().getPhotoName());
+					Bitmap photo = extras.getParcelable("data");
+					File imageFile = new File(
+							getMyApplication().getImagesDir(),
+							user.generatePhotoFileName() + ".jpg");
+					FileOutputStream fos;
+					try {
+						fos = new FileOutputStream(imageFile);
+						photo.compress(Bitmap.CompressFormat.JPEG, 90, fos);
+						fos.close();
+					} catch (IOException e) {
+						Log.e(LOGTAG, "impossible to open fos", e);
+					}
+					if (imageFile.exists()) {
+						if (oldImage.exists() && !oldImage.equals(imageFile))
+							oldImage.delete();
+						Bitmap myBitmap = BitmapFactory.decodeFile(imageFile
+								.getAbsolutePath());
+						avatar.setImageBitmap(myBitmap);
+						avatar.setScaleType(ScaleType.FIT_XY);
+						user.setPhotoName(imageFile.getName());
+						uploadPhoto();
+						getMyApplication().updateOwner(user);
+					}
 				}
+			} else if (requestCode == SELECT_PICTURE) {
+				Uri selectedImageUri = data.getData();
+				Intent intent = new Intent("com.android.camera.action.CROP");
+				intent.setData(selectedImageUri);
+				intent.putExtra("crop", "true");
+				intent.putExtra("aspectX", 1);
+				intent.putExtra("aspectY", 1);
+				intent.putExtra("outputX", 100);
+				intent.putExtra("outputY", 100);
+				intent.putExtra("noFaceDetection", true);
+				intent.putExtra("return-data", true);
+				try {
+					startActivityForResult(intent, CROP_PICTURE);
+				} catch (Exception e) {
+					Log.e(LOGTAG, "impossible to crop picture", e);
+					selectedImagePath = getPath(selectedImageUri);
+					try {
+						cambiaFoto(selectedImagePath);
+					} catch (IOException e1) {
+						Log.e(LOGTAG, "impossible to change picture", e1);
+					}
+				}
+
 			}
 		}
 	}
@@ -241,13 +276,13 @@ public class Profilo extends EasyCalcettoActivity {
 	public void cambiaFoto(String path) throws IOException {
 		File imgFile = new File(path);
 		if (imgFile.exists()) {
-
 			File imageFile = new File(getMyApplication().getImagesDir(),
 					user.generatePhotoFileName() + ".jpg");
+			File oldImage = new File(getMyApplication().getImagesDir(),
+					getOwner().getPhotoName());
 
 			Bitmap myBitmap = BitmapFactory.decodeFile(imgFile
 					.getAbsolutePath());
-			Log.d(LOGTAG, "questa chiamata viene invocata");
 			avatar.setImageBitmap(myBitmap);
 
 			avatar.setScaleType(ScaleType.FIT_XY);
@@ -255,9 +290,12 @@ public class Profilo extends EasyCalcettoActivity {
 			FileOutputStream fos = new FileOutputStream(imageFile);
 			myBitmap.compress(CompressFormat.JPEG, 90, fos);
 			fos.close();
-			user.setPhotoName(imageFile.getName());
 			uploadPhoto();
+			user = getOwner();
+			user.setPhotoName(imageFile.getName());
 			getMyApplication().updateOwner(user);
+			if (oldImage.exists() && !oldImage.equals(imageFile))
+				oldImage.delete();
 		}
 	}
 
@@ -274,14 +312,16 @@ public class Profilo extends EasyCalcettoActivity {
 	}
 
 	private void uploadPhoto() {
-		List<BasicNameValuePair> params= new ArrayList<BasicNameValuePair>();
+		List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
 		params.add(new BasicNameValuePair(FUNC, FUNCDESCRIPTOR_UPLOAD_PHOTO));
-		params.add(new BasicNameValuePair(BNDKEY_ID, String.valueOf(getMyApplication().getOwner().get_id())));
-		params.add(new BasicNameValuePair(BNDKEY_POST_IMAGE_PHOTOPATH, 
-				new File(getMyApplication().getImagesDir(), getMyApplication().getOwner().getPhotoName()).getAbsolutePath()));
-		ECPostWithMPETask task = new ECPostWithMPETask(){
-			ProgressDialog pDialog ;
-			
+		params.add(new BasicNameValuePair(BNDKEY_ID, String
+				.valueOf(getMyApplication().getOwner().get_id())));
+		params.add(new BasicNameValuePair(BNDKEY_POST_IMAGE_PHOTOPATH,
+				new File(getMyApplication().getImagesDir(), getMyApplication()
+						.getOwner().getPhotoName()).getAbsolutePath()));
+		new ECPostWithMPETask() {
+			ProgressDialog pDialog;
+
 			@Override
 			protected void onPreExecute() {
 				pDialog = new ProgressDialog(Profilo.this);
@@ -295,68 +335,58 @@ public class Profilo extends EasyCalcettoActivity {
 				pDialog.dismiss();
 				super.onPostExecute(result);
 			}
-			
-			
-			
+
 			@Override
 			protected void onSuccessWithNoData() {
-				Toast.makeText(getApplicationContext(), "Nuova foto caricata con successo", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(),
+						"Nuova foto caricata con successo", Toast.LENGTH_SHORT)
+						.show();
 			}
-			
+
 			@Override
 			protected void onSuccess() {
 				// TODO Auto-generated method stub
 			}
-			
+
 			@Override
 			protected void onOpResultNULL() {
 				// TODO Auto-generated method stub
 			}
-			
+
 			@Override
 			protected void onJArrNULL() {
 				// TODO Auto-generated method stub
 			}
-			
+
 			@Override
 			protected void onGenericError() {
 				// TODO Auto-generated method stub
 			}
-			
+
 			@Override
 			protected void onFailure() {
-				Toast.makeText(getApplicationContext(), "Impossibile caricare la foto", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(),
+						"Impossibile caricare la foto", Toast.LENGTH_SHORT)
+						.show();
 			}
-			
+
 			@Override
 			protected void onDataNULL() {
 				// TODO Auto-generated method stub
 			}
-			
+
 			@Override
 			protected void onConnectionLost() {
 				// TODO Auto-generated method stub
 			}
-		};
-		
-		// Messenger msnger = new Messenger(getConnectionServiceHandler());
-		// Message msg = null;
-		// msg = MessagesCreator
-		// .getUploadPhotoMessage(msnger, user.get_id(), new File(
-		// getMyApplication().getImagesDir(), user.getPhotoName())
-		// .getAbsolutePath());
-		// if (msg != null && messenger != null)
-		// try {
-		// messenger.send(msg);
-		// } catch (RemoteException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
+
+		}.execute(params.toArray(new BasicNameValuePair[] {}));
 	}
 
 	private void getClosedMatches() {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair(FUNC, FUNCDESCRIPTOR_GETMATCHES_CLOSED));
+		params.add(new BasicNameValuePair(FUNC,
+				FUNCDESCRIPTOR_GETMATCHES_CLOSED));
 		params.add(new BasicNameValuePair("id", String
 				.valueOf(getMyApplication().getOwner().get_id())));
 
@@ -386,8 +416,7 @@ public class Profilo extends EasyCalcettoActivity {
 			@Override
 			protected void onSuccess() {
 				try {
-					Object[] oArr =  ECMatch
-							.createFromJSONArray(getDataJArr());
+					Object[] oArr = ECMatch.createFromJSONArray(getDataJArr());
 					partiteGiocate = oArr.length;
 					field_Games.setText("" + partiteGiocate);
 				} catch (NumberFormatException e) {
