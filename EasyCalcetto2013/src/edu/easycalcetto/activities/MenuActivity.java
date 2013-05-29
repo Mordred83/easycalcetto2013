@@ -3,7 +3,7 @@ package edu.easycalcetto.activities;
 //import static edu.easycalcetto.CommonUtilities.DISPLAY_MESSAGE_ACTION;
 import static edu.easycalcetto.CommonUtilities.EXTRA_MESSAGE;
 import static edu.easycalcetto.CommonUtilities.SENDER_ID;
-import static edu.easycalcetto.connection.ECConnectionMessageConstants.SERVER_HR_ADDRESS;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.SERVER_API_URL;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -143,7 +143,7 @@ public class MenuActivity extends EasyCalcettoActivity {
 	}
 
 	private void registrationToGCM() {
-		checkNotNull(SERVER_HR_ADDRESS, "SERVER_URL");
+		checkNotNull(SERVER_API_URL, "SERVER_URL");
 		checkNotNull(SENDER_ID, "SENDER_ID");
 		// Make sure the device has the proper dependencies.
 		GCMRegistrar.checkDevice(this);
@@ -439,7 +439,7 @@ public class MenuActivity extends EasyCalcettoActivity {
 			try {
 
 				HttpPost request = new HttpPost(
-						SERVER_HR_ADDRESS);
+						SERVER_API_URL);
 				ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
 				list.add(new BasicNameValuePair(
 						ECConnectionMessageConstants.FUNC,

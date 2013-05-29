@@ -12,7 +12,7 @@ import static edu.easycalcetto.connection.Constants.RESULT_SUCCESS_WITH_NO_DATA;
 import static edu.easycalcetto.connection.Constants.SUCCESS_FLAG;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.RESIND_DATA;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.RESIND_OPRESULT;
-import static edu.easycalcetto.connection.ECConnectionMessageConstants.SERVER_HR_ADDRESS;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.SERVER_API_URL;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ public abstract class ECPostWithBNVPTask extends
 	String opResult = null;
 
 	public ECPostWithBNVPTask() {
-		request = new HttpPost(SERVER_HR_ADDRESS);
+		request = new HttpPost(SERVER_API_URL);
 		client = new ECHttpClient();
 	}
 

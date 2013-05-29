@@ -3,8 +3,9 @@ package edu.easycalcetto.connection;
 
 public final class ECConnectionMessageConstants{
 	
-	
-	public static final String SERVER_HR_ADDRESS = "http://www.sapienzaapps.it/easycalcetto/index.php";
+	public static final String SERVER_URL = "http://www.sapienzaapps.it/easycalcetto";
+	public static final String SERVER_API_URL = SERVER_URL+"/index.php";
+	public static final String SERVER_IMGFLD_URL = SERVER_URL+"/images";
 	
 	//*********	INTENT DATA KEYS
 	public static final String INTKEY_MESSENGER = "MESSENGER";
@@ -77,19 +78,5 @@ public final class ECConnectionMessageConstants{
 	public static final String BNDKEY_RESULT = "RESULT";
 
 	public static final String BNDKEY_ID = "id";
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
 	
 }

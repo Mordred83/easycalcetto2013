@@ -13,7 +13,7 @@ import static edu.easycalcetto.connection.ECConnectionMessageConstants.BNDKEY_PO
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNC;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.RESIND_DATA;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.RESIND_OPRESULT;
-import static edu.easycalcetto.connection.ECConnectionMessageConstants.SERVER_HR_ADDRESS;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.SERVER_API_URL;
 import static org.apache.http.entity.mime.HttpMultipartMode.BROWSER_COMPATIBLE;
 
 import java.io.File;
@@ -47,7 +47,7 @@ public abstract class ECPostWithMPETask extends
 	String opResult = null;
 
 	public ECPostWithMPETask() {
-		request = new HttpPost(SERVER_HR_ADDRESS);
+		request = new HttpPost(SERVER_API_URL);
 		client = new ECHttpClient();
 	}
 

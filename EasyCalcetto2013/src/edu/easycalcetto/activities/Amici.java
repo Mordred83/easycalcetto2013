@@ -2,7 +2,8 @@ package edu.easycalcetto.activities;
 
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNC;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_GETFRIENDS;
-import static edu.easycalcetto.connection.ECConnectionMessageConstants.SERVER_HR_ADDRESS;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.SERVER_API_URL;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.SERVER_IMGFLD_URL;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -220,7 +221,7 @@ public class Amici extends EasyCalcettoActivity implements
 			}
 		});
 
-		NewQAAdapter adapter = new NewQAAdapter(this);
+		NewQAAdapter adapter = new NewQAAdapter(this, getMyApplication());
 		adapter.setData(friends);
 		mList.setAdapter(adapter);
 		aggiungiQuickActionAmici();
@@ -238,7 +239,7 @@ public class Amici extends EasyCalcettoActivity implements
 				getListsFromServer();
 			}
 		});
-		NewQAAdapter adapter = new NewQAAdapter(this);
+		NewQAAdapter adapter = new NewQAAdapter(this, getMyApplication());
 		adapter.setData(acquietances);
 		mList.setAdapter(adapter);
 		aggiungiQuickActionOspiti();
@@ -748,8 +749,7 @@ public class Amici extends EasyCalcettoActivity implements
 					final long userId = ecu.get_id();
 					final File file = new File(getMyApplication()
 							.getImagesDir(), ecu.getPhotoName());
-					URL url = new URL(SERVER_HR_ADDRESS
-							+ "/images/" + ecu.getPhotoName());
+					URL url = new URL(SERVER_IMGFLD_URL+"/"+ecu.getPhotoName());
 					URLConnection ucon = url.openConnection();
 					InputStream is = ucon.getInputStream();
 					BufferedInputStream bis = new BufferedInputStream(is);

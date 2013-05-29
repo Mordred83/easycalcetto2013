@@ -3,7 +3,8 @@ package edu.easycalcetto.activities;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNC;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_CREATEMATCH;
 import static edu.easycalcetto.connection.ECConnectionMessageConstants.FUNCDESCRIPTOR_GETFRIENDS;
-import static edu.easycalcetto.connection.ECConnectionMessageConstants.SERVER_HR_ADDRESS;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.SERVER_API_URL;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.SERVER_IMGFLD_URL;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -42,6 +43,7 @@ import com.google.ads.AdView;
 
 import edu.easycalcetto.EasyCalcettoActivity;
 import edu.easycalcetto.R;
+import edu.easycalcetto.connection.ECConnectionMessageConstants;
 import edu.easycalcetto.connection.ECHttpClient;
 import edu.easycalcetto.connection.ECPostWithBNVPTask;
 import edu.easycalcetto.data.ECMatch;
@@ -434,8 +436,7 @@ public class InvitaAmiciNuovaPartita extends EasyCalcettoActivity {
 				try {
 					File file = new File(getMyApplication().getImagesDir(),
 							ecu.getPhotoName());
-					URL url = new URL(SERVER_HR_ADDRESS
-							+ "/images/" + ecu.getPhotoName());
+					URL url = new URL(SERVER_IMGFLD_URL+"/"+ecu.getPhotoName());
 					URLConnection ucon = url.openConnection();
 					InputStream is = ucon.getInputStream();
 					BufferedInputStream bis = new BufferedInputStream(is);

@@ -1,6 +1,6 @@
 package edu.easycalcetto;
 
-import static edu.easycalcetto.connection.ECConnectionMessageConstants.SERVER_HR_ADDRESS;
+import static edu.easycalcetto.connection.ECConnectionMessageConstants.SERVER_API_URL;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -43,7 +43,7 @@ public final class ServerUtilities {
 	public static boolean register(final Context context, final String regId,
 			final long userId) {
 		Log.i(TAG, "registering device (regId = " + regId + ")");
-		String serverUrl = SERVER_HR_ADDRESS;
+		String serverUrl = SERVER_API_URL;
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(ECConnectionMessageConstants.FUNC, "gcm_register");
 		params.put("id", "" + userId);
@@ -90,7 +90,7 @@ public final class ServerUtilities {
 	 */
 	static void unregister(final Context context, final String userId) {
 		Log.i(TAG, "unregistering device (regId = " + userId + ")");
-		String serverUrl = SERVER_HR_ADDRESS;
+		String serverUrl = SERVER_API_URL;
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(ECConnectionMessageConstants.FUNC, "gcm_unregister");
 		params.put("id", userId);
